@@ -60,10 +60,13 @@
     </span>
   {% endif %}
 
+    <!-- The "more" class for the bottons are custom and adds a "hand curser" when hovering.
+         See the /_sass/amunk-bib and /assets/css as well as search "add custom css to jekyll"
+         to see how this is done -->
   <span class="links">
-      [<a class="btnId" id="b_{{key}}-bibtex">BIB</a>]
+      [<a class="btnId more" id="b_{{key}}-bibtex">BIB</a>]
   {% if entry.abstract %}
-      [<a class="btnId" id="b_{{key}}-abstract">Abs</a>]
+      [<a class="btnId more" id="b_{{key}}-abstract">Abs</a>]
   {% endif %}
   {% if entry.arxiv %}
     [<a href="http://arxiv.org/abs/{{ entry.arxiv }}" target="_blank">arXiv</a>]
