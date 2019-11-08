@@ -1,0 +1,203 @@
+---
+title: GANs and ALI
+layout: post
+date: 2019-02-15 15:59:00-0400
+comments: true
+---
+
+{% include mathjax-macros.html %}
+
+<div id="outline-container-org94288b5" class="outline-2">
+<h2 id="org94288b5">GANs</h2>
+<div class="outline-text-2" id="text-org94288b5">
+<p>
+Generative Adversarial Nets (GANs) [<a href="#goodfellow2014a">Goodfellow et&nbsp;al., 2014</a>] is a form of deep
+generative modeling, trained as a minimax "two-player game". A generator \(G\) is
+trained to fool a discriminator \(D\). The purpose of the discriminator is to
+differentiate between real data and artificially generated data. The generator
+tries to fool the discriminator by generating data close to the real data (in
+the distributive sense). We shall using \(y=1\) to denote real data, allowing for
+a purely probabilistic denotation.
+</p>
+
+<p>
+Discriminator \(D: \real^d \rightarrow \br{0,1}\) can be
+considered a discriminator, \(D(x,\theta) = p_\phi(y=1|x)\), i.e. the probability
+\(x\) is real. The generator is a function defining the distribution
+\(p_\phi(x|y=0)\), s.t. \(x=G(x,\phi)\) with \(z\sim p(z)\). This allows us to define
+the expected (negative) loss over generated data as,
+</p>
+
+\begin{align}
+\mL(\phi,\theta) &= -\meanp{p(x,y)}{\ln D(x)^y(1-D(x))^{1-y}}\nn\\
+ &= \pi\meanp{p(x|y=1)}{-y\ln{D(x,\theta)}} +
+                 (1-\pi)\meanp{p_\phi(x|y=0)}{-(1-y)\ln D(x,\theta)},\nn
+\end{align}
+
+<p>
+where \(\pi = p(y=1)\). Generally \(\pi\) is defined in terms of ratio between the
+sampled number of real data \(n\) and fake data \(n'\), \((1-\pi)/\pi=n'/n\). Instead
+of calculating the last expectation w.r.t. \(p_\phi(x|y=0)\) directly, we use that
+\(p(x|y=0)\) is defined as the distribution of \(x=G(z)\), where \(z\sim p(z)\), and
+take the expectation w.r.t. p(z),
+\[
+\mL(\phi,\theta) = \pi\meanp{p(x|y=1)}{-y\ln{D(x,\theta)}} +
+                 (1-\pi)\meanp{p(z)}{-(1-y)\ln D(G(z,\phi),\theta)}.
+\]
+Thus, we seek to maximize this loss w.r.t. the generator, but minimize it w.r.t. the
+discriminator, such that
+</p>
+
+<p>
+\[
+\max_{\phi}\min_{\theta}\mL(\phi,\theta).
+\]
+</p>
+
+<p>
+The minimization w.r.t. the discriminator promotes correct classification of
+real/fake data. On the other hand, the maximization w.r.t. the generator forces
+\(G(z,\phi)\) to produce data \(x\), which appears (relative to \(D\)) to be real.
+</p>
+
+<p>
+This loss, is shown to be related to the Jensen Shannon divergence,
+</p>
+
+<p>
+\[
+\js{p}{q} = \frac{1}{2}\meanp{p}{\ln\frac{p+q}{2p}} + \frac{1}{2}\meanp{q}{\frac{p+q}{2q}}.
+\]
+</p>
+
+<p>
+A variety of other divergence and objectives have been explored, such as
+\(f\) &#x2013; GANs, which used the \(f\) &#x2013; divergence. A selection of such objective can be
+found in [<a href="#mohamed2016learning">Mohamed and Lakshminarayanan, 2016</a>].
+</p>
+</div>
+</div>
+
+<div id="outline-container-org84ba743" class="outline-2">
+<h2 id="org84ba743">Adversarially Learned Inference</h2>
+<div class="outline-text-2" id="text-org84ba743">
+<p>
+Adversarially Learned Inference (ALI) [<a href="#dumoulin2016adversarially">Dumoulin et&nbsp;al., 2016</a>], can be
+considered an extension to GANs, in the sense that it not only learns a
+generator for observed data and a discriminator, but also a posterior
+distribution over the latent space given \(x\), \(z|x\). In this framework we refer
+to the data generator as the <b>decoder</b> \(G_x(z)\), and the latent generator as the
+<b>encoder</b> \(G_z(x)\). The problem is then casts as matching the two joint
+distributions,
+</p>
+
+<ul class="org-ul">
+<li><i>Encoder</i> joint distribution \(p(z,x|y=1)=q(x)q(z|x)\)</li>
+<li><i>Decoder</i> joint distribution \(p(z,x|y=0)=p(z)p(x|z)\)</li>
+</ul>
+
+<p>
+Here \(p(z)\) can take any form, while \(q(x)\) is the empirical data distribution.
+Note further, that \(G_x\) and \(G_z\), are neural networks parameterizing \(p(x|z)\)
+and \(q(z|x)\) respectively, whereas in the GAN setting \(G(z)\) was a change of
+variables.
+</p>
+
+<p>
+Thus, following the same procedure as for GANs, we find the following loss,
+\[
+\mL(\phi,\theta_x, \theta_z) = \pi\meanp{p(x,z|y=1)}{-y\ln{D(x,z,\theta)}} +
+                               (1-\pi)\meanp{p(x,z|y=0)}{-(1-y)\ln D(x,z,\theta)},
+\]
+where the generator networks \(G_x\) and \(G_z\) are implicitly found through the
+expectations. Using the reparameterization trick [<a href="#kingma2014a">Kingma and Welling, 2014</a>], we can thus train both
+generators.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org61bae6e" class="outline-2">
+<h2 id="org61bae6e">Propositions</h2>
+<div class="outline-text-2" id="text-org61bae6e">
+<p>
+As proven by [<a href="#goodfellow2014a">Goodfellow et&nbsp;al., 2014</a>], the following two propositions holds for ALI
+(and is an extension to those for GANs),
+</p>
+
+<p>
+<b>Proposition 1</b> <i>Given a fixed generator \(G\), the optimal discriminator is given by</i>
+</p>
+
+<p>
+\[
+D^*(x,z) = \frac{q(x,z)}{p(x,z)+q(x,z)}.
+\]
+</p>
+
+<p>
+<b>Proposition 2</b> <i>Under an optimal discriminator \(D^*\), the generator minimizes
+the Jensen-Shannon divergence which attains its minimum if and only if</i> \(q(x,z)=p(x,z)\).
+</p>
+
+
+<div id="bibliography">
+<h2>References</h2>
+
+<table>
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="dumoulin2016adversarially">Dumoulin et&nbsp;al., 2016</a>]
+</td>
+<td class="bibtexitem">
+Dumoulin, V., Belghazi, I., Poole, B., Mastropietro, O., Lamb, A., Arjovsky,
+  M., and Courville, A. (2016).
+ Adversarially learned inference.
+ <em>arXiv preprint arXiv:1606.00704</em>.
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="goodfellow2014a">Goodfellow et&nbsp;al., 2014</a>]
+</td>
+<td class="bibtexitem">
+Goodfellow, I.&nbsp;J., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D.,
+  Ozair, S., Courville, A., and Bengio, Y. (2014).
+ Generative adversarial nets.
+ <em>Advances in Neural Information Processing Systems 27 (nips
+  2014)</em>, 27(January):2672--2680.
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="kingma2014a">Kingma and Welling, 2014</a>]
+</td>
+<td class="bibtexitem">
+Kingma, D.&nbsp;P. and Welling, M. (2014).
+ Auto-encoding variational bayes.
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="mohamed2016learning">Mohamed and Lakshminarayanan, 2016</a>]
+</td>
+<td class="bibtexitem">
+Mohamed, S. and Lakshminarayanan, B. (2016).
+ Learning in implicit generative models.
+ <em>arXiv preprint arXiv:1610.03483</em>.
+
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>

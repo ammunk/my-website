@@ -1,17 +1,18 @@
 # -----------------------------------------------------------------------------
 # Site settings
 # -----------------------------------------------------------------------------
-name: Your Name
-email: you@example.com
+title: Andreas Munk
+name: Andreas Munk
+email: andreas@ammunk.com
 description: > # this means to ignore newlines until "url:"
-  A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-footer_text: >
-  Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
-  Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-  Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
+  My personal website for notes and listing publications
+# footer_text: >
+#   Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
+#   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+#   Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
 
-url:  # the base hostname & protocol for your site
-baseurl: /al-folio # the subpath of your site, e.g. /blog/
+url: "https://ammunk.com" # the base hostname & protocol for your site
+baseurl:  # the subpath of your site, e.g. /blog/
 last_updated: # leave blank if you don't want to display last updated
 
 # -----------------------------------------------------------------------------
@@ -25,10 +26,10 @@ og_image: # The site-wide (default for all links) Open Graph preview image
 # -----------------------------------------------------------------------------
 # Social integration
 # -----------------------------------------------------------------------------
-github_username: # your GitHub user name
+github_username: ammunk # your GitHub user name
 twitter_username: # your Twitter handle
-linkedin_username: # your LinkedIn user name
-scholar_userid: # your Google Scholar ID
+linkedin_username: andreas-munk # your LinkedIn user name
+scholar_userid: MnrFp5AAAAAJ&hl=da # your Google Scholar ID
 orcid_id: # your ORCID ID
 medium_username: # your Medium username
 quora_username: # your Quora username
@@ -37,15 +38,15 @@ research_gate_profile: # your profile on ResearchGate
 blogger_url: # your blogger URL
 
 contact_note: >
-  You can even add a little note about which of these is the best way to reach you.
+  
 
 google_analytics: UA-XXXXXXXXX # out your google-analytics code
 
 # -----------------------------------------------------------------------------
 # Blog
 # -----------------------------------------------------------------------------
-blog_name: al-folio
-blog_description: a simple whitespace theme for academics
+blog_name: blog
+blog_description: Blogs will eventually appear here when I find the time :)
 
 # Pagination
 paginate: 4
@@ -58,10 +59,10 @@ text:
     older: 'Older'
 
 # Comments
-disqus_shortname: al-folio # put your disqus shortname
+disqus_shortname: amunk # put your disqus shortname
 
 # Optional features
-show_social_icons:  false
+show_social_icons:  true
 enable_anchorjs:    false
 enable_katex:       true
 
@@ -77,6 +78,9 @@ collections:
   projects:
     output: true
     permalink: /projects/:path/
+  notes:
+    permalink: /notes/:path/
+    output: true
 
 news_limit: 5
 
@@ -89,8 +93,26 @@ markdown: kramdown
 highlighter: pygments
 
 # Includes & excludes
-include: ['_pages']
-exclude: [vendor]
+exclude:
+  - vendor
+  - build-commands
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - package.json
+  - package-lock.json
+  - webpack.config.js
+  - "*.gemspec"
+  - _js
+  - _plugins
+  - .sass-cache
+include:
+  - LICENSE.md
+  - .htaccess
+  - resume
+  - papers
+  - js-files
+  - _pages
 
 # Plug-ins
 plugins:
@@ -102,7 +124,7 @@ plugins:
 # Jekyll-Scholar
 scholar:
 
-  last_name: Einstein
+  last_name: Munk
 
   style: apa
   locale: en
@@ -111,7 +133,7 @@ scholar:
   order: descending
 
   source: /_bibliography/
-  bibliography: papers.bib
+  bibliography: my-publications.bib
   bibliography_template: bib
 
   replace_strings: true
@@ -120,12 +142,13 @@ scholar:
   details_dir: bibliography
   details_layout: bibtex.html
   details_link: Details
+  repository: /assets/pdf
 
   query: "@*"
 
 # -----------------------------------------------------------------------------
 # Other settings
 # -----------------------------------------------------------------------------
-jquery_version: "1.12.4"
-katex_version: "0.9.0"
+jquery_version: "3.4.1"
+katex_version: "0.11.1"
 anchorjs_version: "3.2.2"

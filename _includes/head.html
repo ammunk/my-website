@@ -20,4 +20,18 @@
 
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+
+  <!-- Load MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://ammunk.com/assets/js/mathjax-config.js" defer> </script>
+  <script type="text/javascript" id="MathJax-script" defer
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+  <style>
+   p.MyMathJax {display: none;}
+  </style>
+
+  <!-- Load jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/{{ site.jquery_version}}/jquery.min.js"></script>
+  <script src="{{ '/assets/js/bibbuttons.js' | prepend: site.baseurl | prepend: site.url }}"></script>
 </head>

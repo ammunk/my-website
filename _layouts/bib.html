@@ -61,17 +61,18 @@
   {% endif %}
 
   <span class="links">
+      [<a class="btnId" id="b_{{key}}-bibtex">BIB</a>]
   {% if entry.abstract %}
-    [<a class="abstract">Abs</a>]
+      [<a class="btnId" id="b_{{key}}-abstract">Abs</a>]
   {% endif %}
   {% if entry.arxiv %}
     [<a href="http://arxiv.org/abs/{{ entry.arxiv }}" target="_blank">arXiv</a>]
   {% endif %}
-  {% if entry.html %}
-    [<a href="{{ entry.html }}" target="_blank">HTML</a>]
+  {% if entry.url %}
+    [<a href="{{ entry.url }}" target="_blank">HTML</a>]
   {% endif %}
-  {% if entry.pdf %}
-    [<a href="{{ entry.pdf | prepend: '/assets/pdf/' | prepend: site.baseurl | prepend: site.url }}" target="_blank">PDF</a>]
+  {% if link %}
+    [<a href="{{link}}" target="_blank">PDF</a>]
   {% endif %}
   {% if entry.supp %}
     [<a href="{{ entry.supp | prepend: '/assets/pdf/' | prepend: site.baseurl | prepend: site.url }}" target="_blank">Supp</a>]
@@ -87,10 +88,14 @@
   {% endif %}
   </span>
 
+  <!-- Hidden bibtex block -->
+  <div class="dropDownBibtex" id="{{key}}-bibtex" style="display:none;">
+      <pre>{{ entry.bibtex }}</pre>
+  </div>
   <!-- Hidden abstract block -->
   {% if entry.abstract %}
-  <span class="abstract hidden">
-    <p>{{ entry.abstract }}</p>
-  </span>
+  <div class="dropDownAbstract" id="{{key}}-abstract" style="display:none;">
+    <pre>{{ entry.abstract }}</pre>
+  </div>
   {% endif %}
 </div>

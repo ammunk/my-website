@@ -1,0 +1,188 @@
+\(
+\def\ie{i.e.~}
+\def\eg{e.g.~}
+\def\etc{\textit{etc.}}
+\def\etal{\textit{et~al.}}
+\def\wrt{w.r.t.~}
+\def\bra#1{\langle #1 |}
+\def\ket#1{|#1\rangle}
+\def\braket#1#2{\langle #1 | #2 \rangle}
+\def\bigbra#1{\big\langle #1 \big|}
+\def\bigket#1{\big| #1 \big\rangle}
+\def\bigbraket#1#2{\big\langle #1 \big| #2 \big\rangle}
+\def\beq#1{\begin{equation} \eqlab{#1}}
+\def\eeq{\end{equation}}
+\def\bal{\begin{align}}
+\def\eal{\end{align}}
+\def\bsubal#1#2{\bsub \eqlab{#1}\bal#2\eal}
+\def\esubal{\esub}
+\def\bsub{\begin{subequations}}
+\def\esub{\end{subequations}}
+\def\nn{\nonumber}
+\def\bsubalat#1#2#3{\bsub\eqlab{#1}\begin{alignat}{#2}#3\end{alignat}}
+\def\esubalat{\esub}
+\def\eqlab#1{\label{eq:#1}}
+\def\eqref#1{Eq.~(\ref{eq:#1})}
+\def\eqnoref#1{(\ref{eq:#1})}
+\def\eqsref#1#2{Eqs.~(\ref{eq:#1}) and~(\ref{eq:#2})}
+\def\eqsnoref#1#2{(\ref{eq:#1}) and~(\ref{eq:#2})}
+\def\figref#1{Figure~\ref{fig:#1}}
+\def\figsrefs#1#2{Figs.~\ref{fig:#1} and~\ref{fig:#2}}
+\def\figlab#1{\label{fig:#1}}
+\def\tabref#1{Table~\ref{tab:#1}}
+\def\tabsref#1#2{Tables~\ref{tab:#1} and~\ref{tab:#2}}
+\def\tablab#1{\label{tab:#1}}
+\def\appref#1{Appendix~\ref{chap:#1}}
+\def\appsref#1#2{Appendices~\ref{chap:#1} and~\ref{chap:#2}}
+\def\applab#1{\label{chap:#1}}
+\def\chapref#1{Chapter~\ref{chap:#1}}
+\def\chapsref#1#2{Chapters~\ref{chap:#1} and~\ref{chap:#2}}
+\def\chaplab#1{\label{chap:#1}}
+\def\secref#1{Section~\ref{sec:#1}}
+\def\secsref#1#2{Sections~\ref{sec:#1} and~\ref{sec:#2}}
+\def\seclab#1{\label{sec:#1}}
+\def\algref#1{Algorithm~\ref{alg:#1}}
+\def\algsref#1#2{Algorithms~\ref{alg:#1} and~\ref{alg:#2}}
+\def\alglab#1{\label{alg:#1}}
+\def\grad{\boldsymbol{\nabla}}
+\def\divop{\grad\scap}
+\def\pp{\partial}
+\def\ppsqr{\partial^2}
+\def\vec#1{\boldsymbol{#1}}
+\def\trans#1{#1^\mr{T}}
+\def\dm{\mathrm{d}}
+\def\mN{\mathcal{N}}
+\def\mMN{\mathcal{MN}}
+\def\mL{\mathcal{L}}
+\def\mO{\mathcal{O}}
+\def\mI{\mathcal{I}}
+\def\mE{\mathcal{E}}
+\def\mA{\mathcal{A}}
+\def\mG{\mathcal{G}}
+\def\mD{\mathcal{D}}
+\def\mU{\mathcal{U}}
+\def\mT{\mathcal{T}}
+\def\mF{\mathcal{F}}
+\def\mS{\mathcal{S}}
+\def\mH{\mathcal{H}}
+\def\mX{\mathcal{X}}
+\def\complex{\mathbb{C}}
+\def\real{\mathbb{R}}
+\def\krondel#1{\delta_{#1}}
+\def\limit#1#2{\mathop{\longrightarrow}_{#1 \rightarrow #2}}
+\def\scap{\!\cdot\!}
+\def\intd#1{\int\!\dm#1\: }
+\def\ave#1{\left\langle #1 \right\rangle}
+\def\br#1{\left\lbrack #1 \right\rbrack}
+\def\paren#1{\left(#1\right)}
+\def\tub#1{\left\{#1\right\}}
+\def\mr#1{\mathrm{#1}}
+\def\vt#1{\left.#1\right\vert}
+\def\abs#1{\left\lvert#1\right\rvert}
+\def\norm#1{\left\lVert#1\right\rVert}
+\def\sigv{\vec{\sigma}}
+\def\sigvt{\trans{\sigv}}
+\def\yyy{\vec{y}}
+\def\yyyt{\trans{\yyy}}
+\def\aaa{\vec{a}}
+\def\aaat{\trans{\aaa}}
+\def\AAA{\vec{A}}
+\def\AAAt{\trans{\AAA}}
+\def\fff{\vec{f}}
+\def\ffft{\trans{\fff}}
+\def\FFF{\vec{F}}
+\def\FFFt{\trans{\FFF}}
+\def\vvv{\vec{v}}
+\def\vvvt{\trans{\vvv}}
+\def\VVV{\vec{V}}
+\def\VVVt{\trans{\VVV}}
+\def\III{\vec{I}}
+\def\IIIt{\trans{\III}}
+\def\eee{\vec{e}}
+\def\eeet{\trans{\eee}}
+\def\ooo{\vec{0}}
+\def\ooot{\trans{\vec{0}}}
+\def\xxx{\vec{x}}
+\def\xxxt{\trans{\xxx}}
+\def\alalal{\vec{\alpha}}
+\def\alalalt{\trans{\alalal}}
+\def\ththth{\vec{\theta}}
+\def\XXX{\vec{X}}
+\def\XXXt{\trans{\XXX}}
+\def\JJJ{\vec{J}}
+\def\JJJt{\trans{\JJJ}}
+\def\www{\vec{w}}
+\def\wwwt{\trans{\www}}
+\def\ggg{\vec{g}}
+\def\gggt{\trans{\ggg}}
+\def\bbb{\vec{b}}
+\def\bbbt{\trans{\bbb}}
+\def\ttt{\vec{t}}
+\def\tttt{\trans{\ttt}}
+\def\TTT{\vec{T}}
+\def\TTTt{\trans{\TTT}}
+\def\WWW{\vec{W}}
+\def\WWWt{\trans{\WWW}}
+\def\ZZZ{\vec{Z}}
+\def\ZZZt{\trans{\ZZZ}}
+\def\HHH{\vec{H}}
+\def\HHHt{\trans{\HHH}}
+\def\ppi{\vec{\pi}}
+\def\ppit{\trans{\ppi}}
+\def\lamm{\vec{\lambda}}
+\def\lammt{\trans{\lamm}}
+\def\ccc{\vec{c}}
+\def\ccct{\trans{\ccc}}
+\def\ppp{\vec{p}}
+\def\pppt{\trans{\ppp}}
+\def\uuu{\vec{u}}
+\def\uuut{\trans{\uuu}}
+\def\muu{\vec{\mu}}
+\def\muut{\trans{\muu}}
+\def\CCC{\vec{C}}
+\def\CCCt{\trans{\CCC}}
+\def\zzz{\vec{z}}
+\def\zzzt{\trans{\zzz}}
+\def\sss{\vec{s}}
+\def\ssst{\trans{\sss}}
+\def\SSS{\vec{S}}
+\def\SSSt{\trans{\SSS}}
+\def\LLL{\vec{L}}
+\def\LLLt{\trans{\LLL}}
+\def\lll{\vec{l}}
+\def\lllt{\trans{\lll}}
+\def\rrrt{\trans{\rrr}}
+\def\RRRt{\trans{\RRR}}
+\def\SiSiSi{\vec{\Sigma}}
+\def\SiSiSit{\trans{\Sigma}}
+\def\hhh{\vec{h}}
+\def\hhht{\trans{\hhh}}
+\def\one{\vec{1}}
+\def\onet{\trans{\one}}
+\def\xlat{\xxx_{\mr{lat}}}
+\def\xobs{\xxx_{\mr{obs}}}
+\def\xmr#1{\xxx_{\mr{#1}}}
+\def\argmax{arg\,max}
+\def\argmin{arg\,min}
+\def\trace#1{\mr{Tr}\paren{#1}}
+\def\mean#1{\mathbb{E}\br{#1}}
+\def\meanq#1{\mathbb{E}_{q}\br{#1}}
+\def\meannni#1{\mathbb{E}_{-i}\br{#1}}
+\def\meanp#1#2{\mathbb{E}_{#1}\br{#2}}
+\def\kl#1#2{\mr{KL}\paren{\vt{\vt{#1~}}#2}}
+\def\js#1#2{\mr{JS}\paren{\vt{\vt{#1}}#2}}
+\def\elbo#1{\mr{ELBO}\paren{#1}}
+\def\loss{\mL}
+\def\lossq{\loss_\mr{sq}}
+\def\IBP{\mathcal{IBP}}
+\def\BeP{\mathcal{BeP}}
+\def\bp{\mathcal{bp}}
+\def\npbNMFinf{\mr{npbNMF}^i_\infty}
+\def\npbNMFfinite{\mr{npbNMF}^i_\approx}
+\def\npbNMFinfshared{\mr{npbNMF}^\text{shared}_\infty}
+\def\npbNMFfiniteshared{\mr{npbNMF}^\text{shared}_\approx}
+\def\npbNMFinfsparse{\mr{npbNMF}^\text{sparse}_\infty}
+\def\npbNMFfinitesparse{\mr{npbNMF}^\text{sparse}_\approx}
+\def\npbNMFfinitess{\mr{npbNMF}^\text{ss}_\approx}
+\def\npbNMFinfss{\mr{npbNMF}^\text{ss}_\infty}
+\)
