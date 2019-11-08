@@ -1,18 +1,8 @@
 ---
-layout: default
+layout: page
 ---
 
 {% assign posts = site.notes %}
-
-{% if page.title.size > 0 %}
-  <header>
-    <h1 class="page-title">{{ page.title }}</h1>
-    <h2>{{ page.description }}</h2>
-  </header>
-  <hr class="sr-only"/>
-{% endif %}
-
-{{ content }}
 
 {% assign date_formats  = site.data.strings.date_formats               %}
 {% assign list_group_by = date_formats.list_group_by | default:"%Y"    %}
@@ -22,10 +12,10 @@ layout: default
   {% assign currentdate = post.date | date:list_group_by %}
   {% if currentdate != date %}
     {% unless forloop.first %}</ul>{% endunless %}
-    <h2 id="{{ list_group_by | slugify }}-{{ currentdate | slugify }}" class="hr">{{ currentdate }}</h2>
+    <h3 id="{{ list_group_by | slugify }}-{{ currentdate | slugify }}" class="hr">{{ currentdate }}</h2>
     <ul class="related-posts">
     {% assign date = currentdate %}
   {% endif %}
-  {% include components/post-list-item.html post=post format=list_entry %}
+  {% include list-item.html post=post format=list_entry %}
   {% if forloop.last %}</ul>{% endif %}
 {% endfor %}

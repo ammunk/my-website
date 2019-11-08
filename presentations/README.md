@@ -1,5 +1,6 @@
 ---
 title: presentations
+layout: page
 permalink: /presentations/
 ---
 
