@@ -9,7 +9,7 @@
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/reveal.css"/>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/theme/sky.css" id="theme"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/theme/moon.css" id="theme"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/lib/css/zenburn.css"/>
 
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
@@ -34,7 +34,7 @@
 <div class="reveal">
 <div class="slides">
 <section id="sec-title-slide">
-<h1 class="title">Deep Probabilistic Surrogate Networks for Universal Simulator Approximation</h1><h2 class="author">Andreas Munk,</h2><h2 class="date">November 2, 2019</h2><p class="date">Created: 2019-11-08 Fri 11:00</p>
+<h1 class="title">Deep Probabilistic Surrogate Networks for Universal Simulator Approximation</h1><h2 class="author">Andreas Munk,</h2><h2 class="date">November 2, 2019</h2>
 </section>
 <section id="table-of-contents-section">
 <div id="table-of-contents">
@@ -48,6 +48,7 @@
 </div>
 </div>
 </section>
+<div id="hiddenMathbox" style="display: none;">
 <p>
 \(
 \newcommand{\ie}{i.e.~}
@@ -238,6 +239,7 @@
 \newcommand{\npbNMFinfss}{\mr{npbNMF}^\text{ss}_\infty}
 \)
 </p>
+</div>
 
 <section>
 <section id="slide-org417fdb4">
@@ -303,11 +305,10 @@ hashOneBasedIndex: false,
 pdfSeparateFragments: true,
 
 overview: true,
-width: 1420,
+width: 2048,
 height: 1080,
-margin: 0.10,
-minScale: 0.90,
-maxScale: 1.20,
+minScale: 0.50,
+maxScale: 1.50,
 
 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 transition: Reveal.getQueryHash().transition || 'linear', // see README of reveal.js for options
@@ -316,7 +317,8 @@ transitionSpeed: 'default',
 // Optional libraries used to extend reveal.js
 dependencies: [
  { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-]
+,
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
 
 });
 </script>

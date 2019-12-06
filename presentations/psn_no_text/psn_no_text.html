@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="author" content="Andreas Munk"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/theme/beige.css" id="theme"/>
+
+<link rel="stylesheet" href="https://ammunk.com/assets/img/utils/extra.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/lib/css/zenburn.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src=""></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://ammunk.com/assets/js/mathjax-config.js" defer> </script>
+<script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<meta name="description" content="Deep Probabilistic Surrogate Networks for Universal Simulator Approximation">
+<script> $(function(){$("#includedContent").load("./bibtex.html");}); </script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<div id="hiddenMathbox" style="display: none;">
+<p>
+\(
+\newcommand{\ie}{i.e.~}
+\newcommand{\eg}{e.g.~}
+\newcommand{\etc}{\textit{etc.}}
+\newcommand{\etal}{\textit{et~al.}}
+\newcommand{\wrt}{w.r.t.~}
+\newcommand{\bra}[1]{\langle #1 |}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+\newcommand{\bigbra}[1]{\big\langle #1 \big|}
+\newcommand{\bigket}[1]{\big| #1 \big\rangle}
+\newcommand{\bigbraket}[2]{\big\langle #1 \big| #2 \big\rangle}
+\newcommand{\beq}[1]{\begin{equation} \eqlab{#1}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bal}{\begin{align}}
+\newcommand{\eal}{\end{align}}
+\newcommand{\bsubal}[2]{\bsub \eqlab{#1}\bal#2\eal}
+\newcommand{\esubal}{\esub}
+\newcommand{\bsub}{\begin{subequations}}
+\newcommand{\esub}{\end{subequations}}
+\newcommand{\nn}{\nonumber}
+\newcommand{\bsubalat}[3]{\bsub\eqlab{#1}\begin{alignat}{#2}#3\end{alignat}}
+\newcommand{\esubalat}{\esub}
+\newcommand{\eqlab}[1]{\label{eq:#1}}
+\renewcommand{\eqref}[1]{Eq.~(\ref{eq:#1})}
+\newcommand{\eqnoref}[1]{(\ref{eq:#1})}
+\newcommand{\eqsref}[2]{Eqs.~(\ref{eq:#1}) and~(\ref{eq:#2})}
+\newcommand{\eqsnoref}[2]{(\ref{eq:#1}) and~(\ref{eq:#2})}
+\newcommand{\figref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\figsrefs}[2]{Figs.~\ref{fig:#1} and~\ref{fig:#2}}
+\newcommand{\figlab}[1]{\label{fig:#1}}
+\newcommand{\tabref}[1]{Table~\ref{tab:#1}}
+\newcommand{\tabsref}[2]{Tables~\ref{tab:#1} and~\ref{tab:#2}}
+\newcommand{\tablab}[1]{\label{tab:#1}}
+\newcommand{\appref}[1]{Appendix~\ref{chap:#1}}
+\newcommand{\appsref}[2]{Appendices~\ref{chap:#1} and~\ref{chap:#2}}
+\newcommand{\applab}[1]{\label{chap:#1}}
+\newcommand{\chapref}[1]{Chapter~\ref{chap:#1}}
+\newcommand{\chapsref}[2]{Chapters~\ref{chap:#1} and~\ref{chap:#2}}
+\newcommand{\chaplab}[1]{\label{chap:#1}}
+\newcommand{\secref}[1]{Section~\ref{sec:#1}}
+\newcommand{\secsref}[2]{Sections~\ref{sec:#1} and~\ref{sec:#2}}
+\newcommand{\seclab}[1]{\label{sec:#1}}
+\newcommand{\algref}[1]{Algorithm~\ref{alg:#1}}
+\newcommand{\algsref}[2]{Algorithms~\ref{alg:#1} and~\ref{alg:#2}}
+\newcommand{\alglab}[1]{\label{alg:#1}}
+\newcommand{\grad}{\boldsymbol{\nabla}}
+\newcommand{\divop}{\grad\scap}
+\newcommand{\pp}{\partial}
+\newcommand{\ppsqr}{\partial^2}
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\trans}[1]{#1^\mr{T}}
+\newcommand{\dm}{\mathrm{d}}
+\newcommand{\mN}{\mathcal{N}}
+\newcommand{\mMN}{\mathcal{MN}}
+\newcommand{\mL}{\mathcal{L}}
+\newcommand{\mO}{\mathcal{O}}
+\newcommand{\mI}{\mathcal{I}}
+\newcommand{\mE}{\mathcal{E}}
+\newcommand{\mA}{\mathcal{A}}
+\newcommand{\mG}{\mathcal{G}}
+\newcommand{\mD}{\mathcal{D}}
+\newcommand{\mU}{\mathcal{U}}
+\newcommand{\mT}{\mathcal{T}}
+\newcommand{\mF}{\mathcal{F}}
+\newcommand{\mS}{\mathcal{S}}
+\newcommand{\mH}{\mathcal{H}}
+\newcommand{\mX}{\mathcal{X}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\krondel}[1]{\delta_{#1}}
+\newcommand{\limit}[2]{\mathop{\longrightarrow}_{#1 \rightarrow #2}}
+\newcommand{\scap}{\!\cdot\!}
+\newcommand{\intd}[1]{\int\!\dm#1\: }
+\newcommand{\ave}[1]{\left\langle #1 \right\rangle}
+\newcommand{\br}[1]{\left\lbrack #1 \right\rbrack}
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\tub}[1]{\left\{#1\right\}}
+\newcommand{\mr}[1]{\mathrm{#1}}
+\newcommand{\vt}[1]{\left.#1\right\vert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\sigv}{\vec{\sigma}}
+\newcommand{\sigvt}{\trans{\sigv}}
+\newcommand{\yyy}{\vec{y}}
+\newcommand{\yyyt}{\trans{\yyy}}
+\newcommand{\aaa}{\vec{a}}
+\newcommand{\aaat}{\trans{\aaa}}
+\newcommand{\AAA}{\vec{A}}
+\newcommand{\AAAt}{\trans{\AAA}}
+\newcommand{\fff}{\vec{f}}
+\newcommand{\ffft}{\trans{\fff}}
+\newcommand{\FFF}{\vec{F}}
+\newcommand{\FFFt}{\trans{\FFF}}
+\newcommand{\vvv}{\vec{v}}
+\newcommand{\vvvt}{\trans{\vvv}}
+\newcommand{\VVV}{\vec{V}}
+\newcommand{\VVVt}{\trans{\VVV}}
+\newcommand{\III}{\vec{I}}
+\newcommand{\IIIt}{\trans{\III}}
+\newcommand{\eee}{\vec{e}}
+\newcommand{\eeet}{\trans{\eee}}
+\newcommand{\ooo}{\vec{0}}
+\newcommand{\ooot}{\trans{\vec{0}}}
+\newcommand{\xxx}{\vec{x}}
+\newcommand{\xxxt}{\trans{\xxx}}
+\newcommand{\alalal}{\vec{\alpha}}
+\newcommand{\alalalt}{\trans{\alalal}}
+\newcommand{\ththth}{\vec{\theta}}
+\newcommand{\XXX}{\vec{X}}
+\newcommand{\XXXt}{\trans{\XXX}}
+\newcommand{\JJJ}{\vec{J}}
+\newcommand{\JJJt}{\trans{\JJJ}}
+\newcommand{\www}{\vec{w}}
+\newcommand{\wwwt}{\trans{\www}}
+\renewcommand{\ggg}{\vec{g}}
+\newcommand{\gggt}{\trans{\ggg}}
+\newcommand{\bbb}{\vec{b}}
+\newcommand{\bbbt}{\trans{\bbb}}
+\newcommand{\ttt}{\vec{t}}
+\newcommand{\tttt}{\trans{\ttt}}
+\newcommand{\TTT}{\vec{T}}
+\newcommand{\TTTt}{\trans{\TTT}}
+\newcommand{\WWW}{\vec{W}}
+\newcommand{\WWWt}{\trans{\WWW}}
+\newcommand{\ZZZ}{\vec{Z}}
+\newcommand{\ZZZt}{\trans{\ZZZ}}
+\newcommand{\HHH}{\vec{H}}
+\newcommand{\HHHt}{\trans{\HHH}}
+\newcommand{\ppi}{\vec{\pi}}
+\newcommand{\ppit}{\trans{\ppi}}
+\newcommand{\lamm}{\vec{\lambda}}
+\newcommand{\lammt}{\trans{\lamm}}
+\newcommand{\ccc}{\vec{c}}
+\newcommand{\ccct}{\trans{\ccc}}
+\newcommand{\ppp}{\vec{p}}
+\newcommand{\pppt}{\trans{\ppp}}
+\newcommand{\uuu}{\vec{u}}
+\newcommand{\uuut}{\trans{\uuu}}
+\newcommand{\muu}{\vec{\mu}}
+\newcommand{\muut}{\trans{\muu}}
+\newcommand{\CCC}{\vec{C}}
+\newcommand{\CCCt}{\trans{\CCC}}
+\newcommand{\zzz}{\vec{z}}
+\newcommand{\zzzt}{\trans{\zzz}}
+\newcommand{\sss}{\vec{s}}
+\newcommand{\ssst}{\trans{\sss}}
+\newcommand{\SSS}{\vec{S}}
+\newcommand{\SSSt}{\trans{\SSS}}
+\newcommand{\LLL}{\vec{L}}
+\newcommand{\LLLt}{\trans{\LLL}}
+\renewcommand{\lll}{\vec{l}}
+\newcommand{\lllt}{\trans{\lll}}
+\newcommand{\rrrt}{\trans{\rrr}}
+\newcommand{\RRRt}{\trans{\RRR}}
+\newcommand{\SiSiSi}{\vec{\Sigma}}
+\newcommand{\SiSiSit}{\trans{\Sigma}}
+\newcommand{\hhh}{\vec{h}}
+\newcommand{\hhht}{\trans{\hhh}}
+\newcommand{\one}{\vec{1}}
+\newcommand{\onet}{\trans{\one}}
+\newcommand{\xlat}{\xxx_{\mr{lat}}}
+\newcommand{\xobs}{\xxx_{\mr{obs}}}
+\newcommand{\xmr}[1]{\xxx_{\mr{#1}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\trace}[1]{\mr{Tr}\paren{#1}}
+\newcommand{\mean}[1]{\mathbb{E}\br{#1}}
+\newcommand{\meanq}[1]{\mathbb{E}_{q}\br{#1}}
+\newcommand{\meannni}[1]{\mathbb{E}_{-i}\br{#1}}
+\newcommand{\meanp}[2]{\mathbb{E}_{#1}\br{#2}}
+\newcommand{\kl}[2]{\mr{KL}\paren{\vt{\vt{#1~}}#2}}
+\newcommand{\js}[2]{\mr{JS}\paren{\vt{\vt{#1}}#2}}
+\newcommand{\elbo}[1]{\mr{ELBO}\paren{#1}}
+\newcommand{\loss}{\mL}
+\newcommand{\lossq}{\loss_\mr{sq}}
+\newcommand{\IBP}{\mathcal{IBP}}
+\newcommand{\BeP}{\mathcal{BeP}}
+\newcommand{\bp}{\mathcal{bp}}
+\newcommand{\npbNMFinf}{\mr{npbNMF}^i_\infty}
+\newcommand{\npbNMFfinite}{\mr{npbNMF}^i_\approx}
+\newcommand{\npbNMFinfshared}{\mr{npbNMF}^\text{shared}_\infty}
+\newcommand{\npbNMFfiniteshared}{\mr{npbNMF}^\text{shared}_\approx}
+\newcommand{\npbNMFinfsparse}{\mr{npbNMF}^\text{sparse}_\infty}
+\newcommand{\npbNMFfinitesparse}{\mr{npbNMF}^\text{sparse}_\approx}
+\newcommand{\npbNMFfinitess}{\mr{npbNMF}^\text{ss}_\approx}
+\newcommand{\npbNMFinfss}{\mr{npbNMF}^\text{ss}_\infty}
+\)
+</p>
+</div>
+
+<section>
+<section id="slide-orgb74e653">
+<h2 id="orgb74e653">Deep Probabilistic Surrogate Networks for Universal Simulator Approximation</h2>
+<img src="https://ammunk.com/assets/img/psn_short/figs/wing_plus_logo.png" height="1000">
+<img src="https://ammunk.com/assets/img/psn_short/figs/heatmap_time_evolution.gif" height="1000">
+
+<div class="slide-footer">Munk, Ścibior, Baydin, Stewart, Fernlund, Poursartip & Wood. Deep Probabilistic Surrogate Networks for Universal Simulator Approximation, Submitted AISTATS 2020</div>
+</section>
+<section>
+
+<ul>
+<li><b>10 times faster inversion</b></li>
+<li><b>30 times faster simulation</b></li>
+<li>Framework is model-agnostic</li>
+
+</ul>
+
+<div class="figure">
+<p><img src="https://ammunk.com/assets/img/psn_short/figs/heatmap_guess.gif" alt="heatmap_guess.gif" width="70%" />
+</p>
+</div>
+<div class="slide-footer">Munk, Ścibior, Baydin, Stewart, Fernlund, Poursartip & Wood. Deep Probabilistic Surrogate Networks for Universal Simulator Approximation, Submitted AISTATS 2020</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/js/reveal.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 't',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+width: 2700,
+height: 1600,
+margin: 0.00,
+minScale: 0.30,
+maxScale: 2.50,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+,
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+</script>
+</body>
+</html>

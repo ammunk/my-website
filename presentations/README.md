@@ -5,6 +5,6 @@ permalink: /presentations/
 ---
 
 ### Academic
-* [PSN]{:.heading.h3} --- First presentation
+* [Summary of PSNs]{:.heading.h3} --- Short two-slide version
 
-[PSN]: psn/psn.html
+[Summary of PSNs]: psn_short/psn_short.html

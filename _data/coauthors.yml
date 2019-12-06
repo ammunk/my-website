@@ -1,8 +1,17 @@
-Adams:
-    url: https://en.wikipedia.org/wiki/Edwin_Plimpton_Adams
+Wood:
+  url: https://www.cs.ubc.ca/~fwood/
 
-Podolsky:
-    url: https://en.wikipedia.org/wiki/Boris_Podolsky
+Ścibior:
+  url: https://www.cs.ubc.ca/~ascibior/
 
-Rosen:
-    url: https://en.wikipedia.org/wiki/Nathan_Rosen
+Baydin:
+  url: https://www.robots.ox.ac.uk/~gunes/
+
+Hansen:
+  url: http://cogsys.imm.dtu.dk/staff/lkhansen/lkhansen.html
+
+Naderiparizi:
+  url: https://www.cs.ubc.ca/~saeidnp/
+
+Harvey:
+  url: https://www.cs.ubc.ca/~wsgh/

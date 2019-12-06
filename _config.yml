@@ -42,6 +42,10 @@ contact_note: >
 
 google_analytics: UA-XXXXXXXXX # out your google-analytics code
 
+menu:
+  - title: Resume
+    url: https://ammunk.com/resume/resume.pdf
+
 # -----------------------------------------------------------------------------
 # Blog
 # -----------------------------------------------------------------------------
@@ -59,7 +63,7 @@ text:
     older: 'Older'
 
 # Comments
-disqus_shortname: amunk # put your disqus shortname
+disqus_shortname: ammunk-com # put your disqus shortname
 
 # Optional features
 show_social_icons:  true
