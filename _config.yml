@@ -42,10 +42,6 @@ contact_note: >
 
 google_analytics: UA-XXXXXXXXX # out your google-analytics code
 
-menu:
-  - title: Resume
-    url: https://ammunk.com/resume/resume.pdf
-
 # -----------------------------------------------------------------------------
 # Blog
 # -----------------------------------------------------------------------------
