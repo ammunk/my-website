@@ -1,12 +1,9 @@
-body {
-    background-image: url('https://ammunk.com/assets/img/utils/ubc.svg'), url('https://ammunk.com/assets/img/utils/plai.svg');
-    background-size:
-        20%,
-        5%;
-    background-repeat: no-repeat;
-    background-position:
-        98% 97%,
-        2% 97%;
+.reveal section .slide-footer {
+    position: fixed;
+    bottom: 150px;
+    width: 100%;
+    text-align:center;
+    font-size:smaller;
 }
 
 /*See https://css-tricks.com/snippets/css/complete-guide-grid/ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container */
@@ -17,3 +14,9 @@ body {
 .col{
     margin: auto;
 }
+.col-list{
+    self-align: flex-start;
+    margin: auto;
+}
+/*https://stackoverflow.com/questions/23082660/how-to-style-images-in-reveal-js */
+.reveal section img { background:none; border:none; box-shadow:none; }

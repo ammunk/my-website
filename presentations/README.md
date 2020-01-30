@@ -5,6 +5,6 @@ permalink: /presentations/
 ---
 
 ### Academic
-* [Summary of PSNs]{:.heading.h3} --- Short two-slide version
+* [PSNs]{:.heading.h3} --- Probabilistic Surrogate Networks
 
-[Summary of PSNs]: {% link /presentations/psn_short/psn_short.html %}
+[PSNs]: {% link /presentations/psn/psn.html %}

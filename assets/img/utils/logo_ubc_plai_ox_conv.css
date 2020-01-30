@@ -1,0 +1,14 @@
+body {
+    background-image: url('https://ammunk.com/assets/img/utils/ubc.svg'), url('https://ammunk.com/assets/img/utils/oxford.svg'), url('https://ammunk.com/assets/img/utils/convergent_logo.svg'), url('https://ammunk.com/assets/img/utils/plai.svg');
+    background-size:
+        20%,
+        8%,
+        7%,
+        4%;
+    background-repeat: no-repeat;
+    background-position:
+        98% 97%,
+        60% 97%,
+        28% 97%,
+        2% 97%;
+}

@@ -3,13 +3,17 @@
 <head>
 <meta charset="utf-8"/>
 <title>Deep Probabilistic Surrogate Networks for Universal Simulator Approximation</title>
-<meta name="author" content="Andreas Munk,"/>
+<meta name="author" content="Andreas Munk, Adam Ścibior, Atılım Güneş Baydin,@@latex:\\@@ @@html:<br>@@Andrew Stewart, Goran Fernlund,@@latex:\\@@ @@html:<br>@@Anoush Poursartip, Frank Wood"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/reveal.css"/>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/theme/moon.css" id="theme"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/theme/serif.css" id="theme"/>
+
+<link rel="stylesheet" href="https://ammunk.com/assets/img/utils/extra.css"/>
+
+<link rel="stylesheet" href="https://ammunk.com/assets/img/utils/logo_ubc_plai_ox_conv.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/lib/css/zenburn.css"/>
 
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
@@ -27,26 +31,17 @@
 <script src="https://ammunk.com/assets/js/mathjax-config.js" defer> </script>
 <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"> </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<meta name="description" content="Deep Probabilistic Surrogate Networks for Universal Simulator Approximation">
 <script> $(function(){$("#includedContent").load("./bibtex.html");}); </script>
+<meta name="description" content="Deep Probabilistic Surrogate Networks for Universal Simulator Approximation">
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
 <section id="sec-title-slide">
-<h1 class="title">Deep Probabilistic Surrogate Networks for Universal Simulator Approximation</h1><h2 class="author">Andreas Munk,</h2><h2 class="date">November 2, 2019</h2>
+<section id="sec-title-slide">
+    <h1 class="title">Deep Probabilistic Surrogate Networks for Universal Simulator Approximation</h1><h2 class="author">Andreas Munk, Adam Ścibior, Atılım Güneş Baydin, <br>Andrew Stewart, Goran Fernlund, <br>Anoush Poursartip, Frank Wood</h2><h4 class="email"><a href="mailto:amunk@cs.ubc.ca">amunk@cs.ubc.ca</a></h4><h4 class="date">January 28, 2020</h4>
 </section>
-<section id="table-of-contents-section">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#/slide-org417fdb4">Hello</a></li>
-<li><a href="#/slide-org235def0">GANs</a></li>
-<li><a href="#/slide-org01768fe">References</a></li>
-</ul>
-</div>
-</div>
+
 </section>
 <div id="hiddenMathbox" style="display: none;">
 <p>
@@ -240,47 +235,193 @@
 \)
 </p>
 </div>
-
 <section>
-<section id="slide-org417fdb4">
-<h2 id="org417fdb4">Hello</h2>
-<div class="column" style="float:left; width: 50%">
-<p class="fragment appear">
-Column 1
+<section id="slide-orgdb78cd3">
+<h2 id="orgdb78cd3">Probabilistic Programs [<a href="#van2018introduction">van&nbsp;de Meent et&nbsp;al., 2018</a>]</h2>
+<div class="container">
+<div class="col">
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/example_program.svg" class="org-svg" height="900">
+Sorry, your browser does not support SVG.</object>
 </p>
 </div>
+</div>
+<div class="col">
 
-<div class="column" style="float:right; width: 50%">
-<ul class="fragment appear">
-<li>Column 2
 <ul>
-<li>Hello</li>
-<li>\(\xxx\)</li>
-
-</ul></li>
+<li>Infer the posterior distribution \(p(\xlat|\xobs)\) over latent variables \(\xlat\) (specified by
+<b>sample</b> statements) conditioned on observed variables \(\xobs\) (specified by <b>observe</b> statements)</li>
+<li data-fragment-index="2" class="fragment appear">We consider the joint distribution over the space of "traces" \((x_{a_t},
+  a_t)\) for \(t=1,\dots,T\) \[p(\xxx, \aaa) = \prod_{t=1}^T
+  p(a_t|x_{a_1:a_{t-1}},a_{1:t-1}) p(x_{a_t}|x_{a_1:a_{t-1}},a_{1:t})\]</li>
+<li data-fragment-index="2" class="fragment appear">We denoted the set of all variables \(\xxx=\xlat\cup\xobs\)</li>
+<li data-fragment-index="3" class="fragment appear">Address transitions are deterministic:
+\(p(a_t|x_{a_1:a_{t-1}},a_{1:t-1})\) is a Kronecker-Delta function</li>
+<li data-fragment-index="4" class="fragment appear">But this notation becomes useful later</li>
 
 </ul>
 </div>
+
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
 </section>
 <section>
-<section id="slide-org235def0">
-<h2 id="org235def0">GANs</h2>
-<p>
-Generative Adversarial Nets (GANs) [<a href="#goodfellow2014a">Goodfellow et&nbsp;al., 2014</a>] is a form of deep
-generative modeling, trained as a minimax "two-player game". A generator \(G\) is
-trained to fool a discriminator \(D\). The purpose of the discriminator is to
-differentiate between real data and artificially generated data. The generator
-tries to fool the discriminator by generating data close to the real data (in
-the distributive sense). We shall using \(y=1\) to denote real data, allowing for
-a purely probabilistic denotation.
+<section id="slide-org8a62bcd">
+<h2 id="org8a62bcd">Inference Compilation (IC) [<a href="#le2016inference">Le et&nbsp;al., 2017</a>]</h2>
+<div class="container">
+<div class="col-item">
+<ul>
+<li>Self-normalizing sequential importance sampling (SIS)</li>
+<li data-fragment-index="2" class="fragment appear">Draw \(K\) samples \(\xlat^k \overset{i.i.d.}{\sim}q(\xlat|\xobs)\) (proposal distribution)</li>
+<li data-fragment-index="3" class="fragment appear">Compute the weights, \[w^k = \frac{p(\xlat^k,\xobs)}{q(\xlat^k|\xobs)}\]</li>
+<li data-fragment-index="4" class="fragment appear">Approximate the posterior as \[
+  p(\xxx_{\mr{lat}}|\xxx_{\mr{obs}})\approx\frac{\sum_{k=1}^Kw^k\delta(\xxx_{\mr{lat}}^k-\xxx_{\mr{lat}})}{\sum_{k=1}^Kw^k}\]</li>
+
+</ul>
+</div>
+<div class="col-item">
+<ul>
+<li data-fragment-index="5" class="fragment appear">IC is all about constructing \(q(\xlat|\xobs)\) \(\rightarrow\) efficient SIS \[q(\xxx_{\mr{lat}}|\xxx_{\mr{obs}};\phi) =
+  \prod_{x_{a_t}^{\mr{lat}}\in\xxx_{\mr{lat}}}q(x^{\mr{lat}}_{a_t}|\eta_{a_t}(x^{\mr{lat}}_{<{a_t}},\xxx_{\mr{obs}},\phi))\]</li>
+<li data-fragment-index="5" class="fragment appear">\(\eta(\cdot)\) is a recurrent neural network</li>
+<li data-fragment-index="6" class="fragment appear">We train \(q(\cdot|\xobs;\phi)\) to be close to \(p(\xlat|\xobs)\) for all
+\(\xobs\),  <br> by minimizing the expected KL divergence under the
+marginal \(p(\xxx_{\mr{obs}})\)
+\[\begin{align}\mL_{\mr{IC}}(\phi)&=\meanp{p(\xxx_{\mr{obs}})}{\kl{p(\xxx_{\mr{lat}}|\xxx_{\mr{obs}})}{q(\xxx_{\mr{lat}}|\xxx_{\mr{obs}};\phi)}}\nn\\ &=-\meanp{p(\xxx)}{\log
+  q(\xxx_{\mr{lat}}|\xxx_{\mr{obs}};\phi)} + \mr{const}\nn\end{align}\]</li>
+<li data-fragment-index="7" class="fragment appear">"Evaluation based inference" requires the simulator to run
+<b>repeatedly</b></li>
+
+</ul>
+</div>
+</div>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-org0181750">
+<h2 id="org0181750">Probabilistic Surrogate Network (PSN)</h2>
+<div class="container">
+<div class="col-item">
+<ul>
+<li><b>IC is still limited by the execution speed of the program</b></li>
+<li data-fragment-index="2" class="fragment appear">How about learning a surrogate model \(s\) that replaces \(p\) as a program when \(p\) is slow?</li>
+<li data-fragment-index="3" class="fragment appear">We structure \(s\) as a distribution over traces factorized exactly like \(p\)
+\[ s(\xxx,\aaa;\theta)=\prod_{t=1}^{T}s(x_{a_t}|\xi_{a_t}(x_{a_1:a_{t-1}},a_{1:t},\theta))s(a_t|\xi_{t-1}(x_{a_1:a_{t-1}},a_{1:t-1},\theta))\]</li>
+<li data-fragment-index="3" class="fragment appear">\(\xi_{a_t}(\cdot)\) and \(\xi_t(\cdot)\) are neural networks linked across the <br>addresses using a recurrent neural network structure</li>
+
+</ul>
+</div>
+<div class="col-item">
+<ul>
+<li data-fragment-index="4" class="fragment appear">We match \(p\) and \(s\) by minimizing the KL-divergence \[\begin{align*} \mL(\theta)
+  &= \kl{p(\xxx,\aaa)}{s(\xxx,\aaa;\theta)} \\ &= -\meanp{p(\xxx,\aaa)}{\log
+  s(\xxx,\aaa;\theta)} + \mr{const} \end{align*}\]</li>
+<li data-fragment-index="5" class="fragment appear">Now we <b>have</b> to model the address transitions \(s(a_t|\xi_{t-1}(x_{a_1:a_{t-1}},a_{1:t-1},\theta))\)</li>
+<li data-fragment-index="6" class="fragment appear">For instance a categorical distribution</li>
+<li data-fragment-index="7" class="fragment appear">Fully compatible with the probabilistic programming framework</li>
+
+</ul>
+</div>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-orge7ecfdc">
+<h3 id="orge7ecfdc">The Communication Interface</h3>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/inference-program-surrogate.svg" class="org-svg" height="1100">
+Sorry, your browser does not support SVG.</object>
 </p>
+</div>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
 </section>
 <section>
-<section id="slide-org01768fe">
-<h2 id="org01768fe">References</h2>
+<section id="slide-org5bb0061">
+<h2 id="org5bb0061">Simulating the Curing of Composite Materials</h2>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/wing_problem.svg" class="org-svg" height="800">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-org9acf587">
+<h2 id="org9acf587">Faster Simulation</h2>
+<ul>
+<li><b>~30 times faster simulation</b></li>
+
+</ul>
+
+<div class="figure">
+<p><img src="https://ammunk.com/assets/img/psn/figs/heatmap_guess.gif" alt="heatmap_guess.gif" height="800" />
+</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-org7e06733">
+<h3 id="org7e06733">Control Flow Program</h3>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="figs/simple_program.svg" class="org-svg" height="900">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-orgf1eb970">
+<h3 id="orgf1eb970">Address Transitions</h3>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="figs/address_transition_orig.svg" class="org-svg" width="2400">
+Sorry, your browser does not support SVG.</object>
+</p>
+<p><span class="figure-number">Figure 6: </span>Address transition graph generated by the original program</p>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="figs/address_transition_surr.svg" class="org-svg" width="2400">
+Sorry, your browser does not support SVG.</object>
+</p>
+<p><span class="figure-number">Figure 7: </span>Address transition graph generated by the PSN</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-org0a14dfa">
+<h2 id="org0a14dfa">Faster Inference</h2>
+<ul>
+<li>Infer \(\meanp{p(\xlat|\xobs)}{\mu_w}\)</li>
+<li>\(\mu_w\) is the empirical mean across the time window
+$w=\br{155,165}$min  <br> at a fixed
+depth $30$mm</li>
+<li class="fragment appear"><b>~10 times faster inference</b></li>
+
+</ul>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/posterior_box_plot.svg" class="fragment (appear)" height="800">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-org040e27b">
+<h2 id="org040e27b">References</h2>
 <div id="includedContent"></div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
 </section>
 </div>
@@ -305,10 +446,11 @@ hashOneBasedIndex: false,
 pdfSeparateFragments: true,
 
 overview: true,
-width: 2048,
-height: 1080,
-minScale: 0.50,
-maxScale: 1.50,
+width: 2400,
+height: 1600,
+margin: 0.00,
+minScale: 0.30,
+maxScale: 2.50,
 
 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 transition: Reveal.getQueryHash().transition || 'linear', // see README of reveal.js for options
