@@ -1,0 +1,52 @@
+---
+title: Neural Tangent Kernel (NTK)
+layout: post
+date: 2020-01-30 08:03:00-0400
+comments: true
+---
+
+{% include mathjax-macros.html %}
+
+<p>
+Neural tangent kernels (NTK) [<a href="#jacot2018neural">Jacot et&nbsp;al., 2018</a>] appear in the infinite-width limit
+of neural networks. Essentially, under certain conditions they prove that a deep
+fully connected neural network converges to a linear model (wrt. the model
+weights \(\www\)) as the layers become infinitely wide under certain conditions:
+</p>
+
+<ul class="org-ul">
+<li>Weights \(\www\) have to be initialized using <i>LeCun initialization</i>
+<ul class="org-ul">
+<li>Except for the first set of weights going from input to first layer.
+Initialize these e.g. using a unit Gaussian \(\mN(0,1)\).</li>
+</ul></li>
+<li>Activation functions \(\sigma\) must be smooth twice-differentiable (and Lipschitz)</li>
+</ul>
+
+<p>
+The NTKs provide valuable insight into how neural networks behave during
+training, and may thus help guide future research for designing new and better
+network architectures. I won't dive further into this topic in this note, as
+<a href="https://rajatvd.github.io/NTK/">this blog</a> provides a thorough explanation including proofs (for simple cases).
+</p>
+
+<div id="bibliography">
+<h2>References</h2>
+
+<table>
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="jacot2018neural">Jacot et&nbsp;al., 2018</a>]
+</td>
+<td class="bibtexitem">
+Jacot, A., Gabriel, F., and Hongler, C. (2018).
+ Neural tangent kernel: Convergence and generalization in neural
+  networks.
+ In <em>Advances in neural information processing systems</em>, pages
+  8571--8580.
+
+</td>
+</tr>
+</table>
+</div>

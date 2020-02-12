@@ -1,0 +1,146 @@
+---
+title: Rejection Sampling
+layout: post
+date: 2020-02-10 12:05:00-0400
+comments: true
+---
+
+{% include mathjax-macros.html %}
+
+<div id="outline-container-org42028dd" class="outline-2">
+<h2 id="org42028dd">Rejection Sampling</h2>
+<div class="outline-text-2" id="text-org42028dd">
+<p>
+Rejection Sampling is a technique that allows to sample from a distribution \(p\)
+defined on some random variable \(x\) we otherwise would not be able to. It works,
+as the name implies, by sampling from some other distribution \(q\) and then we
+accept or reject that sample with some probability \(p(A|x):\tub{0,1}\rightarrow
+\br{0,1}\). This acceptance probability must be defined such that the
+distribution of the accepted samples follow that of \(p\).
+</p>
+
+<p>
+If we are able to evaluate \(p\) we could define \(p(A|x)=\frac{p(x)}{q(x)M}\),
+where \(M>0\) is chosen such that \(q(x)M>p(x) \forall x\) (we need the \(M\),
+otherwise there will be regions where \(p(x)>q(x)\Rightarrow
+p(A|x)=\frac{p(x)}{q(x)}>1\)).
+</p>
+
+<p>
+To see why this works we invoke Bayes rule and find that,
+</p>
+
+\begin{align*}
+p(x|A)&=\frac{p(A|x)q(x)}{p(A)}\
+      &=\frac{\frac{p(x)}{q(x)}q(x)}{Mp(A)}\
+      &=\frac{p(x)}{Mp(A)},
+\end{align*}
+<p>
+where
+</p>
+\begin{equation}
+p(A)=\int p(A|x)q(x)\dm{x} = \frac{1}{M}\int\frac{p(x)}{q(x)}q(x)\dm{x}=\frac{1}{M},
+\end{equation}
+<p>
+such that
+</p>
+
+<p>
+\[p(x|A)=p(x),\]
+</p>
+
+<p>
+as we wanted.
+</p>
+
+<p>
+We typically consider two different categories for rejection sampling; hard
+rejection and soft rejection. The hard rejection case defines
+\(p(A|x)=\unicode{x1D7D9}_\tub{C}(x)\) (i.e. accept \(x\) only if \(x\in C\)) whereas
+soft rejection accept the sample \(x\) with some probability. The former case
+could for instance be used to truncate the normal distribution such that we
+reject all samples below e.g. 0.
+</p>
+
+<p>
+For more information about such sampling techniques see e.g. [<a href="#gelman2013bayesian">Gelman et&nbsp;al., 2013</a>]</p>
+</div>
+<div id="outline-container-orgae0603b" class="outline-3">
+<h3 id="orgae0603b">Rejection Sampling and Bayesian Inference is a bad idea</h3>
+<div class="outline-text-3" id="text-orgae0603b">
+<p>
+One might be tempted to consider rejection sampling for Bayesian inference where
+we seek to infer the posterior distribution on \(\xxx\) given some observed values
+\(\yyy\). However, that will turn out to be a incredible inefficient and in the
+continuous case we will even end up <b>never</b> accepting any samples at all.
+</p>
+
+<p>
+To see this we can consider a simple two variable scenario with a joint
+distribution \(p(x,y)\), where \(x,y\in\real\). Assuming we observe \(y=y*\) and using
+rejection sampling to sample from \(p(x|y)\) we could try and consider sample
+\(x,\tilde{y}\sim p(x,y)\), accept \(x\) <b>only if</b> \(\tilde{y}=y*\), and then throw
+away \(\tilde{y}\) (which is equal to \(y*\) anyway), s.t.
+</p>
+
+<p>
+\[ p(A|x,y) = \unicode{x1D7D9}_{y=y*}p(x,y). \]
+</p>
+
+<p>
+Given our previous derivations this might seem like a good idea as (here we
+generalize to the distribution over \(x\) <b>and</b> \(y\) to be consistent, but since we
+through away accepted \(y\) we do an implicit marginalization),
+</p>
+
+\begin{align*}
+p(x,y|A)&=\frac{p(A|x,y)p(x,y)}{p(A)}\
+        &=\frac{p(A|x,y)p(x|y)p(y))}{p(A)},
+        &=\frac{p(x|y=y*)p(y*)}{p(A)},
+\end{align*}
+
+<p>
+and
+</p>
+
+<p>
+\[p(A)=\int p(A|x)p(x|y)p(y)\dm{x}\dm{y}=\int p(x|y=y*)p(y*)\dm{x}=p(y*),\]
+</p>
+
+<p>
+leaving us with,
+</p>
+
+<p>
+\[p(x,y|A)=\frac{p(x|y=y*)p(y*)}{p(y*)}=p(x|y=y*),\]
+</p>
+
+<p>
+which again is exactly what we wanted! However, in the continuous case the
+probability of actually ever sampling \(y=y*\) is <b>zero</b>! And so we would end up
+never accepting any samples \(x\). Of course this issue is only exacerbated in
+higher dimensions.
+</p>
+
+<div id="bibliography">
+<h2>References</h2>
+
+<table>
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="gelman2013bayesian">Gelman et&nbsp;al., 2013</a>]
+</td>
+<td class="bibtexitem">
+Gelman, A., Carlin, J.&nbsp;B., Stern, H.&nbsp;S., Dunson, D.&nbsp;B., Vehtari, A., and Rubin,
+  D.&nbsp;B. (2013).
+ <em>Bayesian data analysis</em>.
+ CRC press, 3 edition.
+
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>

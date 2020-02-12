@@ -1,0 +1,131 @@
+---
+title: Importance Sampling
+layout: post
+date: 2020-02-10 12:05:00-0400
+comments: true
+---
+
+{% include mathjax-macros.html %}
+
+<div id="outline-container-org215c7e7" class="outline-2">
+<h2 id="org215c7e7">Importance Sampling (IS)</h2>
+<div class="outline-text-2" id="text-org215c7e7">
+<p>
+Importance sampling allows for estimating properties (for instance when
+analytical solutions are infeasible) of a particular distribution \(p(xxx)\) from
+which we cannot sample directly. Instead we sample from a <b>proposal
+distribution</b> \(q(x)\) and by scoring these samples appropriately we reach
+asymptotic convergence of our estimates.
+</p>
+
+<p>
+Using IS we estimate the expected value of \(f(x)\) under \(p\), i.e.
+\(\meanp{p}{f(x)}\) by noticing, 
+</p>
+
+\begin{align*}
+\meanp{p}{f(x)} &= \int f(x) p(x) \dm{x} \\
+&= \int f(x) \frac{p(x)}{q(x)} q(x) \dm{x}\\
+&= \meanp{q} {f(x)\frac{p(x)}{q(x)}}\\
+&\approx \frac{1}{N}\sum_{n=1}^Nf(x^n)\frac{p(x^n)}{q(x^n},\quad x^n\sim q.
+\end{align*}
+
+<p>
+where the approximation comes from the Monte Carlo estimation of the
+expectation. This estimation is unbiased and converges asymptotically to
+\(\meanp{p}{f(x)}\) for \(N\rightarrow\infty\).
+</p>
+</div>
+
+<div id="outline-container-org3743cca" class="outline-3">
+<h3 id="org3743cca">Importance Sampling for Bayesian Inference</h3>
+<div class="outline-text-3" id="text-org3743cca">
+<div id="bibliography">
+<h2>References</h2>
+
+<table>
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="bishop2006a">Bishop, 2006</a>]
+</td>
+<td class="bibtexitem">
+Bishop, C.&nbsp;M. (2006).
+ <em>Pattern recognition and machine learning</em>.
+ Springer,.
+
+</td>
+</tr>
+</table>
+</div>
+
+<p>
+We can also use IS to perform Bayesian inference, i.e. given observed values \(y\) we
+may estimate properties of the posterior \(p(x|y)\), as follows,
+</p>
+
+\begin{align*}
+\meanp{p}{f(x)|y} &= \int f(x) p(x|y) \dm{x} \\
+&= \frac{1}{p(y)}\int f(x) \frac{p(x,y)}{q(x)} q(x) \dm{x}\\
+&= \frac{1}{p(y)}\meanp{q} {f(x)\frac{p(x,y)}{q(x)}}\\
+&\approx \frac{\frac{1}{N}\sum_{n=1}^Nf(x^n)\frac{p(x^n,y)}{q(x^n}}{p(y)},\quad x^n\sim q.
+\end{align*}
+
+<p>
+In general we do not know \(p(y)\) and have no feasible way of calculating it (in
+fact the marginal \(p(y)\) is the crux of Bayesian inference). We can, however,
+estimate (unbiased) it using the calculated weights \(w^n=\frac{p(x^k,y)}{q(x^k)}\),
+</p>
+
+<p>
+\[\frac{1}{N}\sum_{n=1}{N}w^k\approx p(y).\]
+</p>
+
+<p>
+To see this we consider the <a href="https://www.stat.ubc.ca/~bouchard/courses/stat547-fa2018-19//files/notes.pdf">Law of Large Numbers</a> and note that,
+</p>
+
+<p>
+\[\meanq{\frac{1}{N}\sum_{n=1}{N}w^k}=p(y).\]
+</p>
+
+<p>
+Therefore we can write,
+</p>
+
+\begin{equation}\eqlab{pos_est}
+\meanp{p}{f(x)|y}\approx\frac{\sum_{n=1}^Nf(x^n)w^k}{\sum_{n=1}{N}w^k}, \quad
+w^k=\frac{p(x^k,y}{q(x^k}, \quad x\sim q(x)
+\end{equation}
+
+<p>
+Of course \eqref{pos_est} is only asymptotically correct, and while the
+denominator and numerator are individually unbiased estimates, the fact that we
+need to normalize using the averaging of the weights, \eqref{pos_est} is not
+unbiased.
+</p>
+
+<p>
+For more information about such sampling techniques see e.g. [<a href="#bishop2006a">Bishop, 2006</a>]</p>
+
+<div id="bibliography">
+<h2>References</h2>
+
+<table>
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="bishop2006a">Bishop, 2006</a>]
+</td>
+<td class="bibtexitem">
+Bishop, C.&nbsp;M. (2006).
+ <em>Pattern recognition and machine learning</em>.
+ Springer,.
+
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>

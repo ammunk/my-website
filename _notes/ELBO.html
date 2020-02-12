@@ -7,9 +7,9 @@ comments: true
 
 {% include mathjax-macros.html %}
 
-<div id="outline-container-orgcd382a0" class="outline-2">
-<h2 id="orgcd382a0">Introduction</h2>
-<div class="outline-text-2" id="text-orgcd382a0">
+<div id="outline-container-org479fb53" class="outline-2">
+<h2 id="org479fb53">Introduction</h2>
+<div class="outline-text-2" id="text-org479fb53">
 <p>
 This note aims at deriving the <i>evidence lower bound</i> (ELBO) and motivate it
 using a Bayesian inference perspective. Here we consider an observed variable
@@ -41,9 +41,9 @@ inference [<a href="#blei2017a">Blei et&nbsp;al., 2017</a>].
 </div>
 </div>
 
-<div id="outline-container-org61d8276" class="outline-2">
-<h2 id="org61d8276">The ELBO</h2>
-<div class="outline-text-2" id="text-org61d8276">
+<div id="outline-container-org36e0d06" class="outline-2">
+<h2 id="org36e0d06">The ELBO</h2>
+<div class="outline-text-2" id="text-org36e0d06">
 <p>
 We will derive the ELBO from an inference perspective, i.e. we want to
 approximate \(p(x|y)\) with \(q(x|y;\theta)\). Here we explicitly parameterized \(q\)
@@ -64,9 +64,9 @@ and we shall see two different ways to derive that expression.
 </p>
 </div>
 
-<div id="outline-container-orgfd887fd" class="outline-3">
-<h3 id="orgfd887fd">From the KL divergence</h3>
-<div class="outline-text-3" id="text-orgfd887fd">
+<div id="outline-container-org6e06176" class="outline-3">
+<h3 id="org6e06176">From the KL divergence</h3>
+<div class="outline-text-3" id="text-org6e06176">
 <p>
 To measure closeness between \(q\) and \(p\) and consider the
 Kullback&#x2013;Leibler (KL) divergence,
@@ -95,13 +95,13 @@ Because the KL-divergence is non-negative we identify \(\ln p(y)\ge\mL\), making
 </div>
 </div>
 
-<div id="outline-container-orge2430c2" class="outline-3">
-<h3 id="orge2430c2">From maximizing the model evidence</h3>
-<div class="outline-text-3" id="text-orge2430c2">
+<div id="outline-container-org20d8953" class="outline-3">
+<h3 id="org20d8953">From maximizing the model evidence</h3>
+<div class="outline-text-3" id="text-org20d8953">
 <p>
 As shown above there is a direct connection between the evidence \(p(y)\) and the
 ELBO \(\mL\) and we will here derive the expression of \(\mL\) directly from \(\ln
-p(y)\) using <a href="https://en.wikipedia.org/wiki/Jensen's_inequality">Jensen's inequality</a>,
+p(y)\) using <a href="https://en.wikipedia.org/wiki/Jensen%27s_inequality">Jensen's inequality</a>,
 </p>
 
 <p>
@@ -131,9 +131,9 @@ which is exactly the expression in \eqref{elbo}
 </div>
 
 
-<div id="outline-container-org781e954" class="outline-2">
-<h2 id="org781e954">Related topics</h2>
-<div class="outline-text-2" id="text-org781e954">
+<div id="outline-container-orgc8bf920" class="outline-2">
+<h2 id="orgc8bf920">Related topics</h2>
+<div class="outline-text-2" id="text-orgc8bf920">
 <p>
 The topics of VB and the ELBO, relates to a series of other
 topics some of which I will be making other notes about. Some of these topics 
