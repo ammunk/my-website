@@ -7,9 +7,9 @@ comments: true
 
 {% include mathjax-macros.html %}
 
-<div id="outline-container-org42028dd" class="outline-2">
-<h2 id="org42028dd">Rejection Sampling</h2>
-<div class="outline-text-2" id="text-org42028dd">
+<div id="outline-container-orge3ba6ae" class="outline-2">
+<h2 id="orge3ba6ae">Rejection Sampling</h2>
+<div class="outline-text-2" id="text-orge3ba6ae">
 <p>
 Rejection Sampling is a technique that allows to sample from a distribution \(p\)
 defined on some random variable \(x\) we otherwise would not be able to. It works,
@@ -31,8 +31,8 @@ To see why this works we invoke Bayes rule and find that,
 </p>
 
 \begin{align*}
-p(x|A)&=\frac{p(A|x)q(x)}{p(A)}\
-      &=\frac{\frac{p(x)}{q(x)}q(x)}{Mp(A)}\
+p(x|A)&=\frac{p(A|x)q(x)}{p(A)}\\
+      &=\frac{\frac{p(x)}{q(x)}q(x)}{Mp(A)}\\
       &=\frac{p(x)}{Mp(A)},
 \end{align*}
 <p>
@@ -56,7 +56,7 @@ as we wanted.
 <p>
 We typically consider two different categories for rejection sampling; hard
 rejection and soft rejection. The hard rejection case defines
-\(p(A|x)=\unicode{x1D7D9}_\tub{C}(x)\) (i.e. accept \(x\) only if \(x\in C\)) whereas
+\(p(A|x)=\unicode{x1D7D9}_\br{C}(x)\) (i.e. accept \(x\) only if \(x\in C\)) whereas
 soft rejection accept the sample \(x\) with some probability. The former case
 could for instance be used to truncate the normal distribution such that we
 reject all samples below e.g. 0.
@@ -65,9 +65,9 @@ reject all samples below e.g. 0.
 <p>
 For more information about such sampling techniques see e.g. [<a href="#gelman2013bayesian">Gelman et&nbsp;al., 2013</a>]</p>
 </div>
-<div id="outline-container-orgae0603b" class="outline-3">
-<h3 id="orgae0603b">Rejection Sampling and Bayesian Inference is a bad idea</h3>
-<div class="outline-text-3" id="text-orgae0603b">
+<div id="outline-container-org9370d9a" class="outline-3">
+<h3 id="org9370d9a">Rejection Sampling and Bayesian Inference is a bad idea</h3>
+<div class="outline-text-3" id="text-org9370d9a">
 <p>
 One might be tempted to consider rejection sampling for Bayesian inference where
 we seek to infer the posterior distribution on \(\xxx\) given some observed values
@@ -77,14 +77,14 @@ continuous case we will even end up <b>never</b> accepting any samples at all.
 
 <p>
 To see this we can consider a simple two variable scenario with a joint
-distribution \(p(x,y)\), where \(x,y\in\real\). Assuming we observe \(y=y*\) and using
+distribution \(p(x,y)\), where \(x,y\in\real\). Assuming we observe \(y=y^*\) and using
 rejection sampling to sample from \(p(x|y)\) we could try and consider sample
-\(x,\tilde{y}\sim p(x,y)\), accept \(x\) <b>only if</b> \(\tilde{y}=y*\), and then throw
-away \(\tilde{y}\) (which is equal to \(y*\) anyway), s.t.
+\(x,\tilde{y}\sim p(x,y)\), accept \(x\) <b>only if</b> \(\tilde{y}=y^*\), and then throw
+away \(\tilde{y}\) (which is equal to \(y^*\) anyway), s.t.
 </p>
 
 <p>
-\[ p(A|x,y) = \unicode{x1D7D9}_{y=y*}p(x,y). \]
+\[ p(A|x,y) = \unicode{x1D7D9}_\br{y=y^*}p(x,y). \]
 </p>
 
 <p>
@@ -94,9 +94,9 @@ through away accepted \(y\) we do an implicit marginalization),
 </p>
 
 \begin{align*}
-p(x,y|A)&=\frac{p(A|x,y)p(x,y)}{p(A)}\
-        &=\frac{p(A|x,y)p(x|y)p(y))}{p(A)},
-        &=\frac{p(x|y=y*)p(y*)}{p(A)},
+p(x,y|A)&=\frac{p(A|x,y)p(x,y)}{p(A)}\\
+        &=\frac{p(A|x,y)p(x|y)p(y))}{p(A)}\\
+        &=\frac{p(x|y=y^*)p(y^*)}{p(A)},
 \end{align*}
 
 <p>
@@ -104,7 +104,7 @@ and
 </p>
 
 <p>
-\[p(A)=\int p(A|x)p(x|y)p(y)\dm{x}\dm{y}=\int p(x|y=y*)p(y*)\dm{x}=p(y*),\]
+\[p(A)=\int p(A|x)p(x|y)p(y)\dm{x}\dm{y}=\int p(x|y=y^*)p(y^*)\dm{x}=p(y^*),\]
 </p>
 
 <p>
@@ -112,12 +112,12 @@ leaving us with,
 </p>
 
 <p>
-\[p(x,y|A)=\frac{p(x|y=y*)p(y*)}{p(y*)}=p(x|y=y*),\]
+\[p(x,y|A)=\frac{p(x|y=y^*)p(y^*)}{p(y^*)}=p(x|y=y^*),\]
 </p>
 
 <p>
 which again is exactly what we wanted! However, in the continuous case the
-probability of actually ever sampling \(y=y*\) is <b>zero</b>! And so we would end up
+probability of actually ever sampling \(y=y^*\) is <b>zero</b>! And so we would end up
 never accepting any samples \(x\). Of course this issue is only exacerbated in
 higher dimensions.
 </p>
