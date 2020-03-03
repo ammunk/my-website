@@ -81,6 +81,9 @@ collections:
   notes:
     permalink: /notes/:path/
     output: true
+  puzzles:
+    permalink: /puzzles/:path/
+    output: true
 
 news_limit: 5
 
@@ -139,9 +142,12 @@ scholar:
   replace_strings: true
   join_strings: true
 
+  # details about bibliography entries (see jekyll scholar) Currently not used
   details_dir: bibliography
-  details_layout: bibtex.html
+  details_layout: bibtex-details.html
   details_link: Details
+
+  # where to look for pdf that matches the bibtex entry
   repository: /assets/pdf
 
   query: "@*"
