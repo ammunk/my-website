@@ -7,9 +7,9 @@ comments: true
 
 {% include mathjax-macros.html %}
 
-<div id="outline-container-orgddd016c" class="outline-2">
-<h2 id="orgddd016c">GANs</h2>
-<div class="outline-text-2" id="text-orgddd016c">
+<div id="outline-container-orgc30f2b3" class="outline-2">
+<h2 id="orgc30f2b3">GANs</h2>
+<div class="outline-text-2" id="text-orgc30f2b3">
 <p>
 Generative Adversarial Nets (GANs) [<a href="#goodfellow2014a">Goodfellow et&nbsp;al., 2014</a>] is a form of deep
 generative modeling, trained as a minimax "two-player game". A generator \(G\) is
@@ -29,11 +29,15 @@ is a function defining the distribution \(p_\phi(x|y=0)\), s.t. \(x=G(z,\phi)\) 
 generated data as,
 </p>
 
-\begin{align}
+<p>
+\[
+\balnn
 \mL(\phi,\theta) &= \meanp{p(x,y)}{\ln D(x)^y(1-D(x))^{1-y}}\nn\\
  &= \pi\meanp{p(x|y=1)}{\ln{D(x,\theta)}} +
                  (1-\pi)\meanp{p_\phi(x|y=0)}{\ln(1-D(x,\theta))},\nn
-\end{align}
+\ealnn
+\]
+</p>
 
 <p>
 where \(\pi = p(y=1)\). Typically \(\pi\) is defined in terms of ratio between the
@@ -83,9 +87,9 @@ found in [<a href="#mohamed2016learning">Mohamed and Lakshminarayanan, 2016</a>]
 </div>
 </div>
 
-<div id="outline-container-orgc61c0df" class="outline-2">
-<h2 id="orgc61c0df">Adversarially Learned Inference</h2>
-<div class="outline-text-2" id="text-orgc61c0df">
+<div id="outline-container-orgfe81625" class="outline-2">
+<h2 id="orgfe81625">Adversarially Learned Inference</h2>
+<div class="outline-text-2" id="text-orgfe81625">
 <p>
 Adversarially Learned Inference (ALI) [<a href="#dumoulin2016adversarially">Dumoulin et&nbsp;al., 2016</a>], can be
 considered an extension to GANs, in the sense that it not only learns a
@@ -116,9 +120,9 @@ reparameterization trick [<a href="#kingma2014a">Kingma and Welling, 2014</a>], 
 </p>
 </div>
 
-<div id="outline-container-org5e13e7a" class="outline-3">
-<h3 id="org5e13e7a">Propositions</h3>
-<div class="outline-text-3" id="text-org5e13e7a">
+<div id="outline-container-org1b0ee2d" class="outline-3">
+<h3 id="org1b0ee2d">Propositions</h3>
+<div class="outline-text-3" id="text-org1b0ee2d">
 <p>
 As proven in [<a href="#goodfellow2014a">Goodfellow et&nbsp;al., 2014</a>], the following two propositions holds for ALI
 (and is an extension to those for GANs),

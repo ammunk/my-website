@@ -20,12 +20,16 @@ Using IS we estimate the expected value of \(f(x)\) under \(p\), i.e.
 \(\meanp{p}{f(x)}\) by noticing, 
 </p>
 
-\begin{align*}
+<p>
+\[
+\balnn
 \meanp{p}{f(x)} &= \int f(x) p(x) \dm{x} \\
 &= \int f(x) \frac{p(x)}{q(x)} q(x) \dm{x}\\
 &= \meanp{q} {f(x)\frac{p(x)}{q(x)}}\\
 &\approx \frac{1}{N}\sum_{n=1}^Nf(x^n)\frac{p(x^n)}{q(x^n)},\quad x^n\sim q.
-\end{align*}
+\ealnn
+\]
+</p>
 
 <p>
 where the approximation comes from the Monte Carlo estimation of the
@@ -33,20 +37,24 @@ expectation. This estimation is unbiased and converges asymptotically to
 \(\meanp{p}{f(x)}\) for \(N\rightarrow\infty\).
 </p>
 
-<div id="outline-container-org4858d44" class="outline-2">
-<h2 id="org4858d44">Importance Sampling for Bayesian Inference</h2>
-<div class="outline-text-2" id="text-org4858d44">
+<div id="outline-container-org3743cca" class="outline-2">
+<h2 id="org3743cca">Importance Sampling for Bayesian Inference</h2>
+<div class="outline-text-2" id="text-org3743cca">
 <p>
 We can also use IS to perform Bayesian inference, i.e. given observed values \(y\) we
 may estimate properties of the posterior \(p(x|y)\), as follows,
 </p>
 
-\begin{align*}
+<p>
+\[
+\balnn
 \meanp{p}{f(x)|y} &= \int f(x) p(x|y) \dm{x} \\
 &= \frac{1}{p(y)}\int f(x) \frac{p(x,y)}{q(x)} q(x) \dm{x}\\
 &= \frac{1}{p(y)}\meanp{q} {f(x)\frac{p(x,y)}{q(x)}}\\
 &\approx \frac{\frac{1}{N}\sum_{n=1}^Nf(x^n)\frac{p(x^n,y)}{q(x^n}}{p(y)},\quad x^n\sim q.
-\end{align*}
+\ealnn
+\]
+</p>
 
 <p>
 In general we do not know \(p(y)\) and have no feasible way of calculating it (in

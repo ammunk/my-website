@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="author" content="Andreas Munk"/>
+<meta name="author" content="Muff"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -51,6 +51,8 @@
 \newcommand{\eeq}{\end{equation}}
 \newcommand{\bal}{\begin{align}}
 \newcommand{\eal}{\end{align}}
+\newcommand{\balnn}{\begin{align*}}
+\newcommand{\ealnn}{\end{align*}}
 \newcommand{\bsubal}[2]{\bsub \eqlab{#1}\bal#2\eal}
 \newcommand{\esubal}{\esub}
 \newcommand{\bsub}{\begin{subequations}}
@@ -91,6 +93,7 @@
 \newcommand{\mN}{\mathcal{N}}
 \newcommand{\mMN}{\mathcal{MN}}
 \newcommand{\mL}{\mathcal{L}}
+\newcommand{\mR}{\mathcal{R}}
 \newcommand{\mO}{\mathcal{O}}
 \newcommand{\mI}{\mathcal{I}}
 \newcommand{\mE}{\mathcal{E}}
@@ -103,6 +106,7 @@
 \newcommand{\mS}{\mathcal{S}}
 \newcommand{\mH}{\mathcal{H}}
 \newcommand{\mX}{\mathcal{X}}
+\newcommand{\mZ}{\mathcal{Z}}
 \newcommand{\complex}{\mathbb{C}}
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\krondel}[1]{\delta_{#1}}
@@ -222,13 +226,15 @@
 \newcommand{\npbNMFfinitesparse}{\mr{npbNMF}^\text{sparse}_\approx}
 \newcommand{\npbNMFfinitess}{\mr{npbNMF}^\text{ss}_\approx}
 \newcommand{\npbNMFinfss}{\mr{npbNMF}^\text{ss}_\infty}
-\)
+\newcommand{\block}[1]{\underbrace{\begin{matrix}1 & \cdots & 1\end{matrix}}_{#1}}
+\newcommand{\blockt}[1]{\begin{rcases} \begin{matrix} ~\\ ~\\ ~ \end{matrix} \end{rcases}{#1}}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}\)
 </p>
 </div>
 
 <section>
-<section id="slide-orgc88f0de">
-<h2 id="orgc88f0de">Deep Probabilistic Surrogate Networks for Universal Simulator Approximation</h2>
+<section id="slide-org318b077">
+<h2 id="org318b077">Deep Probabilistic Surrogate Networks for Universal Simulator Approximation</h2>
 <div class="container">
 <div class="col">
 <ul>

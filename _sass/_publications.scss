@@ -27,6 +27,28 @@
 
         span { display: block; }
         .title { font-weight: bolder; }
+        .clippy{
+            margin-top:-3px;
+            position:relative;
+            top:3px;
+        }
+        .snippet-to-copy{
+            position:relative;
+            overflow:visible;
+        }
+        .btn{
+            -webkit-transition:opacity .3s ease-in-out;
+            -o-transition:opacity .3s ease-in-out;
+            transition:opacity .3s ease-in-out;
+            opacity:0;
+            padding:2px 6px;
+            position: absolute;
+            right:4px;
+            top:4px;
+        }
+        .snippet-to-copy:hover .btn,.snippet .btn:focus{
+            opacity:1;
+        }
         .author {
             a {
                 border-bottom: 1px dashed $theme-color;
@@ -41,10 +63,10 @@
             }
         }
         a.abstract, a.bibtex { cursor: pointer; }
-        .hidden {
+
+        .hidden-bibtex, .hidden-abstract {
+            display: none;
             font-size: $small-font-size;
-            max-height: 0px;
-            overflow: hidden;
             text-align: justify;
             -webkit-transition: 0.15s ease;
             -moz-transition: 0.15s ease;
@@ -57,24 +79,9 @@
                 margin: 10px;
             }
             pre {
-                font-size: 1em;
                 line-height: 1.4em;
                 padding: 10px;
             }
-        }
-        .hidden.open {
-            max-height: 100em;
-            -webkit-transition: 0.15s ease;
-            -moz-transition: 0.15s ease;
-            -ms-transition: 0.15s ease;
-            -o-transition: 0.15s ease;
-            transition: all 0.15s ease;
-        }
-        span.abstract.hidden {
-            border: dashed 1px $background-color;
-        }
-        span.abstract.hidden.open {
-            border-color: $grey-color;
         }
     }
     abbr {

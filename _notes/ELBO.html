@@ -7,9 +7,9 @@ comments: true
 
 {% include mathjax-macros.html %}
 
-<div id="outline-container-org7ff77e4" class="outline-2">
-<h2 id="org7ff77e4">Introduction</h2>
-<div class="outline-text-2" id="text-org7ff77e4">
+<div id="outline-container-org479fb53" class="outline-2">
+<h2 id="org479fb53">Introduction</h2>
+<div class="outline-text-2" id="text-org479fb53">
 <p>
 This note aims at deriving the <i>evidence lower bound</i> (ELBO) and motivate it
 using a Bayesian inference perspective. Here we consider an observed variable
@@ -41,9 +41,9 @@ inference [<a href="#blei2017a">Blei et&nbsp;al., 2017</a>].
 </div>
 </div>
 
-<div id="outline-container-orgdf683eb" class="outline-2">
-<h2 id="orgdf683eb">The ELBO</h2>
-<div class="outline-text-2" id="text-orgdf683eb">
+<div id="outline-container-org36e0d06" class="outline-2">
+<h2 id="org36e0d06">The ELBO</h2>
+<div class="outline-text-2" id="text-org36e0d06">
 <p>
 We will derive the ELBO from an inference perspective, i.e. we want to
 approximate \(p(x|y)\) with \(q(x|y;\theta)\). Here we explicitly parameterized \(q\)
@@ -64,19 +64,23 @@ and we shall see two different ways to derive that expression.
 </p>
 </div>
 
-<div id="outline-container-org0f97077" class="outline-3">
-<h3 id="org0f97077">From the KL divergence</h3>
-<div class="outline-text-3" id="text-org0f97077">
+<div id="outline-container-org6e06176" class="outline-3">
+<h3 id="org6e06176">From the KL divergence</h3>
+<div class="outline-text-3" id="text-org6e06176">
 <p>
 To measure closeness between \(q\) and \(p\) and consider the
 Kullback&#x2013;Leibler (KL) divergence,
 </p>
 
-\begin{align}
+<p>
+\[
+\balnn
   \kl{q(x|y;\theta)}{p(x|y)} &= -\int \ln{\frac{p(x|y)}{q(x|y;\theta)}} q(x|y;\theta)\dm x\nn\\
 & = -\br{ \int \ln{\frac{p(x,y)}{q(x|y;\theta)}} q(x|y;\theta)\dm x  - \int \ln p(y) q(x|y;\theta)\dm x } \nn\\
 & = -\meanp{q(x|y;\theta)}{\ln{\frac{p(x,y)}{q(x|y;\theta)}}} \dm x  + \ln p(y),\nn
-\end{align}
+\ealnn
+\]
+</p>
 
 <p>
 which we rearrange to,
@@ -95,9 +99,9 @@ Because the KL-divergence is non-negative we identify \(\ln p(y)\ge\mL\), making
 </div>
 </div>
 
-<div id="outline-container-org76aa223" class="outline-3">
-<h3 id="org76aa223">From maximizing the model evidence</h3>
-<div class="outline-text-3" id="text-org76aa223">
+<div id="outline-container-org20d8953" class="outline-3">
+<h3 id="org20d8953">From maximizing the model evidence</h3>
+<div class="outline-text-3" id="text-org20d8953">
 <p>
 As shown above there is a direct connection between the evidence \(p(y)\) and the
 ELBO \(\mL\) and we will here derive the expression of \(\mL\) directly from \(\ln
@@ -118,12 +122,14 @@ f(\mean{x}) \ge \mean{f(x)}, \quad \text{for a convex function}~f.
 With this we can write,
 </p>
 
-\begin{align}
+<p>
+\[
+\balnn
 \ln p(y) &= \ln \int p(y|x)p(x) \dm x \nn\\
 &= \ln \int \frac{p(y,x)}{q(x|y;\theta)}q(x|y;\theta) \dm x \nn\\
 &\ge \meanp{q(x|y;\theta)}{\ln\frac{p(y,x)}{q(x|y;\theta)}},\nn
-\end{align}
-<p>
+\ealnn
+\]
 which is exactly the expression in \eqref{elbo}
 </p>
 </div>
@@ -131,9 +137,9 @@ which is exactly the expression in \eqref{elbo}
 </div>
 
 
-<div id="outline-container-org06796a0" class="outline-2">
-<h2 id="org06796a0">Related topics</h2>
-<div class="outline-text-2" id="text-org06796a0">
+<div id="outline-container-orgc8bf920" class="outline-2">
+<h2 id="orgc8bf920">Related topics</h2>
+<div class="outline-text-2" id="text-orgc8bf920">
 <p>
 The topics of VB and the ELBO, relates to a series of other
 topics some of which I will be making other notes about. Some of these topics 

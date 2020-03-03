@@ -1,6 +1,8 @@
 ---
 ---
 
+<!-- See /_sass/ublications.scss for styles-->
+
 {% if entry.abbr %}
   {% if site.data.venues[entry.abbr] %}
     <abbr>[<a href="{{site.data.venues[entry.abbr].url}}" target="_blank">{{entry.abbr}}</a>]</abbr>
@@ -28,7 +30,7 @@
               <em>{{author.last}}, {{author.first}}</em>,
             {% else %}
               {% if site.data.coauthors[author.last] %}
-                <a href="{{site.data.coauthors[author.last].url}}" target="_blank">{{author.last}}, {{author.first}}</a>, 
+                <a href="{{site.data.coauthors[author.last].url}}" target="_blank">{{author.last}}, {{author.first}}</a>,
               {% else %}
                 {{author.last}}, {{author.first}},
               {% endif %}
@@ -38,7 +40,7 @@
               and <em>{{author.last}}, {{author.first}}</em>
             {% else %}
               {% if site.data.coauthors[author.last] %}
-                and <a href="{{site.data.coauthors[author.last].url}}" target="_blank">{{author.last}}, {{author.first}}</a> 
+                and <a href="{{site.data.coauthors[author.last].url}}" target="_blank">{{author.last}}, {{author.first}}</a>
               {% else %}
                 and {{author.last}}, {{author.first}}
               {% endif %}
@@ -60,13 +62,17 @@
     </span>
   {% endif %}
 
-    <!-- The "more" class for the buttons are custom and adds a "hand curser" when hovering.
+    <!--
+         The "more" class for the buttons are custom and adds a "hand curser" when hovering.
          See the /_sass/amunk-bib and /assets/css as well as search "add custom css to jekyll"
-         to see how this is done -->
+         to see how this is done
+
+         Further for bottons the id after '_' must match the id for dropDown boxes further down
+    -->
   <span class="links">
-      [<a class="btnId more" id="b_{{key}}-bibtex">BIB</a>]
+      [<a class="btnId bibtex" id="b_{{key}}-bibtex">BIB</a>]
   {% if entry.abstract %}
-      [<a class="btnId more" id="b_{{key}}-abstract">Abs</a>]
+      [<a class="btnId abstract" id="b_{{key}}-abstract">ABS</a>]
   {% endif %}
   {% if entry.arxiv %}
     [<a href="http://arxiv.org/abs/{{ entry.arxiv }}" target="_blank">arXiv</a>]
@@ -92,13 +98,12 @@
   </span>
 
   <!-- Hidden bibtex block -->
-  <div class="dropDownBibtex" id="{{key}}-bibtex" style="display:none;">
-      <pre>{{ entry.bibtex }}</pre>
-  </div>
+  <!-- Hidden bibtex block -->
+  <div class="snippet-to-copy hidden-bibtex" id="{{key}}-bibtex"><pre>{{ entry.bibtex }}</pre></div>
   <!-- Hidden abstract block -->
   {% if entry.abstract %}
-  <div class="dropDownAbstract" id="{{key}}-abstract" style="display:none;">
-    <pre>{{ entry.abstract }}</pre>
+  <div class="hidden-abstract" id="{{key}}-abstract" style="display:none;">
+      <div> {{ entry.abstract }} </div>
   </div>
   {% endif %}
 </div>

@@ -1,0 +1,144 @@
+---
+title: Decision Theory for Classification Problems
+layout: post
+date: 2020-02-26 11:12:00-0400
+comments: true
+---
+
+{% include mathjax-macros.html %}
+
+<p>
+This note will discuss optimal decision strategies in the context of a
+classification problem, and largely builds on section 1.5 in [<a href="#bishop2006a">Bishop, 2006</a>].
+</p>
+
+<div id="outline-container-orgf6399cc" class="outline-2">
+<h2 id="orgf6399cc">Finding the Optimal Classification Strategy</h2>
+<div class="outline-text-2" id="text-orgf6399cc">
+<p>
+Our goal is to assign \(\xxx\in\mX\) (for instance \(\real^d\)) to one of the \(K\)
+classes such that we minimize the probability of making a mistake (or maximize
+the probability of being correct).
+</p>
+
+<p>
+Here we consider the classification problem, where we know a class posterior
+\(p(y=k|\xxx)\), for \(k=1,\dots,K\) with \(K\) being the total number of classes.
+</p>
+
+<p>
+Intuitively, given a certain \(\xxx'\) we should predict \(k^*=\argmax_k
+p(y=k|\xxx)\) as the probability of being correct is equal to \(p(y=k^*|\xxx)\)
+which therefore is maximized. However, we will show a different way to derive
+this which (may) give a more fundamental understanding. We can do this by
+considering partitioning the space \(\mX\) into \(K\) regions one for each class
+such that \(\cup_{k=1}^K\mR_k = \mX\) and \(\cap_{k=1}^K \mR_k=\emptyset\), and then
+assign any \(\xxx\in\mR_k\) to the class k. We now consider the event that we
+\(\xxx\) belongs to class \(y=k\) and we accurately assign \(\xxx\) to the region
+\(\mR_k\), and denote that event \(A_k={\xxx\in\mR_k, y=k}\). We see that the
+probability that we have correctly placed these regions must be equal the
+probability that any of the \(k\) event occur w.r.t. the joint distribution on
+\((\xxx,y=k)\). Using basic probability theory the probability that either of the
+\(A_k\) occur is equal to the probability of the union of the \(A_k\) events,
+</p>
+
+<p>
+\[
+\balnn
+P(\mr{correct})&=P(\cup_{k=1}^K A_k)\\
+  &=\sum_{k=1}^K P(A_k)\\
+  &=\sum_{k=1}^K p(\xxx\in\mR_k,y=k) \\
+  &=\sum_{k=1}^K\int_{\mR_k}p(\xxx,y=k)\dm{\xxx}\\
+  &=\sum_{k=1}^K\int_{\mR_k}p(y=k|\xxx)p(\xxx)\dm{\xxx}.
+\ealnn
+\]
+</p>
+
+<p>
+Since we can choose \(\mR_k\) freely, we should pick each region such that we
+maximize the integrant for each \(\xxx\), i.e. pick \(\mR_k\) that maximizes
+\(p(y=k|\xxx)p(\xxx)\forall \xxx\in\mX\). Because \(p(\xxx)\) is invariant to the
+choice of \(k\) we should pick \(\mR_k=\tub{\xxx:p(y=k|\xxx)>p(y=i), \forall
+i\neq k}\).
+</p>
+
+<p>
+We can also equivalently derive this by minimizing the probability of making
+mistakes. Like before we write the probability of making a mistake, by defining
+\(B_k=\tub{\xxx\in\mR_k, y\neq k}=\cup_{i\neq k}\tub{\xxx\in\mR_k, y=i}\) (we make
+a mistake if we assign \(\xxx\) to class \(k\) but it is not), and so we write,
+</p>
+
+<p>
+\[
+\balnn
+P(\mr{mistake})&=P(\cup_{k=1}^K B_k)\\
+  &=\sum_{k=1}^K P(B_k)\\
+  &=\sum_{k=1}^K \sum_{i\neq k} p(\xxx\in\mR_k,y=i) \\
+  &=\sum_{k=1}^K\sum_{i\neq k}\int_{\mR_k}p(\xxx,y=i)\dm{\xxx}\\
+  &=\sum_{k=1}^K\sum_{i\neq k}\int_{\mR_k}p(y=i|\xxx)p(\xxx)\dm{\xxx}\\
+  &=1 - P(\overline{\cup_{k=1}^K B_k})\\
+  &=1 - P(\cup_{k=1}^K A_k),
+\ealnn
+\]
+</p>
+
+<p>
+where the complement \(\cup_{k=1}^K A_k=\overline{\cup_{k=1}^K B_k}\) follows from
+the properties of set theory, \(\overline{\cup_{k=1}^K A_k}=\cap_{k=1}^K\overline{A_k}\) -
+i.e. the complement of all the cases where we are correct must be all the cases
+where we are wrong, which is precisely the $B_k$s (and vice versa).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga6febc5" class="outline-2">
+<h2 id="orga6febc5">Adjust for different priors</h2>
+<div class="outline-text-2" id="text-orga6febc5">
+<p>
+This note has been focusing on situations where we know (or assume to know via a
+trained classifier) the class posterior \(p(y|\xxx)\). Being Bayesian, I certainly
+prefer taking this probabilistic approach as it allows me to reason about the
+system probabilistically. However, there is no profound reason why one should
+choose to be probabilistic, although there are certain benefits over for
+instance learning a <i><b>decision function</b></i>, which has dropped any notion of
+probability. Just to name a few:
+</p>
+<ul class="org-ul">
+<li>Learning a posterior \(p(y|\xxx)\) allows one to account for loss functions
+post-hoc - see <a href="../LOSSFuncTIONS">this note</a> on how to do that.</li>
+<li>We can change the prior at any point as follows
+\[
+  \balnn
+  p(y|\xxx) &\propto p(\xxx|y)p(y) \\
+  &\Downarrow\\
+  \hat{p}(y|\xxx) &\propto \frac{p(\xxx|y)}{p(y)}\hat{p}(y)
+  \ealnn
+  \]
+where \(p(y)\) would be the prior used during training, and \(\hat{p}(y)\) is the
+new prior. <b>Note</b> how this formulation used proportionality, i.e. once the
+prior is changed one would need to renormalize. Of course this is only
+sensible if we can assume the conditional \(p(y|\xxx)\) can be transferred to
+the system with a different prior.</li>
+</ul>
+
+<div id="bibliography">
+<h2>References</h2>
+
+<table>
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="bishop2006a">Bishop, 2006</a>]
+</td>
+<td class="bibtexitem">
+Bishop, C.&nbsp;M. (2006).
+ <em>Pattern recognition and machine learning</em>.
+ Springer,.
+
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>

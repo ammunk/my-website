@@ -27,18 +27,18 @@ p(A|x)=\frac{p(x)}{q(x)}>1\)).
 To see why this works we invoke Bayes rule and find that,
 </p>
 
-\begin{align*}
+<p>
+\[
+\balnn
 p(x|A)&=\frac{p(A|x)q(x)}{p(A)}\\
       &=\frac{\frac{p(x)}{q(x)}q(x)}{Mp(A)}\\
       &=\frac{p(x)}{Mp(A)},
-\end{align*}
-<p>
+\ealnn
+\]
 where
-</p>
-\begin{equation}
+\[
 p(A)=\int p(A|x)q(x)\dm{x} = \frac{1}{M}\int\frac{p(x)}{q(x)}q(x)\dm{x}=\frac{1}{M},
-\end{equation}
-<p>
+\]
 such that
 </p>
 
@@ -61,9 +61,9 @@ reject all samples below e.g. 0.
 
 <p>
 For more information about such sampling techniques see e.g. [<a href="#gelman2013bayesian">Gelman et&nbsp;al., 2013</a>]</p>
-<div id="outline-container-org9370d9a" class="outline-2">
-<h2 id="org9370d9a">Rejection Sampling and Bayesian Inference is a bad idea</h2>
-<div class="outline-text-2" id="text-org9370d9a">
+<div id="outline-container-orgae0603b" class="outline-2">
+<h2 id="orgae0603b">Rejection Sampling and Bayesian Inference is a bad idea</h2>
+<div class="outline-text-2" id="text-orgae0603b">
 <p>
 One might be tempted to consider rejection sampling for Bayesian inference where
 we seek to infer the posterior distribution on \(\xxx\) given some observed values
@@ -89,11 +89,15 @@ generalize to the distribution over \(x\) <b>and</b> \(y\) to be consistent, but
 through away accepted \(y\) we do an implicit marginalization),
 </p>
 
-\begin{align*}
+<p>
+\[
+\balnn
 p(x,y|A)&=\frac{p(A|x,y)p(x,y)}{p(A)}\\
         &=\frac{p(A|x,y)p(x|y)p(y))}{p(A)}\\
         &=\frac{p(x|y=y^*)p(y^*)}{p(A)},
-\end{align*}
+\ealnn
+\]
+</p>
 
 <p>
 and

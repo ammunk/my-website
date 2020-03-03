@@ -1,0 +1,191 @@
+---
+title: Loss Functions
+layout: post
+date: 2020-02-29 18:34:00-0400
+comments: true
+---
+
+{% include mathjax-macros.html %}
+
+
+<p>
+This note will touch upon <i><b>loss functions</b></i> and their expected minimization. A
+much more rigorous discussion on this topic can be found in e.g. section 1.5 in
+[<a href="#bishop2006a">Bishop, 2006</a>].
+</p>
+
+<p>
+While we here consider the minimization of loss functions there is another
+formulation of the same problem, namely the maximization of the <i><b>utility
+function</b></i>. However, the two formulations coincide, as the negative loss
+functions would be equal to a utility function we then maximize.
+</p>
+
+<p>
+A loss function \(\mL(\cdot)\) takes as argument whatever defines our loss.
+For instance, for a classification problem (or regression problem with scalar
+predictions) \(\mL(\cdot)=\mL(\xxx,y)\). Typically, we have control of the loss
+via some parameter (otherwise we have no problem to begin with as there is
+nothing we can do to minimize our loss&#x2026;). We denote these "parameters"
+\(\theta\), and emphasize they they can represent anything from the set of
+decision regions (like in some classification problems) to parameters of a
+linear function (like in some specific regression problems). Often, however,
+these will be parameters in the sense that we can find them using some
+optimization algorithm. We find the optimal parameters \(\theta^*\) by minimizing
+the expected loss,
+</p>
+
+<p>
+\[
+\beq{opt}
+\theta^* = \argmin_{\theta}\meanp{p(\cdot)}{\mL(\cdot;\theta)}
+\eeq
+\]
+</p>
+
+<p>
+Returning to the classification example, the loss function would allow for
+considering making some wrong predictions worse than others. To use a classical
+example: consider a scenario in the medical industry, where we try to classify
+certain medical tests as either indicating a condition that needs treatment or
+indicating a healthy subject. We probably would penalize predicting the
+indication of being healthy if the subject actually has a medical condition much
+more heavily than the opposite scenario. That is to say we want to be quite
+certain about deeming someone being healthy, because being wrong could be fatal.
+</p>
+
+<div id="outline-container-org9b6d622" class="outline-2">
+<h2 id="org9b6d622">Decision Region Example</h2>
+<div class="outline-text-2" id="text-org9b6d622">
+<p>
+As an example we can re-derive our previous result on how to classify \(\xxx\)
+given that we know \(p(\yyy|\xxx)\).
+</p>
+
+<p>
+Define \(i\in{i,\dots,K}\) and \(k\in{1,\dots,K}\) where \(K\) is the number of
+classes and consider the following loss function,
+</p>
+
+<p>
+\[
+\mL(\yyy=k,\xxx;\theta)=l_{ik}
+\]
+</p>
+
+<p>
+where \(i\) is the "\(\theta\)" i.e. how we classify \(\xxx\). This loss functions
+simply says that there is some loss associated with guessing class \(i\) but the
+real class was \(k\).
+</p>
+
+<p>
+The minimization \eqref{opt} now becomes
+</p>
+
+<p>
+\[
+\min\meanp{p(\cdot)}{\mL(\cdot;\theta)} =\min \int\sum_{k=1}^K a_{ik} p(y|\xxx)p(\xxx)\dm{\xxx}.
+\]
+</p>
+
+<p>
+We may recover the result found in <a href="../DECISION-THEORY">this note</a>, where we seek to determine
+decision regions in classification problems, by setting,
+</p>
+
+<p>
+\[
+l_{ik}=\begin{cases}
+0 & \mr{if}~i=k\\
+-a & \mr{otherwise}
+\end{cases}.
+\] 
+</p>
+
+<p>
+Here we placed no loss contribution for correct classification whereas there is
+some loss \(a\) for being wrong (same loss for all classes). Clearly, we minimize
+the loss by choosing \(i\) such that we minimize \(\sum_{k=1}^K a_{ik}p(y=k|\xxx)\)
+for all \(\xxx\) (as \(p(\xxx)\) is independent of \(k\)). Because we penalize being
+wrong equally across all classes, we should choose to predict the class
+\(i=k=\argmax_{k}p(y=k|\xxx)\), i.e. predict the class \(k\) with highest
+probability.
+</p>
+
+<p>
+It should now be clear that by redefining \(l_{ik}\) we can introduce different
+penalizing strategies for making erroneous decisions, like the medical example
+discussed earlier.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge5e1806" class="outline-2">
+<h2 id="orge5e1806">\(\mL\) is arbitrary</h2>
+<div class="outline-text-2" id="text-orge5e1806">
+<p>
+We may choose \(\mL\) freely in such a way that we incorporate desired properties
+associated with the optimization problem \eqref{opt}. This is in contrast to,
+for instance, minimizing the divergence between two distribution which <i><b>is</b></i>
+principled and hold a very specific meaning. In general I wouldn't consider the
+loss function as principled since any given arbitrary loss function need not be
+justified by any set of associated assumptions. For instance there is no
+particular reason why the squared error is better than the absolute error for a
+regression problem.
+</p>
+
+<p>
+However, in some cases a specific choice of loss function \(\mL\) will coincide
+with a principled objective (if it is associated with a set of assumptions),
+such as certain maximum likelihood approaches - see table below for a small set
+of examples,
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> A few forms of maximum log-likelihood formulations \(\argmax_{\theta}\ln p(\yyy|\xxx;\theta;\theta)\) and their coinciding minimum loss function \(\theta=\argmin_{\theta}\mL(\xxx,\yyy;\theta)\)</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Density \(p(\yyy\vert\xxx)\)</th>
+<th scope="col" class="org-left">Loss function \(\mL\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(\yyy\sim \mN(f(\xxx),\cdot)\)</td>
+<td class="org-left">\(\mL=\norm{\yyy-f(\xxx)}^2\)</td>
+</tr>
+
+<tr>
+<td class="org-left">\(\yyy\sim \mr{Laplace}(f(\xxx),\cdot)\)</td>
+<td class="org-left">\(\mL=\abs{\yyy-f(\xxx)}\)</td>
+</tr>
+</tbody>
+</table>
+
+<div id="bibliography">
+<h2>References</h2>
+
+<table>
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="bishop2006a">Bishop, 2006</a>]
+</td>
+<td class="bibtexitem">
+Bishop, C.&nbsp;M. (2006).
+ <em>Pattern recognition and machine learning</em>.
+ Springer,.
+
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
