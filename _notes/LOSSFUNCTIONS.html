@@ -26,7 +26,7 @@ A loss function \(\mL(\cdot)\) takes as argument whatever defines our loss.
 For instance, for a classification problem (or regression problem with scalar
 predictions) \(\mL(\cdot)=\mL(\xxx,y)\). Typically, we have control of the loss
 via some parameter (otherwise we have no problem to begin with as there is
-nothing we can do to minimize our loss&#x2026;). We denote these "parameters"
+nothing we can do to minimize our loss&#x2026;). We denote these &ldquo;parameters&rdquo;
 \(\theta\), and emphasize they they can represent anything from the set of
 decision regions (like in some classification problems) to parameters of a
 linear function (like in some specific regression problems). Often, however,
@@ -54,9 +54,9 @@ more heavily than the opposite scenario. That is to say we want to be quite
 certain about deeming someone being healthy, because being wrong could be fatal.
 </p>
 
-<div id="outline-container-org9b6d622" class="outline-2">
-<h2 id="org9b6d622">Decision Region Example</h2>
-<div class="outline-text-2" id="text-org9b6d622">
+<div id="outline-container-org4e52b0a" class="outline-2">
+<h2 id="org4e52b0a">Decision Region Example</h2>
+<div class="outline-text-2" id="text-org4e52b0a">
 <p>
 As an example we can re-derive our previous result on how to classify \(\xxx\)
 given that we know \(p(\yyy|\xxx)\).
@@ -74,7 +74,7 @@ classes and consider the following loss function,
 </p>
 
 <p>
-where \(i\) is the "\(\theta\)" i.e. how we classify \(\xxx\). This loss functions
+where \(i\) is the &ldquo;\(\theta\)&rdquo; i.e. how we classify \(\xxx\). This loss functions
 simply says that there is some loss associated with guessing class \(i\) but the
 real class was \(k\).
 </p>
@@ -121,14 +121,14 @@ discussed earlier.
 </div>
 </div>
 
-<div id="outline-container-orge5e1806" class="outline-2">
-<h2 id="orge5e1806">\(\mL\) is arbitrary</h2>
-<div class="outline-text-2" id="text-orge5e1806">
+<div id="outline-container-org10c19fd" class="outline-2">
+<h2 id="org10c19fd">\(\mL\) is arbitrary</h2>
+<div class="outline-text-2" id="text-org10c19fd">
 <p>
 We may choose \(\mL\) freely in such a way that we incorporate desired properties
 associated with the optimization problem \eqref{opt}. This is in contrast to,
 for instance, minimizing the divergence between two distribution which <i><b>is</b></i>
-principled and hold a very specific meaning. In general I wouldn't consider the
+principled and hold a very specific meaning. In general I wouldn&rsquo;t consider the
 loss function as principled since any given arbitrary loss function need not be
 justified by any set of associated assumptions. For instance there is no
 particular reason why the squared error is better than the absolute error for a

@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Generative Modeling by Estimating Gradients of the Data Distribution</title>
+<meta name="author" content="Yang Song^{\dagger} & Stefano Ermon^{\dagger}"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/theme/serif.css" id="theme"/>
+
+<link rel="stylesheet" href="https://ammunk.com/assets/img/utils/extra.css"/>
+
+<link rel="stylesheet" href="https://ammunk.com/assets/img/utils/logo_ubc_plai.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/lib/css/zenburn.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://ammunk.com/assets/js/mathjax-config.js" defer> </script>
+<script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script> $(function(){$("#includedContent").load("./bibtex.html");}); </script>
+<meta name="description" content="Generative Modeling by Estimating Gradients of the Data Distribution">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<section id="sec-title-slide">
+    <h1 class="title">Generative Modeling by Estimating Gradients of the Data Distribution</h1><h2 class="author">By Yang Song<sup>&dagger;</sup> &amp; Stefano Ermon<sup>&dagger;</sup></h2>
+    <h3 class="affiliation"><sup>&#8224;</sup>Stanford University</h3>
+    <h2 class="presented">Presented By</h2>
+    <h3 class="presented">Andreas Munk</h3>
+    <h4 class="email"><a href="mailto:amunk@cs.ubc.ca">amunk@cs.ubc.ca</a></h4><h4 class="date">May 12, 2020</h4>
+</section>
+
+</section>
+<section id="table-of-contents-section">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-org82352f3">Generative Modeling by Estimating Gradients of the Data Distribution [<a href="#/slide-song2019generative">Song and Ermon, 2019</a>]</a></li>
+<li><a href="#/slide-orga843f83">Langevin Dynamics [<a href="#/slide-wibisono2018sampling">Wibisono, 2018</a>]</a></li>
+<li><a href="#/slide-orgbee672f">Score Matching [<a href="#/slide-hyvarinen2005estimation">Hyv&auml;rinen, 2005</a>]</a>
+<ul>
+<li><a href="#/slide-org93dc6e1">Proofs of the Objective Reduction</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orgc4650f3">Sliced Score Matching [<a href="#/slide-song2019sliced">Song et&nbsp;al., 2019</a>]</a>
+<ul>
+<li><a href="#/slide-org98e9c84">Algorithmic Differences</a></li>
+</ul>
+</li>
+<li><a href="#/slide-org71a4d2c">Denoising Score Mathcing [<a href="#/slide-vincent2011connection">Vincent, 2011</a>]</a>
+<ul>
+<li><a href="#/slide-org492e8e9">Proofs of the Minimization Equivalence</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orgad1c2b7">Langevin Dynamics in the Noise Perturbed Manifold</a></li>
+<li><a href="#/slide-org878a10d">Why?</a></li>
+<li><a href="#/slide-orge307655">Annealed Langevin Dynamics</a></li>
+<li><a href="#/slide-org7171f5e">Practical Considerations</a></li>
+<li><a href="#/slide-org69e03d3">Experiments</a>
+<ul>
+<li><a href="#/slide-org9852d37">Experimental Setup</a></li>
+<li><a href="#/slide-org5941667">MNIST, CelebA and CIFAR-10</a></li>
+<li><a href="#/slide-orgfa72d9e">Sampling Dynamics</a></li>
+<li><a href="#/slide-orgbaab3b0">Compared to other Methods</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orga46f32f">Conclusion</a></li>
+<li><a href="#/slide-org525de2d">References</a></li>
+</ul>
+</div>
+</div>
+</section>
+<div id="hiddenMathbox" style="display: none;">
+<p>
+\(
+\newcommand{\ie}{i.e.~}
+\newcommand{\eg}{e.g.~}
+\newcommand{\etc}{\textit{etc.}}
+\newcommand{\etal}{\textit{et~al.}}
+\newcommand{\wrt}{w.r.t.~}
+\newcommand{\bra}[1]{\langle #1 |}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+\newcommand{\bigbra}[1]{\big\langle #1 \big|}
+\newcommand{\bigket}[1]{\big| #1 \big\rangle}
+\newcommand{\bigbraket}[2]{\big\langle #1 \big| #2 \big\rangle}
+\newcommand{\beq}[1]{\begin{equation} \eqlab{#1}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bal}{\begin{align}}
+\newcommand{\eal}{\end{align}}
+\newcommand{\balnn}{\begin{align*}}
+\newcommand{\ealnn}{\end{align*}}
+\newcommand{\bsubal}[2]{\bsub \eqlab{#1}\bal#2\eal}
+\newcommand{\esubal}{\esub}
+\newcommand{\bsub}{\begin{subequations}}
+\newcommand{\esub}{\end{subequations}}
+\newcommand{\nn}{\nonumber}
+\newcommand{\bsubalat}[3]{\bsub\eqlab{#1}\begin{alignat}{#2}#3\end{alignat}}
+\newcommand{\esubalat}{\esub}
+\newcommand{\eqlab}[1]{\label{eq:#1}}
+\renewcommand{\eqref}[1]{Eq.~(\ref{eq:#1})}
+\newcommand{\eqnoref}[1]{(\ref{eq:#1})}
+\newcommand{\eqsref}[2]{Eqs.~(\ref{eq:#1}) and~(\ref{eq:#2})}
+\newcommand{\eqsnoref}[2]{(\ref{eq:#1}) and~(\ref{eq:#2})}
+\newcommand{\figref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\figsrefs}[2]{Figs.~\ref{fig:#1} and~\ref{fig:#2}}
+\newcommand{\figlab}[1]{\label{fig:#1}}
+\newcommand{\tabref}[1]{Table~\ref{tab:#1}}
+\newcommand{\tabsref}[2]{Tables~\ref{tab:#1} and~\ref{tab:#2}}
+\newcommand{\tablab}[1]{\label{tab:#1}}
+\newcommand{\appref}[1]{Appendix~\ref{chap:#1}}
+\newcommand{\appsref}[2]{Appendices~\ref{chap:#1} and~\ref{chap:#2}}
+\newcommand{\applab}[1]{\label{chap:#1}}
+\newcommand{\chapref}[1]{Chapter~\ref{chap:#1}}
+\newcommand{\chapsref}[2]{Chapters~\ref{chap:#1} and~\ref{chap:#2}}
+\newcommand{\chaplab}[1]{\label{chap:#1}}
+\newcommand{\secref}[1]{Section~\ref{sec:#1}}
+\newcommand{\secsref}[2]{Sections~\ref{sec:#1} and~\ref{sec:#2}}
+\newcommand{\seclab}[1]{\label{sec:#1}}
+\newcommand{\algref}[1]{Algorithm~\ref{alg:#1}}
+\newcommand{\algsref}[2]{Algorithms~\ref{alg:#1} and~\ref{alg:#2}}
+\newcommand{\alglab}[1]{\label{alg:#1}}
+\newcommand{\grad}{\boldsymbol{\nabla}}
+\newcommand{\divop}{\grad\scap}
+\newcommand{\pp}{\partial}
+\newcommand{\ppsqr}{\partial^2}
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\trans}[1]{#1^\mr{T}}
+\newcommand{\dm}{\mathrm{d}}
+\newcommand{\mN}{\mathcal{N}}
+\newcommand{\mMN}{\mathcal{MN}}
+\newcommand{\mL}{\mathcal{L}}
+\newcommand{\mR}{\mathcal{R}}
+\newcommand{\mO}{\mathcal{O}}
+\newcommand{\mI}{\mathcal{I}}
+\newcommand{\mE}{\mathcal{E}}
+\newcommand{\mA}{\mathcal{A}}
+\newcommand{\mG}{\mathcal{G}}
+\newcommand{\mD}{\mathcal{D}}
+\newcommand{\mU}{\mathcal{U}}
+\newcommand{\mT}{\mathcal{T}}
+\newcommand{\mF}{\mathcal{F}}
+\newcommand{\mS}{\mathcal{S}}
+\newcommand{\mH}{\mathcal{H}}
+\newcommand{\mX}{\mathcal{X}}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\mW}{\mathcal{W}}
+\newcommand{\mZ}{\mathcal{Z}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\krondel}[1]{\delta_{#1}}
+\newcommand{\limit}[2]{\mathop{\longrightarrow}_{#1 \rightarrow #2}}
+\newcommand{\measure}{\mathbb{P}}
+\newcommand{\scap}{\!\cdot\!}
+\newcommand{\intd}[1]{\int\!\dm#1\: }
+\newcommand{\ave}[1]{\left\langle #1 \right\rangle}
+\newcommand{\br}[1]{\left\lbrack #1 \right\rbrack}
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\tub}[1]{\left\{#1\right\}}
+\newcommand{\mr}[1]{\mathrm{#1}}
+\newcommand{\vt}[1]{\left.#1\right\vert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\sigv}{\vec{\sigma}}
+\newcommand{\sigvt}{\trans{\sigv}}
+\newcommand{\yyy}{\vec{y}}
+\newcommand{\yyyt}{\trans{\yyy}}
+\newcommand{\aaa}{\vec{a}}
+\newcommand{\aaat}{\trans{\aaa}}
+\newcommand{\AAA}{\vec{A}}
+\newcommand{\AAAt}{\trans{\AAA}}
+\newcommand{\fff}{\vec{f}}
+\newcommand{\ffft}{\trans{\fff}}
+\newcommand{\FFF}{\vec{F}}
+\newcommand{\FFFt}{\trans{\FFF}}
+\newcommand{\vvv}{\vec{v}}
+\newcommand{\vvvt}{\trans{\vvv}}
+\newcommand{\VVV}{\vec{V}}
+\newcommand{\VVVt}{\trans{\VVV}}
+\newcommand{\III}{\vec{I}}
+\newcommand{\IIIt}{\trans{\III}}
+\newcommand{\eee}{\vec{e}}
+\newcommand{\eeet}{\trans{\eee}}
+\newcommand{\ooo}{\vec{0}}
+\newcommand{\ooot}{\trans{\vec{0}}}
+\newcommand{\xxx}{\vec{x}}
+\newcommand{\xxxt}{\trans{\xxx}}
+\newcommand{\alalal}{\vec{\alpha}}
+\newcommand{\alalalt}{\trans{\alalal}}
+\newcommand{\ththth}{\vec{\theta}}
+\newcommand{\XXX}{\vec{X}}
+\newcommand{\XXXt}{\trans{\XXX}}
+\newcommand{\JJJ}{\vec{J}}
+\newcommand{\JJJt}{\trans{\JJJ}}
+\newcommand{\www}{\vec{w}}
+\newcommand{\wwwt}{\trans{\www}}
+\renewcommand{\ggg}{\vec{g}}
+\newcommand{\gggt}{\trans{\ggg}}
+\newcommand{\bbb}{\vec{b}}
+\newcommand{\bbbt}{\trans{\bbb}}
+\newcommand{\ttt}{\vec{t}}
+\newcommand{\tttt}{\trans{\ttt}}
+\newcommand{\TTT}{\vec{T}}
+\newcommand{\TTTt}{\trans{\TTT}}
+\newcommand{\WWW}{\vec{W}}
+\newcommand{\WWWt}{\trans{\WWW}}
+\newcommand{\ZZZ}{\vec{Z}}
+\newcommand{\ZZZt}{\trans{\ZZZ}}
+\newcommand{\HHH}{\vec{H}}
+\newcommand{\HHHt}{\trans{\HHH}}
+\newcommand{\ppi}{\vec{\pi}}
+\newcommand{\ppit}{\trans{\ppi}}
+\newcommand{\lamm}{\vec{\lambda}}
+\newcommand{\lammt}{\trans{\lamm}}
+\newcommand{\ccc}{\vec{c}}
+\newcommand{\ccct}{\trans{\ccc}}
+\newcommand{\ppp}{\vec{p}}
+\newcommand{\pppt}{\trans{\ppp}}
+\newcommand{\uuu}{\vec{u}}
+\newcommand{\uuut}{\trans{\uuu}}
+\newcommand{\muu}{\vec{\mu}}
+\newcommand{\muut}{\trans{\muu}}
+\newcommand{\CCC}{\vec{C}}
+\newcommand{\CCCt}{\trans{\CCC}}
+\newcommand{\zzz}{\vec{z}}
+\newcommand{\zzzt}{\trans{\zzz}}
+\newcommand{\sss}{\vec{s}}
+\newcommand{\ssst}{\trans{\sss}}
+\newcommand{\SSS}{\vec{S}}
+\newcommand{\SSSt}{\trans{\SSS}}
+\newcommand{\LLL}{\vec{L}}
+\newcommand{\LLLt}{\trans{\LLL}}
+\renewcommand{\lll}{\vec{l}}
+\newcommand{\lllt}{\trans{\lll}}
+\newcommand{\rrrt}{\trans{\rrr}}
+\newcommand{\RRRt}{\trans{\RRR}}
+\newcommand{\SiSiSi}{\vec{\Sigma}}
+\newcommand{\SiSiSit}{\trans{\Sigma}}
+\newcommand{\hhh}{\vec{h}}
+\newcommand{\hhht}{\trans{\hhh}}
+\newcommand{\one}{\vec{1}}
+\newcommand{\onet}{\trans{\one}}
+\newcommand{\xlat}{\xxx_{\mr{lat}}}
+\newcommand{\xobs}{\xxx_{\mr{obs}}}
+\newcommand{\xmr}[1]{\xxx_{\mr{#1}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\trace}[1]{\mr{Tr}\paren{#1}}
+\newcommand{\mean}[1]{\mathbb{E}\br{#1}}
+\newcommand{\meanq}[1]{\mathbb{E}_{q}\br{#1}}
+\newcommand{\meannni}[1]{\mathbb{E}_{-i}\br{#1}}
+\newcommand{\meanp}[2]{\mathbb{E}_{#1}\br{#2}}
+\newcommand{\kl}[2]{\mr{KL}\paren{\vt{\vt{#1~}}#2}}
+\newcommand{\js}[2]{\mr{JS}\paren{\vt{\vt{#1}}#2}}
+\newcommand{\elbo}[1]{\mr{ELBO}\paren{#1}}
+\newcommand{\loss}{\mL}
+\newcommand{\lossq}{\loss_\mr{sq}}
+\newcommand{\IBP}{\mathcal{IBP}}
+\newcommand{\BeP}{\mathcal{BeP}}
+\newcommand{\bp}{\mathcal{bp}}
+\newcommand{\npbNMFinf}{\mr{npbNMF}^i_\infty}
+\newcommand{\npbNMFfinite}{\mr{npbNMF}^i_\approx}
+\newcommand{\npbNMFinfshared}{\mr{npbNMF}^\text{shared}_\infty}
+\newcommand{\npbNMFfiniteshared}{\mr{npbNMF}^\text{shared}_\approx}
+\newcommand{\npbNMFinfsparse}{\mr{npbNMF}^\text{sparse}_\infty}
+\newcommand{\npbNMFfinitesparse}{\mr{npbNMF}^\text{sparse}_\approx}
+\newcommand{\npbNMFfinitess}{\mr{npbNMF}^\text{ss}_\approx}
+\newcommand{\npbNMFinfss}{\mr{npbNMF}^\text{ss}_\infty}
+\newcommand{\block}[1]{\underbrace{\begin{matrix}1 & \cdots & 1\end{matrix}}_{#1}}
+\newcommand{\blockt}[1]{\begin{rcases} \begin{matrix} ~\\ ~\\ ~ \end{matrix} \end{rcases}{#1}}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\)
+</p>
+</div>
+<section>
+<section id="slide-org82352f3">
+<h2 id="org82352f3">Generative Modeling by Estimating Gradients of the Data Distribution [<a href="#song2019generative">Song and Ermon, 2019</a>]</h2>
+<ul>
+<li>Likelihood-free generative modeling</li>
+<li>Propose an annealed Langevin Dynamics</li>
+<li>Based on score matching</li>
+<li>Main benefits:
+<ul>
+<li>No adverserial methods</li>
+<li>Does not require sampling from the model during training</li>
+<li>Provides for a principled way for model comparison (within the same framework)</li>
+
+</ul></li>
+<li>Achieve state-of-the-art inception score on CIFAR-10</li>
+
+</ul>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-orga843f83">
+<h2 id="orga843f83">Langevin Dynamics [<a href="#wibisono2018sampling">Wibisono, 2018</a>]</h2>
+<div class="container">
+<div class="col-list" style="text-align:left">
+<ul>
+<li>\(X\) is a random variable in \(\real^{D}\)</li>
+<li>\(p\) is a differentiable target density</li>
+<li>\(W\) is the standard Brownian motion (in \(\real^{D}\))</li>
+<li>Langevin Dynamics are: \[\dm{X}_{t} = \grad \ln p(X_t)\dm{t} +
+  \sqrt{2}\dm{W}_{t}\]
+with the distribution of \(X_{t}\) following these dynamics converging to \(p\)</li>
+<li>The discretized version for small time steps \(\epsilon\) is \[\Delta \xxx =
+  \grad_{\xxx}\ln p(\xxx)\epsilon + \zzz,\quad \zzz\sim\mN(0,\sqrt{2\epsilon}\III)\]</li>
+<li>Equivalently \[\xxx_{t+1}\sim\mN(\xxx_{t}+\grad_{\xxx}\ln p(\xxx)\epsilon,
+  \sqrt{2\epsilon}\III)\]</li>
+
+</ul>
+
+</div>
+</div>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section>
+
+<div class="container">
+<div class="col-list" style="text-align:left">
+<ul>
+<li>May correct for the discretization error using Metropolis-Hastings with
+proposal \[q(\xxx_{t+1}|\xxx_{t}) =\mN(\xxx_{t}+\grad_{\xxx}\ln
+  p(\xxx)\epsilon, \sqrt{2\epsilon}\III)\]</li>
+<li>Assuming is small enough and t is sufficiently large, the acceptance rate goes
+to one</li>
+<li>Used also for inference - see e.g. <i>Stochastic Gradient Langevin Dynamics</i>
+[<a href="#welling2011bayesian">Welling and Teh, 2011</a>]</li>
+<li>Think of Langevin Dynamics as a form of a Markov Chain</li>
+
+</ul>
+</div>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-orgbee672f">
+<h2 id="orgbee672f">Score Matching [<a href="#hyvarinen2005estimation">Hyv&auml;rinen, 2005</a>]</h2>
+<ul>
+<li>Can we estimate \(\grad_{\xxx}\ln p(\xxx)\)?</li>
+<li>Define \(s_{\theta}(\xxx)=\grad_{\xxx}\ln q_{\theta}(\xxx),
+  ~s_{\theta}:\real^{d}\rightarrow\real^{d}\)</li>
+<li>Train \(s_{\theta}\) to match \(\grad_{\xxx}\ln p(\xxx)\) by minimizing,
+\[\begin{align*}J(\theta)&=\frac{1}{2}\meanp{p(\xxx)}{\norm{s_{\theta}(\xxx) -
+  \grad_{\xxx}\ln p(\xxx)}^2} \\ &=
+  \meanp{p(\xxx)}{\mr{tr}(\grad_{\xxx}s_{\theta}(\xxx)) +
+  \frac{1}{2}\norm{s_{\theta}(\xxx)}^2} + \mr{const}\end{align*}\]</li>
+<li><i>Consistency</i>: Assuming \(\exists\theta^{*}(s_{\theta}(\xxx)=\ln p(\xxx))\) then
+\(J(\theta)=0\Leftrightarrow\theta=\theta^{*}\)</li>
+<li>Involves Jacobian of (Hessian of \(q\))</li>
+<li>Weak regularity conditions:
+<ul>
+<li>\(p(\xxx)\) is differentiable</li>
+<li>\(\meanp{p(\xxx)}{\norm{s_{\theta}(\xxx)}^{2}}<\infty,~\forall \theta\)</li>
+<li>\(\meanp{p(\xxx)}{\norm{\grad_{\xxx}\ln p(\xxx)}^{2}}<\infty\)</li>
+<li>\(\lim\limits_{\norm{\xxx}\rightarrow\infty}
+    p(\xxx)s_{\theta}(\xxx)=0,~\forall \theta\)</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-org93dc6e1">
+<h3 id="org93dc6e1">Proofs of the Objective Reduction</h3>
+<ul>
+<li>We need only consider \(-\intd{\xxx}p(\xxx)s_{\theta}(\xxx)\grad_{\xxx}\ln
+  p(\xxx)=-\sum_{i}\intd{\xxx}p(\xxx)s_{i}(\xxx)\frac{\pp \ln p(\xxx)}{\pp
+  x_{i}}=-\sum_{i}\intd{\xxx}s_{i}(\xxx)\frac{\pp p(\xxx)}{\pp x_{i}}\),
+where \(s_{i}=s_{\theta}(\xxx)\)</li>
+<li>We restrict our attention to a single \(i\) as the derivation holds for every
+\(i\)</li>
+
+<li>Using the shorthand notation \(\pp_{i}f(\xxx)=\frac{\pp f(\xxx)}{\pp x_{i}}\) we
+now prove that
+\[\intd{\xxx}s_{i}(\xxx)\pp_{i}p(\xxx)=-\intd{\xxx}p(\xxx)\pp_{i}s_{i}(\xxx)\]</li>
+
+<li>Recall that for a differentiable function \(h(\xxx)=p(\xxx)s_{i}(\xxx)\) we have
+\[\pp_{i}h(\xxx)=\pp_{i}\paren{p(\xxx)s_{i}(\xxx)} =
+  p(\xxx)\pp_{i}s_{i}(\xxx)+s_{i}(\xxx)\pp_{i}p(\xxx)\],
+\[\int_{b}^{a}\dm{x_{i}}\pp_{i}h(\xxx) =
+  h(x_{1},\dots,x_{i-1},a,x_{i+1},\dots,x_{d})
+  -h(x_{1},\dots,x_{i-1},b,x_{i+1},\dots,x_{d}) =
+  \int_{b}^{a}p(\xxx)\pp_{i}s_{i}(\xxx)+s_{i}(\xxx)\pp_{i}p(\xxx)\dm{x_{i}}\]</li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section>
+<ul>
+<li>The regularity conditions implies \(\lim\limits_{\norm{\xxx}\rightarrow\infty}
+  p(\xxx)s_{\theta}(\xxx)=0,~\forall \theta\),
+\[\int_{-\infty}^{\infty}\dm{x_{i}}\pp_{i}h(\xxx) =
+  \lim\limits_{a\rightarrow\infty,b\rightarrow-\infty}
+  \br{h(x_{1},\dots,x_{i-1},a,x_{i+1},\dots,x_{d})
+  -h(x_{1},\dots,x_{i-1},b,x_{i+1},\dots,x_{d})}=0\] \[\Downarrow\]
+\[\int_{-\infty}^{\infty}p(\xxx)\pp_{i}s_{i}(\xxx)\dm{x_{i}} =
+  -\int_{-\infty}^{\infty}s_{i}(\xxx)\pp_{i}p(\xxx)\dm{x_{i}}\]</li>
+<li>Additional outer integrals does not change this and so we have
+\[\intd{\xxx}s_{i}(\xxx)\pp_{i}p(\xxx)=-\intd{\xxx}p(\xxx)\pp_{i}s_{i}(\xxx) =
+  -\meanp{p(\xxx)}{\pp_{i}s_{i}(\xxx)}\]</li>
+<li>Identifying \[\sum_{i=1}^{d}\pp_{i}s_{i}(\xxx) =
+  \mr{tr}(\grad_{\xxx}s_{\theta}(\xxx))\]
+concludes the proof</li>
+
+</ul>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-orgc4650f3">
+<h2 id="orgc4650f3">Sliced Score Matching [<a href="#song2019sliced">Song et&nbsp;al., 2019</a>]</h2>
+<ul>
+<li>Preferably no Jacobian in score matching</li>
+<li>Projects the score functions onto a random direction \(\vvv\in\real^{d}\)</li>
+<li>Leads to the following objective
+\[\begin{align*}J_{\mr{SSM}}(\theta)
+  &=\frac{1}{2}\meanp{p(\vvv)}{\meanp{p(\xxx)}{\norm{\vvvt s_{\theta}(\xxx) -
+  \vvvt\grad_{\xxx}\ln p(\xxx)}^2}}
+  \\ &=\meanp{p(\vvv)}{\meanp{p(\xxx)}{\vvvt\grad_{\xxx}s_{\theta}(\xxx)\vvv +
+  \frac{1}{2}\vvvt s_{\theta}(\xxx)}} + \mr{const}\end{align*}\]
+<ul>
+<li>If \(p(\vvv)=\mN(0,\III)\), \[\meanp{p(\vvv)}{\vvvt s_{\theta}(\xxx)}
+    =\norm{s_{\theta}(\xxx)}^{2}\]</li>
+
+</ul></li>
+<li>Similar weak regularity conditions and satisfies <i>consistency</i></li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-org98e9c84">
+<h3 id="org98e9c84">Algorithmic Differences</h3>
+<div class="container">
+<div class="col">
+
+<div class="figure">
+<p><img src="https://ammunk.com/assets/img/ncsn/figs/score_alg.png" alt="score_alg.png" height="450" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Score matching algorithm</p>
+</div>
+</div>
+<div class="col">
+
+<div class="figure">
+<p><img src="https://ammunk.com/assets/img/ncsn/figs/sliced_score_alg.png" alt="sliced_score_alg.png" height="450" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Sliced score matching algorithm</p>
+</div>
+</div>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-org71a4d2c">
+<h2 id="org71a4d2c">Denoising Score Mathcing [<a href="#vincent2011connection">Vincent, 2011</a>]</h2>
+<ul>
+<li>Induce noise pertubation of the data via some “pertubation” distribution ,
+where \(\sigma\) is the noise level</li>
+<li>Objective: \[\begin{align*}J_{\mr{NSM}}(\theta)
+  &=\frac{1}{2}\meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
+  \norm{s_{\theta}(\tilde{\xxx}) - \grad_{\tilde{\xxx}}\ln
+  p_{\sigma}(\tilde{\xxx}|\xxx)}^2} \\ &=\meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
+  \frac{1}{2}\norm{s_{\theta}(\tilde{\xxx})}^{2} -
+  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
+  p_{\sigma}(\tilde{\xxx}|\xxx)} + \mr{const}\end{align*}\]</li>
+<li>No Jacobian term</li>
+<li>Minimizing \(J_{\mr{NSM}}\) is equivalent to solving for the optimal
+\(\theta^{*}\) such that \[s_{\theta^{*}}(\tilde{\xxx}) =
+  \grad_{\tilde{\xxx}}\ln\intd{\xxx p(\xxx)} p_{\sigma}(\tilde{\xxx}|\xxx)
+  =\grad_{\tilde{\xxx}}\ln p_{\sigma}(\tilde{\xxx})\]</li>
+<li>Notice that as \(\sigma\rightarrow 0\) then
+\(p_{\sigma}(\tilde{\xxx})\rightarrow p(\xxx)\)
+<ul>
+<li>Exploited by [<a href="#song2019generative">Song and Ermon, 2019</a>]</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-org492e8e9">
+<h3 id="org492e8e9">Proofs of the Minimization Equivalence</h3>
+<ul>
+<li>We prove that minimizing \(J_{\mr{NSM}(\theta)}\) is equivalent to minimizing
+\[J_{\mr{D}}(\theta)=\frac{1}{2}\meanp{p_{\sigma}(\tilde{\xxx})}{
+  \norm{s_{\theta}(\tilde{\xxx}) - \grad_{\tilde{\xxx}}\ln
+  p_{\sigma}(\tilde{\xxx})}^2}\]</li>
+<li>We need only show that
+\[\begin{equation}\eqlab{to-prove}\meanp{p_{\sigma}(\tilde{\xxx})}{
+  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
+  p_{\sigma}(\tilde{\xxx})} = \meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
+  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
+  p_{\sigma}(\tilde{\xxx}|\xxx)}\end{equation}\]</li>
+<li>Notice that \[\begin{equation}\eqlab{grad-marg}\grad_{{\tilde{\xxx}}}\ln
+  p_{\sigma}(\tilde{\xxx}) =
+  \grad_{\tilde{\xxx}}\ln\intd{\xxx}p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx) =
+  \frac{1}{p_{\sigma}(\tilde{\xxx})}
+  \intd{\xxx}\grad_{\tilde{\xxx}}p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)
+  \end{equation}\]</li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section>
+<ul>
+<li>Substituting \eqref{grad-marg} into the expression of the left-hand side of
+\eqref{to-prove} we find \[\begin{align*}\meanp{p_{\sigma}(\tilde{\xxx})}{
+  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
+  p_{\sigma}(\tilde{\xxx})} &= \int\trans{s_{\theta}(\tilde{\xxx})}
+  \int\grad_{\tilde{\xxx}}p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)
+  \dm{\xxx}\dm{\tilde{\xxx}} \\ &= \int\int
+  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
+  p_{\sigma}(\tilde{\xxx}|\xxx)p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)
+  \dm{\xxx}\dm{\tilde{\xxx}} \\ &= \meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
+  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
+  p_{\sigma}(\tilde{\xxx}|\xxx)}\end{align*}\]</li>
+<li>Leading to \[J_{\mr{DSM}}(\theta)=J_{\mr{D}}(\theta) + C,\] where \(C\) is a
+constant equal the difference between the constant terms of
+\(J_{\mr{NSM}}(\theta)\) and \(J_{\mr{D}}(\theta)\)</li>
+
+</ul>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-orgad1c2b7">
+<h2 id="orgad1c2b7">Langevin Dynamics in the Noise Perturbed Manifold</h2>
+<ul>
+<li>Perturb data with Gaussian noise - \(\mN(0,\sigma)\)</li>
+<li>Train noise conditional score estimator
+\(s_{\theta}(\tilde{\xxx},\sigma)\approx\grad_{\tilde{\xxx}}\ln
+  p_{\sigma}(\tilde{\xxx})\) (Deep Neural Network)
+<ul>
+<li>Called <i>Noise Conditional Score Network</i> (NCSN)</li>
+
+</ul></li>
+<li>Employ Langevin Dynamics in the perturbed space using
+\(s_{\theta}(\tilde{\xxx},\sigma)\)
+<ul>
+<li>Ensured to be in \(\real^{d}\)</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-org878a10d">
+<h2 id="org878a10d">Why?</h2>
+<ul>
+<li>The denoising score matching objective has no Jacobian terms</li>
+<li>The theory behind score matching requires a well-defined \(p(\xxx)\) everywhere
+in \(\real^{d}\)
+<ul>
+<li>Typically \(p(\xxx)\) has a support restricted to some low dimensional
+manifold embedding in the ambient space</li>
+
+</ul></li>
+<li>Langevin dynamics (LD) is likely to mix poorly if \(p(\xxx)\) has large regions
+with near-zero probability
+<ul>
+<li>May additionally lead to poor training of \(s_{\theta}(\xxx)\)</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section>
+<p>
+\(p(\xxx)=\frac{1}{5}\mN((-5,-5),\III) + \frac{4}{5}\mN((5,5),\III)\)
+</p>
+
+<div class="figure">
+<p><img src="https://ammunk.com/assets/img/ncsn/figs/score_estimator.png" alt="score_estimator.png" width="1500" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Left \(\grad_{\xxx}\ln p(\xxx)\). Right \(s_{\theta}(\xxx)\). Darker color implies higher density. Squares are region where \(s_{\theta}(\xxx)\approx\grad_{\xxx}\ln p(\xxx)\)</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section>
+<p>
+\(p(\xxx)=\frac{1}{5}\mN((-5,-5),\III) + \frac{4}{5}\mN((5,5),\III)\)
+</p>
+
+<div class="figure">
+<p><img src="https://ammunk.com/assets/img/ncsn/figs/dynamics_issues.png" alt="dynamics_issues.png" width="1600" />
+</p>
+<p><span class="figure-number">Figure 4: </span>Samples from \(p(\xxx)\) using different methods. a) Exact sampling b) Using LD with exact score c) Annealed LD</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-orge307655">
+<h2 id="orge307655">Annealed Langevin Dynamics</h2>
+<ul>
+<li>Intuition:
+<ul>
+<li>Large noise level forms “bridges” across regions with low probability</li>
+<li>Improves mixing of the Langevin dynamics</li>
+
+</ul></li>
+<li>Anneal noise level to converge to “true” data distribution</li>
+<li>Define noise level as a geometric sequence \(\tub{\sigma_{i}}_{i=1}^{L}\)
+<ul>
+<li>\(\frac{\sigma_{1}}{\sigma_{2}}=\dots=\frac{\sigma_{L-1}}{\sigma_{L}}>1\)</li>
+
+</ul></li>
+<li>Train noise conditional score estimator $s<sub>&theta;</sub>(&sigma;<sub>i</sub>) for every
+level
+<ul>
+<li>noise distribution \(p_\sigma(\tilde{\xxx}|\xxx)=\mN(\xxx,\sigma^{2}\III)\)</li>
+<li>noise level objective \[l(\theta,\sigma)\triangleq
+    J_{\mr{DSM}(\theta,\sigma)}=
+    \frac{1}{2}\meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
+    \norm{s_{\theta}(\tilde{\xxx},\sigma) +
+    \frac{\tilde{\xxx}-\xxx}{\sigma^{2}}}^{2}}\]</li>
+<li>unified objective using an objective “weight” \(\lambda(\sigma)>0\)
+\[\mL(\theta,\tub{\sigma_{i}}_{i=1}^{L}\triangleq
+    \frac{1}{L}\sum_{i=1}^{L}\lambda(\sigma_{i})l(\theta,\sigma_{i})\]</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section>
+<ul>
+<li>set \(\lambda(\sigma)=\sigma\)
+<ul>
+<li>empirically showed \(\lambda(\sigma)l(\theta,\sigma)\) to be independent of
+\(\sigma\)</li>
+
+</ul></li>
+
+</ul>
+
+<div class="figure">
+<p><img src="https://ammunk.com/assets/img/ncsn/figs/algorithm.png" alt="algorithm.png" width="700" />
+</p>
+</div>
+<ul>
+<li>The final sample of each noise level LD process initializes the next process
+<ul>
+<li>Additionally \(s_{\theta}(\tilde{\xxx})\) is likely well estimated in the
+traversed regions at the different noise levels</li>
+
+</ul></li>
+<li>Samples from \(q_{\theta}(\xxx)\) by running several “MCMC-like” chains</li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-org7171f5e">
+<h2 id="org7171f5e">Practical Considerations</h2>
+<ul>
+<li>Step size \(\alpha_{i}\)
+<ul>
+<li>Should decrease over time to ensure convergence [<a href="#welling2011bayesian">Welling and Teh, 2011</a>]</li>
+<li>Held fixed at each noise level for NCSNs</li>
+
+</ul></li>
+<li>Number of steps \(T\)</li>
+<li>Noise levels \(\tub{\sigma_{i}}_{i=1}^{L}\)</li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-org69e03d3">
+<h2 id="org69e03d3">Experiments</h2>
+<div class="outline-text-2" id="text-org69e03d3">
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-org9852d37">
+<h3 id="org9852d37">Experimental Setup</h3>
+<ul>
+<li>\(\tub{\sigma_{i}}_{i=1}^{10}=\tub{1,\dots,0.01}\)</li>
+<li>\(T=100,~\epsilon=2\times10^{-5}\)</li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-org5941667">
+<h3 id="org5941667">MNIST, CelebA and CIFAR-10</h3>
+<ul>
+<li>CelebA was center cropped to \(140\times140\) and resized to \(32\times32\)</li>
+<li>state-of-the-art inception score of \(8.87\) on CIFAR-10</li>
+
+</ul>
+
+<div class="figure">
+<p><img src="https://ammunk.com/assets/img/ncsn/figs/samples.png" alt="samples.png" width="1800" />
+</p>
+<p><span class="figure-number">Figure 6: </span>Random samples using annealed Langevin dynamics for a) MNIST b) CelebA c) CIFAR-10</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-orgfa72d9e">
+<h3 id="orgfa72d9e">Sampling Dynamics</h3>
+
+<div class="figure">
+<p><img src="https://ammunk.com/assets/img/ncsn/figs/intermediate.png" alt="intermediate.png" height="800" />
+</p>
+<p><span class="figure-number">Figure 7: </span>Intermediate samples of annealed Langevin dynamics.</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-orgbaab3b0">
+<h3 id="orgbaab3b0">Compared to other Methods</h3>
+
+<div class="figure">
+<p><img src="https://ammunk.com/assets/img/ncsn/figs/results_table.png" alt="results_table.png" />
+</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-orga46f32f">
+<h2 id="orga46f32f">Conclusion</h2>
+<ul>
+<li>New likelihood-free generative modeling framework</li>
+<li>Reach state-of-the-art inception score on CIFAR-10</li>
+<li>Not clear how well this methods scales to higher dimensions</li>
+
+</ul>
+
+
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+<section>
+<section id="slide-org525de2d">
+<h2 id="org525de2d">References</h2>
+<div id="includedContent"></div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/js/reveal.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 't',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+width: 2000,
+height: 1400,
+margin: 0.00,
+minScale: 0.30,
+maxScale: 2.50,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+,
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+</script>
+</body>
+</html>

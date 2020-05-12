@@ -69,11 +69,14 @@
 \def\mS{\mathcal{S}}
 \def\mH{\mathcal{H}}
 \def\mX{\mathcal{X}}
+\def\mP{\mathcal{P}}
+\def\mW{\mathcal{W}}
 \def\mZ{\mathcal{Z}}
 \def\complex{\mathbb{C}}
 \def\real{\mathbb{R}}
 \def\krondel#1{\delta_{#1}}
 \def\limit#1#2{\mathop{\longrightarrow}_{#1 \rightarrow #2}}
+\def\measure{\mathbb{P}}
 \def\scap{\!\cdot\!}
 \def\intd#1{\int\!\dm#1\: }
 \def\ave#1{\left\langle #1 \right\rangle}
@@ -191,4 +194,5 @@
 \def\npbNMFinfss{\mr{npbNMF}^\text{ss}_\infty}
 \def\block#1{\underbrace{\begin{matrix}1 & \cdots & 1\end{matrix}}_{#1}}
 \def\blockt#1{\begin{rcases} \begin{matrix} ~\\ ~\\ ~ \end{matrix} \end{rcases}{#1}}
-\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}\)
+\def\tikzmark#1{\tikz[overlay,remember picture] \node (#1) {};}
+\)
