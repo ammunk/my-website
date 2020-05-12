@@ -64,7 +64,7 @@
 <li><a href="#/slide-org98e9c84">Algorithmic Differences</a></li>
 </ul>
 </li>
-<li><a href="#/slide-org71a4d2c">Denoising Score Mathcing [<a href="#/slide-vincent2011connection">Vincent, 2011</a>]</a>
+<li><a href="#/slide-org6d39c50">Denoising Score Matching [<a href="#/slide-vincent2011connection">Vincent, 2011</a>]</a>
 <ul>
 <li><a href="#/slide-org492e8e9">Proofs of the Minimization Equivalence</a></li>
 </ul>
@@ -316,9 +316,9 @@
 <div class="container">
 <div class="col-list" style="text-align:left">
 <ul>
-<li>\(X\) is a random variable in \(\real^{D}\)</li>
+<li>\(X\) is a random variable in \(\real^{d}\)</li>
 <li>\(p\) is a differentiable target density</li>
-<li>\(W\) is the standard Brownian motion (in \(\real^{D}\))</li>
+<li>\(W\) is the standard Brownian motion (in \(\real^{d}\))</li>
 <li>Langevin Dynamics are: \[\dm{X}_{t} = \grad \ln p(X_t)\dm{t} +
   \sqrt{2}\dm{W}_{t}\]
 with the distribution of \(X_{t}\) following these dynamics converging to \(p\)</li>
@@ -342,8 +342,8 @@ with the distribution of \(X_{t}\) following these dynamics converging to \(p\)<
 <li>May correct for the discretization error using Metropolis-Hastings with
 proposal \[q(\xxx_{t+1}|\xxx_{t}) =\mN(\xxx_{t}+\grad_{\xxx}\ln
   p(\xxx)\epsilon, \sqrt{2\epsilon}\III)\]</li>
-<li>Assuming is small enough and t is sufficiently large, the acceptance rate goes
-to one</li>
+<li>Assuming \(\epsilon\) is small enough and t is sufficiently large, the
+acceptance rate goes to one</li>
 <li>Used also for inference - see e.g. <i>Stochastic Gradient Langevin Dynamics</i>
 [<a href="#welling2011bayesian">Welling and Teh, 2011</a>]</li>
 <li>Think of Langevin Dynamics as a form of a Markov Chain</li>
@@ -366,8 +366,8 @@ to one</li>
   \grad_{\xxx}\ln p(\xxx)}^2} \\ &=
   \meanp{p(\xxx)}{\mr{tr}(\grad_{\xxx}s_{\theta}(\xxx)) +
   \frac{1}{2}\norm{s_{\theta}(\xxx)}^2} + \mr{const}\end{align*}\]</li>
-<li><i>Consistency</i>: Assuming \(\exists\theta^{*}(s_{\theta}(\xxx)=\ln p(\xxx))\) then
-\(J(\theta)=0\Leftrightarrow\theta=\theta^{*}\)</li>
+<li><i>Consistency</i>: Assuming \(\exists\theta^{*}(s_{\theta^{*}}(\xxx)=\grad_{\xxx}\ln
+  p(\xxx))\) then \(J(\theta)=0\Leftrightarrow\theta=\theta^{*}\)</li>
 <li>Involves Jacobian of (Hessian of \(q\))</li>
 <li>Weak regularity conditions:
 <ul>
@@ -409,9 +409,9 @@ now prove that
 </section>
 <section>
 <ul>
-<li>The regularity conditions implies \(\lim\limits_{\norm{\xxx}\rightarrow\infty}
-  p(\xxx)s_{\theta}(\xxx)=0,~\forall \theta\),
-\[\int_{-\infty}^{\infty}\dm{x_{i}}\pp_{i}h(\xxx) =
+<li>From the regularity conditions we have
+\(\lim\limits_{\norm{\xxx}\rightarrow\infty} p(\xxx)s_{\theta}(\xxx)=0,~\forall
+  \theta\), \[\int_{-\infty}^{\infty}\dm{x_{i}}\pp_{i}h(\xxx) =
   \lim\limits_{a\rightarrow\infty,b\rightarrow-\infty}
   \br{h(x_{1},\dots,x_{i-1},a,x_{i+1},\dots,x_{d})
   -h(x_{1},\dots,x_{i-1},b,x_{i+1},\dots,x_{d})}=0\] \[\Downarrow\]
@@ -475,11 +475,11 @@ concludes the proof</li>
 </section>
 </section>
 <section>
-<section id="slide-org71a4d2c">
-<h2 id="org71a4d2c">Denoising Score Mathcing [<a href="#vincent2011connection">Vincent, 2011</a>]</h2>
+<section id="slide-org6d39c50">
+<h2 id="org6d39c50">Denoising Score Matching [<a href="#vincent2011connection">Vincent, 2011</a>]</h2>
 <ul>
-<li>Induce noise pertubation of the data via some “pertubation” distribution ,
-where \(\sigma\) is the noise level</li>
+<li>Induce noise pertubation of the data via some “pertubation” distribution</li>
+<li>\(\sigma\) denotes noise level</li>
 <li>Objective: \[\begin{align*}J_{\mr{NSM}}(\theta)
   &=\frac{1}{2}\meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
   \norm{s_{\theta}(\tilde{\xxx}) - \grad_{\tilde{\xxx}}\ln
@@ -505,7 +505,7 @@ where \(\sigma\) is the noise level</li>
 <section id="slide-org492e8e9">
 <h3 id="org492e8e9">Proofs of the Minimization Equivalence</h3>
 <ul>
-<li>We prove that minimizing \(J_{\mr{NSM}(\theta)}\) is equivalent to minimizing
+<li>We prove that minimizing \(J_{\mr{NSM}}(\theta)\) is equivalent to minimizing
 \[J_{\mr{D}}(\theta)=\frac{1}{2}\meanp{p_{\sigma}(\tilde{\xxx})}{
   \norm{s_{\theta}(\tilde{\xxx}) - \grad_{\tilde{\xxx}}\ln
   p_{\sigma}(\tilde{\xxx})}^2}\]</li>
@@ -539,7 +539,7 @@ where \(\sigma\) is the noise level</li>
   \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
   p_{\sigma}(\tilde{\xxx}|\xxx)}\end{align*}\]</li>
 <li>Leading to \[J_{\mr{DSM}}(\theta)=J_{\mr{D}}(\theta) + C,\] where \(C\) is a
-constant equal the difference between the constant terms of
+constant equal to the difference between the constant terms of
 \(J_{\mr{NSM}}(\theta)\) and \(J_{\mr{D}}(\theta)\)</li>
 
 </ul>
@@ -600,7 +600,7 @@ with near-zero probability
 <div class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/score_estimator.png" alt="score_estimator.png" width="1500" />
 </p>
-<p><span class="figure-number">Figure 3: </span>Left \(\grad_{\xxx}\ln p(\xxx)\). Right \(s_{\theta}(\xxx)\). Darker color implies higher density. Squares are region where \(s_{\theta}(\xxx)\approx\grad_{\xxx}\ln p(\xxx)\)</p>
+<p><span class="figure-number">Figure 3: </span>Left \(\grad_{\xxx}\ln p(\xxx)\). Right \(s_{\theta}(\xxx)\). Darker color implies higher density. Squares are regions where \(s_{\theta}(\xxx)\approx\grad_{\xxx}\ln p(\xxx)\)</p>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
@@ -628,12 +628,12 @@ with near-zero probability
 
 </ul></li>
 <li>Anneal noise level to converge to “true” data distribution</li>
-<li>Define noise level as a geometric sequence \(\tub{\sigma_{i}}_{i=1}^{L}\)
+<li>Define noise levels as a geometric sequence \(\tub{\sigma_{i}}_{i=1}^{L}\)
 <ul>
 <li>\(\frac{\sigma_{1}}{\sigma_{2}}=\dots=\frac{\sigma_{L-1}}{\sigma_{L}}>1\)</li>
 
 </ul></li>
-<li>Train noise conditional score estimator $s<sub>&theta;</sub>(&sigma;<sub>i</sub>) for every
+<li>Train noise conditional score estimator \(s_{\theta}(\tilde{\xxx},\sigma_{i})\) for every
 level
 <ul>
 <li>noise distribution \(p_\sigma(\tilde{\xxx}|\xxx)=\mN(\xxx,\sigma^{2}\III)\)</li>
