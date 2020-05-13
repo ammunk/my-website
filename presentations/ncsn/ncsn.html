@@ -375,7 +375,7 @@ acceptance rate goes to one</li>
 <li>\(\meanp{p(\xxx)}{\norm{s_{\theta}(\xxx)}^{2}}<\infty,~\forall \theta\)</li>
 <li>\(\meanp{p(\xxx)}{\norm{\grad_{\xxx}\ln p(\xxx)}^{2}}<\infty\)</li>
 <li>\(\lim\limits_{\norm{\xxx}\rightarrow\infty}
-    p(\xxx)s_{\theta}(\xxx)=0,~\forall \theta\)</li>
+    p(\xxx)s_{\theta}(\xxx)=\ooo,~\forall \theta\)</li>
 
 </ul></li>
 
@@ -385,10 +385,11 @@ acceptance rate goes to one</li>
 <section id="slide-org93dc6e1">
 <h3 id="org93dc6e1">Proofs of the Objective Reduction</h3>
 <ul>
-<li>We need only consider \(-\intd{\xxx}p(\xxx)s_{\theta}(\xxx)\grad_{\xxx}\ln
+<li>We need only consider
+\(-\intd{\xxx}p(\xxx)\trans{s_{\theta}(\xxx)}\grad_{\xxx}\ln
   p(\xxx)=-\sum_{i}\intd{\xxx}p(\xxx)s_{i}(\xxx)\frac{\pp \ln p(\xxx)}{\pp
-  x_{i}}=-\sum_{i}\intd{\xxx}s_{i}(\xxx)\frac{\pp p(\xxx)}{\pp x_{i}}\),
-where \(s_{i}=s_{\theta}(\xxx)\)</li>
+  x_{i}}=-\sum_{i}\intd{\xxx}s_{i}(\xxx)\frac{\pp p(\xxx)}{\pp x_{i}}\), where
+\(s_{i}(\xxx)=s_{\theta}(\xxx)_{i}\)</li>
 <li>We restrict our attention to a single \(i\) as the derivation holds for every
 \(i\)</li>
 
@@ -398,7 +399,7 @@ now prove that
 
 <li>Recall that for a differentiable function \(h(\xxx)=p(\xxx)s_{i}(\xxx)\) we have
 \[\pp_{i}h(\xxx)=\pp_{i}\paren{p(\xxx)s_{i}(\xxx)} =
-  p(\xxx)\pp_{i}s_{i}(\xxx)+s_{i}(\xxx)\pp_{i}p(\xxx)\],
+  p(\xxx)\pp_{i}s_{i}(\xxx)+s_{i}(\xxx)\pp_{i}p(\xxx)\] and so
 \[\int_{b}^{a}\dm{x_{i}}\pp_{i}h(\xxx) =
   h(x_{1},\dots,x_{i-1},a,x_{i+1},\dots,x_{d})
   -h(x_{1},\dots,x_{i-1},b,x_{i+1},\dots,x_{d}) =
@@ -410,8 +411,9 @@ now prove that
 <section>
 <ul>
 <li>From the regularity conditions we have
-\(\lim\limits_{\norm{\xxx}\rightarrow\infty} p(\xxx)s_{\theta}(\xxx)=0,~\forall
-  \theta\), \[\int_{-\infty}^{\infty}\dm{x_{i}}\pp_{i}h(\xxx) =
+\(\lim\limits_{\norm{\xxx}\rightarrow\infty}
+  p(\xxx)s_{\theta}(\xxx)=\ooo,~\forall \theta\),
+\[\int_{-\infty}^{\infty}\dm{x_{i}}\pp_{i}h(\xxx) =
   \lim\limits_{a\rightarrow\infty,b\rightarrow-\infty}
   \br{h(x_{1},\dots,x_{i-1},a,x_{i+1},\dots,x_{d})
   -h(x_{1},\dots,x_{i-1},b,x_{i+1},\dots,x_{d})}=0\] \[\Downarrow\]
@@ -643,7 +645,7 @@ level
     \norm{s_{\theta}(\tilde{\xxx},\sigma) +
     \frac{\tilde{\xxx}-\xxx}{\sigma^{2}}}^{2}}\]</li>
 <li>unified objective using an objective “weight” \(\lambda(\sigma)>0\)
-\[\mL(\theta,\tub{\sigma_{i}}_{i=1}^{L}\triangleq
+\[\mL\paren{\theta,\tub{\sigma_{i}}_{i=1}^{L}}\triangleq
     \frac{1}{L}\sum_{i=1}^{L}\lambda(\sigma_{i})l(\theta,\sigma_{i})\]</li>
 
 </ul></li>
