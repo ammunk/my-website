@@ -321,7 +321,7 @@ marginal \(p(\xxx_{\mr{obs}})\)
 <li data-fragment-index="2" class="fragment appear">How about learning a surrogate model \(s\) that replaces \(p\) as a program when \(p\) is slow?</li>
 <li data-fragment-index="3" class="fragment appear">We structure \(s\) as a distribution over traces factorized exactly like \(p\)
 \[ s(\xxx,\aaa;\theta)=\prod_{t=1}^{T}s(x_{a_t}|\xi_{a_t}(x_{a_1:a_{t-1}},a_{1:t},\theta))s(a_t|\xi_{t-1}(x_{a_1:a_{t-1}},a_{1:t-1},\theta))\]</li>
-<li data-fragment-index="3" class="fragment appear">\(\xi_{a_t}(\cdot)\) and \(\xi_t(\cdot)\) are neural networks linked across the <br>addresses using a recurrent neural network structure</li>
+<li data-fragment-index="3" class="fragment appear">\(\xi_{a_t}(\cdot)\) and \(\xi_t(\cdot)\) are recurrent neural networks</li>
 
 </ul>
 </div>
@@ -420,7 +420,7 @@ depth $30$mm</li>
 </ul>
 
 <div class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/posterior_box_plot.svg" class="fragment (appear)" height="800">
+<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/posterior_box_plot.svg" class="fragment (appear)" height="700">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
