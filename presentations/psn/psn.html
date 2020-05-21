@@ -26,7 +26,7 @@
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
-<script type="text/javascript" src=""></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://ammunk.com/assets/js/mathjax-config.js" defer> </script>
 <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"> </script>
@@ -61,6 +61,8 @@
 \newcommand{\eeq}{\end{equation}}
 \newcommand{\bal}{\begin{align}}
 \newcommand{\eal}{\end{align}}
+\newcommand{\balnn}{\begin{align*}}
+\newcommand{\ealnn}{\end{align*}}
 \newcommand{\bsubal}[2]{\bsub \eqlab{#1}\bal#2\eal}
 \newcommand{\esubal}{\esub}
 \newcommand{\bsub}{\begin{subequations}}
@@ -101,6 +103,7 @@
 \newcommand{\mN}{\mathcal{N}}
 \newcommand{\mMN}{\mathcal{MN}}
 \newcommand{\mL}{\mathcal{L}}
+\newcommand{\mR}{\mathcal{R}}
 \newcommand{\mO}{\mathcal{O}}
 \newcommand{\mI}{\mathcal{I}}
 \newcommand{\mE}{\mathcal{E}}
@@ -113,10 +116,14 @@
 \newcommand{\mS}{\mathcal{S}}
 \newcommand{\mH}{\mathcal{H}}
 \newcommand{\mX}{\mathcal{X}}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\mW}{\mathcal{W}}
+\newcommand{\mZ}{\mathcal{Z}}
 \newcommand{\complex}{\mathbb{C}}
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\krondel}[1]{\delta_{#1}}
 \newcommand{\limit}[2]{\mathop{\longrightarrow}_{#1 \rightarrow #2}}
+\newcommand{\measure}{\mathbb{P}}
 \newcommand{\scap}{\!\cdot\!}
 \newcommand{\intd}[1]{\int\!\dm#1\: }
 \newcommand{\ave}[1]{\left\langle #1 \right\rangle}
@@ -232,12 +239,15 @@
 \newcommand{\npbNMFfinitesparse}{\mr{npbNMF}^\text{sparse}_\approx}
 \newcommand{\npbNMFfinitess}{\mr{npbNMF}^\text{ss}_\approx}
 \newcommand{\npbNMFinfss}{\mr{npbNMF}^\text{ss}_\infty}
+\newcommand{\block}[1]{\underbrace{\begin{matrix}1 & \cdots & 1\end{matrix}}_{#1}}
+\newcommand{\blockt}[1]{\begin{rcases} \begin{matrix} ~\\ ~\\ ~ \end{matrix} \end{rcases}{#1}}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
 \)
 </p>
 </div>
 <section>
-<section id="slide-orgdb78cd3">
-<h2 id="orgdb78cd3">Probabilistic Programs [<a href="#van2018introduction">van&nbsp;de Meent et&nbsp;al., 2018</a>]</h2>
+<section id="slide-org8a89328">
+<h2 id="org8a89328">Probabilistic Programs [<a href="#van2018introduction">van&nbsp;de Meent et&nbsp;al., 2018</a>]</h2>
 <div class="container">
 <div class="col">
 
@@ -252,7 +262,7 @@ Sorry, your browser does not support SVG.</object>
 <ul>
 <li>Infer the posterior distribution \(p(\xlat|\xobs)\) over latent variables \(\xlat\) (specified by
 <b>sample</b> statements) conditioned on observed variables \(\xobs\) (specified by <b>observe</b> statements)</li>
-<li data-fragment-index="2" class="fragment appear">We consider the joint distribution over the space of "traces" \((x_{a_t},
+<li data-fragment-index="2" class="fragment appear">We consider the joint distribution over the space of &ldquo;traces&rdquo; \((x_{a_t},
   a_t)\) for \(t=1,\dots,T\) \[p(\xxx, \aaa) = \prod_{t=1}^T
   p(a_t|x_{a_1:a_{t-1}},a_{1:t-1}) p(x_{a_t}|x_{a_1:a_{t-1}},a_{1:t})\]</li>
 <li data-fragment-index="2" class="fragment appear">We denoted the set of all variables \(\xxx=\xlat\cup\xobs\)</li>
@@ -268,8 +278,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-org8a62bcd">
-<h2 id="org8a62bcd">Inference Compilation (IC) [<a href="#le2016inference">Le et&nbsp;al., 2017</a>]</h2>
+<section id="slide-orga5cadae">
+<h2 id="orga5cadae">Inference Compilation (IC) [<a href="#le2016inference">Le et&nbsp;al., 2017</a>]</h2>
 <div class="container">
 <div class="col-item">
 <ul>
@@ -291,7 +301,7 @@ Sorry, your browser does not support SVG.</object>
 marginal \(p(\xxx_{\mr{obs}})\)
 \[\begin{align}\mL_{\mr{IC}}(\phi)&=\meanp{p(\xxx_{\mr{obs}})}{\kl{p(\xxx_{\mr{lat}}|\xxx_{\mr{obs}})}{q(\xxx_{\mr{lat}}|\xxx_{\mr{obs}};\phi)}}\nn\\ &=-\meanp{p(\xxx)}{\log
   q(\xxx_{\mr{lat}}|\xxx_{\mr{obs}};\phi)} + \mr{const}\nn\end{align}\]</li>
-<li data-fragment-index="7" class="fragment appear">"Evaluation based inference" requires the simulator to run
+<li data-fragment-index="7" class="fragment appear">&ldquo;Evaluation based inference&rdquo; requires the simulator to run
 <b>repeatedly</b></li>
 
 </ul>
@@ -302,8 +312,8 @@ marginal \(p(\xxx_{\mr{obs}})\)
 </section>
 </section>
 <section>
-<section id="slide-org0181750">
-<h2 id="org0181750">Probabilistic Surrogate Network (PSN)</h2>
+<section id="slide-org0390320">
+<h2 id="org0390320">Probabilistic Surrogate Network (PSN)</h2>
 <div class="container">
 <div class="col-item">
 <ul>
@@ -311,7 +321,7 @@ marginal \(p(\xxx_{\mr{obs}})\)
 <li data-fragment-index="2" class="fragment appear">How about learning a surrogate model \(s\) that replaces \(p\) as a program when \(p\) is slow?</li>
 <li data-fragment-index="3" class="fragment appear">We structure \(s\) as a distribution over traces factorized exactly like \(p\)
 \[ s(\xxx,\aaa;\theta)=\prod_{t=1}^{T}s(x_{a_t}|\xi_{a_t}(x_{a_1:a_{t-1}},a_{1:t},\theta))s(a_t|\xi_{t-1}(x_{a_1:a_{t-1}},a_{1:t-1},\theta))\]</li>
-<li data-fragment-index="3" class="fragment appear">\(\xi_{a_t}(\cdot)\) and \(\xi_t(\cdot)\) are neural networks linked across the <br>addresses using a recurrent neural network structure</li>
+<li data-fragment-index="3" class="fragment appear">\(\xi_{a_t}(\cdot)\) and \(\xi_t(\cdot)\) are recurrent neural networks</li>
 
 </ul>
 </div>
@@ -329,8 +339,8 @@ marginal \(p(\xxx_{\mr{obs}})\)
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-orge7ecfdc">
-<h3 id="orge7ecfdc">The Communication Interface</h3>
+<section id="slide-org294581b">
+<h3 id="org294581b">The Communication Interface</h3>
 
 <div class="figure">
 <p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/inference-program-surrogate.svg" class="org-svg" height="1100">
@@ -342,8 +352,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-org5bb0061">
-<h2 id="org5bb0061">Simulating the Curing of Composite Materials</h2>
+<section id="slide-org2be6d6a">
+<h2 id="org2be6d6a">Simulating the Curing of Composite Materials</h2>
 
 <div class="figure">
 <p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/wing_problem.svg" class="org-svg" height="800">
@@ -354,8 +364,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-org9acf587">
-<h2 id="org9acf587">Faster Simulation</h2>
+<section id="slide-orgd5ee418">
+<h2 id="orgd5ee418">Faster Simulation</h2>
 <ul>
 <li><b>~30 times faster simulation</b></li>
 
@@ -367,21 +377,21 @@ Sorry, your browser does not support SVG.</object>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-org7e06733">
-<h3 id="org7e06733">Control Flow Program</h3>
+<section id="slide-orgebfa010">
+<h3 id="orgebfa010">Control Flow Program</h3>
 
 <div class="figure">
-<p><object type="image/svg+xml" data="figs/simple_program.svg" class="org-svg" height="900">
+<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/simple_program.svg" class="org-svg" height="900">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-orgf1eb970">
-<h3 id="orgf1eb970">Address Transitions</h3>
+<section id="slide-org91a236e">
+<h3 id="org91a236e">Address Transitions</h3>
 
 <div class="figure">
-<p><object type="image/svg+xml" data="figs/address_transition_orig.svg" class="org-svg" width="2400">
+<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/address_transition_orig.svg" class="org-svg" width="2400">
 Sorry, your browser does not support SVG.</object>
 </p>
 <p><span class="figure-number">Figure 6: </span>Address transition graph generated by the original program</p>
@@ -389,7 +399,7 @@ Sorry, your browser does not support SVG.</object>
 
 
 <div class="figure">
-<p><object type="image/svg+xml" data="figs/address_transition_surr.svg" class="org-svg" width="2400">
+<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/address_transition_surr.svg" class="org-svg" width="2400">
 Sorry, your browser does not support SVG.</object>
 </p>
 <p><span class="figure-number">Figure 7: </span>Address transition graph generated by the PSN</p>
@@ -398,8 +408,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-org0a14dfa">
-<h2 id="org0a14dfa">Faster Inference</h2>
+<section id="slide-orgb5585fa">
+<h2 id="orgb5585fa">Faster Inference</h2>
 <ul>
 <li>Infer \(\meanp{p(\xlat|\xobs)}{\mu_w}\)</li>
 <li>\(\mu_w\) is the empirical mean across the time window
@@ -410,7 +420,7 @@ depth $30$mm</li>
 </ul>
 
 <div class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/posterior_box_plot.svg" class="fragment (appear)" height="800">
+<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/posterior_box_plot.svg" class="fragment (appear)" height="700">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
@@ -418,8 +428,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-org040e27b">
-<h2 id="org040e27b">References</h2>
+<section id="slide-org5a2e4ba">
+<h2 id="org5a2e4ba">References</h2>
 <div id="includedContent"></div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
