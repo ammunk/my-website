@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="author" content="Muff"/>
+<meta name="author" content="Andreas Munk"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -23,7 +23,7 @@
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
-<script type="text/javascript" src=""></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://ammunk.com/assets/js/mathjax-config.js" defer> </script>
 <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"> </script>
@@ -34,6 +34,9 @@
 <body>
 <div class="reveal">
 <div class="slides">
+<section id="sec-title-slide">
+<h2 class="author">Andreas Munk</h2>
+</section>
 <div id="hiddenMathbox" style="display: none;">
 <p>
 \(
@@ -52,6 +55,8 @@
 \newcommand{\eeq}{\end{equation}}
 \newcommand{\bal}{\begin{align}}
 \newcommand{\eal}{\end{align}}
+\newcommand{\balnn}{\begin{align*}}
+\newcommand{\ealnn}{\end{align*}}
 \newcommand{\bsubal}[2]{\bsub \eqlab{#1}\bal#2\eal}
 \newcommand{\esubal}{\esub}
 \newcommand{\bsub}{\begin{subequations}}
@@ -92,6 +97,7 @@
 \newcommand{\mN}{\mathcal{N}}
 \newcommand{\mMN}{\mathcal{MN}}
 \newcommand{\mL}{\mathcal{L}}
+\newcommand{\mR}{\mathcal{R}}
 \newcommand{\mO}{\mathcal{O}}
 \newcommand{\mI}{\mathcal{I}}
 \newcommand{\mE}{\mathcal{E}}
@@ -104,10 +110,14 @@
 \newcommand{\mS}{\mathcal{S}}
 \newcommand{\mH}{\mathcal{H}}
 \newcommand{\mX}{\mathcal{X}}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\mW}{\mathcal{W}}
+\newcommand{\mZ}{\mathcal{Z}}
 \newcommand{\complex}{\mathbb{C}}
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\krondel}[1]{\delta_{#1}}
 \newcommand{\limit}[2]{\mathop{\longrightarrow}_{#1 \rightarrow #2}}
+\newcommand{\measure}{\mathbb{P}}
 \newcommand{\scap}{\!\cdot\!}
 \newcommand{\intd}[1]{\int\!\dm#1\: }
 \newcommand{\ave}[1]{\left\langle #1 \right\rangle}
@@ -223,14 +233,17 @@
 \newcommand{\npbNMFfinitesparse}{\mr{npbNMF}^\text{sparse}_\approx}
 \newcommand{\npbNMFfinitess}{\mr{npbNMF}^\text{ss}_\approx}
 \newcommand{\npbNMFinfss}{\mr{npbNMF}^\text{ss}_\infty}
+\newcommand{\block}[1]{\underbrace{\begin{matrix}1 & \cdots & 1\end{matrix}}_{#1}}
+\newcommand{\blockt}[1]{\begin{rcases} \begin{matrix} ~\\ ~\\ ~ \end{matrix} \end{rcases}{#1}}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
 \)
 </p>
 </div>
 
 
 <section>
-<section id="slide-org1e3d841">
-<h2 id="org1e3d841">Beyond Hasty V4</h2>
+<section id="slide-org9460262">
+<h2 id="org9460262">Beyond Hasty V4</h2>
 <div class="support">
 <div class="container">
 <div class="col">
