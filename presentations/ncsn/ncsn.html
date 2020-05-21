@@ -26,13 +26,13 @@
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://ammunk.com/assets/js/mathjax-config.js" defer> </script>
 <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"> </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script> $(function(){$("#includedContent").load("./bibtex.html");}); </script>
 <meta name="description" content="Generative Modeling by Estimating Gradients of the Data Distribution">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
@@ -52,37 +52,37 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#/slide-org82352f3">Generative Modeling by Estimating Gradients of the Data Distribution [<a href="#/slide-song2019generative">Song and Ermon, 2019</a>]</a></li>
-<li><a href="#/slide-orga843f83">Langevin Dynamics [<a href="#/slide-wibisono2018sampling">Wibisono, 2018</a>]</a></li>
-<li><a href="#/slide-orgbee672f">Score Matching [<a href="#/slide-hyvarinen2005estimation">Hyv&auml;rinen, 2005</a>]</a>
+<li><a href="#/slide-org385c397">Generative Modeling by Estimating Gradients of the Data Distribution [<a href="#/slide-song2019generative">Song and Ermon, 2019</a>]</a></li>
+<li><a href="#/slide-orge08859c">Langevin Dynamics [<a href="#/slide-wibisono2018sampling">Wibisono, 2018</a>]</a></li>
+<li><a href="#/slide-org18170da">Score Matching [<a href="#/slide-hyvarinen2005estimation">Hyv&auml;rinen, 2005</a>]</a>
 <ul>
-<li><a href="#/slide-org93dc6e1">Proofs of the Objective Reduction</a></li>
+<li><a href="#/slide-orgc30ff13">Proofs of the Objective Reduction</a></li>
 </ul>
 </li>
-<li><a href="#/slide-orgc4650f3">Sliced Score Matching [<a href="#/slide-song2019sliced">Song et&nbsp;al., 2019</a>]</a>
+<li><a href="#/slide-org5f8c67e">Sliced Score Matching [<a href="#/slide-song2019sliced">Song et&nbsp;al., 2019</a>]</a>
 <ul>
-<li><a href="#/slide-org98e9c84">Algorithmic Differences</a></li>
+<li><a href="#/slide-orga95406a">Algorithmic Differences</a></li>
 </ul>
 </li>
-<li><a href="#/slide-org6d39c50">Denoising Score Matching [<a href="#/slide-vincent2011connection">Vincent, 2011</a>]</a>
+<li><a href="#/slide-org03a1293">Denoising Score Matching [<a href="#/slide-vincent2011connection">Vincent, 2011</a>]</a>
 <ul>
-<li><a href="#/slide-org492e8e9">Proofs of the Minimization Equivalence</a></li>
+<li><a href="#/slide-org89c5038">Proofs of the Minimization Equivalence</a></li>
 </ul>
 </li>
-<li><a href="#/slide-orgad1c2b7">Langevin Dynamics in the Noise Perturbed Manifold</a></li>
-<li><a href="#/slide-org878a10d">Why?</a></li>
-<li><a href="#/slide-orge307655">Annealed Langevin Dynamics</a></li>
-<li><a href="#/slide-org7171f5e">Practical Considerations</a></li>
-<li><a href="#/slide-org69e03d3">Experiments</a>
+<li><a href="#/slide-org6e56908">Langevin Dynamics in the Noise Perturbed Manifold</a></li>
+<li><a href="#/slide-org549d1f5">Why?</a></li>
+<li><a href="#/slide-org7cfdf74">Annealed Langevin Dynamics</a></li>
+<li><a href="#/slide-orgc625cf4">Practical Considerations</a></li>
+<li><a href="#/slide-orgbd591d6">Experiments</a>
 <ul>
-<li><a href="#/slide-org9852d37">Experimental Setup</a></li>
-<li><a href="#/slide-org5941667">MNIST, CelebA and CIFAR-10</a></li>
-<li><a href="#/slide-orgfa72d9e">Sampling Dynamics</a></li>
-<li><a href="#/slide-orgbaab3b0">Compared to other Methods</a></li>
+<li><a href="#/slide-orge0c1929">Experimental Setup</a></li>
+<li><a href="#/slide-org7661035">MNIST, CelebA and CIFAR-10</a></li>
+<li><a href="#/slide-org6bb2ead">Sampling Dynamics</a></li>
+<li><a href="#/slide-org9961e0a">Compared to other Methods</a></li>
 </ul>
 </li>
-<li><a href="#/slide-orga46f32f">Conclusion</a></li>
-<li><a href="#/slide-org525de2d">References</a></li>
+<li><a href="#/slide-org8d5f40a">Conclusion</a></li>
+<li><a href="#/slide-org0413a35">References</a></li>
 </ul>
 </div>
 </div>
@@ -290,8 +290,8 @@
 </p>
 </div>
 <section>
-<section id="slide-org82352f3">
-<h2 id="org82352f3">Generative Modeling by Estimating Gradients of the Data Distribution [<a href="#song2019generative">Song and Ermon, 2019</a>]</h2>
+<section id="slide-org385c397">
+<h2 id="org385c397">Generative Modeling by Estimating Gradients of the Data Distribution [<a href="#song2019generative">Song and Ermon, 2019</a>]</h2>
 <ul>
 <li>Likelihood-free generative modeling</li>
 <li>Propose an annealed Langevin Dynamics</li>
@@ -311,8 +311,8 @@
 </section>
 </section>
 <section>
-<section id="slide-orga843f83">
-<h2 id="orga843f83">Langevin Dynamics [<a href="#wibisono2018sampling">Wibisono, 2018</a>]</h2>
+<section id="slide-orge08859c">
+<h2 id="orge08859c">Langevin Dynamics [<a href="#wibisono2018sampling">Wibisono, 2018</a>]</h2>
 <div class="container">
 <div class="col-list" style="text-align:left">
 <ul>
@@ -355,8 +355,8 @@ acceptance rate goes to one</li>
 </section>
 </section>
 <section>
-<section id="slide-orgbee672f">
-<h2 id="orgbee672f">Score Matching [<a href="#hyvarinen2005estimation">Hyv&auml;rinen, 2005</a>]</h2>
+<section id="slide-org18170da">
+<h2 id="org18170da">Score Matching [<a href="#hyvarinen2005estimation">Hyv&auml;rinen, 2005</a>]</h2>
 <ul>
 <li>Can we estimate \(\grad_{\xxx}\ln p(\xxx)\)?</li>
 <li>Define \(s_{\theta}(\xxx)=\grad_{\xxx}\ln q_{\theta}(\xxx),
@@ -382,8 +382,8 @@ acceptance rate goes to one</li>
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-org93dc6e1">
-<h3 id="org93dc6e1">Proofs of the Objective Reduction</h3>
+<section id="slide-orgc30ff13">
+<h3 id="orgc30ff13">Proofs of the Objective Reduction</h3>
 <ul>
 <li>We need only consider
 \(-\intd{\xxx}p(\xxx)\trans{s_{\theta}(\xxx)}\grad_{\xxx}\ln
@@ -432,8 +432,8 @@ concludes the proof</li>
 </section>
 </section>
 <section>
-<section id="slide-orgc4650f3">
-<h2 id="orgc4650f3">Sliced Score Matching [<a href="#song2019sliced">Song et&nbsp;al., 2019</a>]</h2>
+<section id="slide-org5f8c67e">
+<h2 id="org5f8c67e">Sliced Score Matching [<a href="#song2019sliced">Song et&nbsp;al., 2019</a>]</h2>
 <ul>
 <li>Preferably no Jacobian in score matching</li>
 <li>Projects the score functions onto a random direction \(\vvv\in\real^{d}\)</li>
@@ -453,8 +453,8 @@ concludes the proof</li>
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-org98e9c84">
-<h3 id="org98e9c84">Algorithmic Differences</h3>
+<section id="slide-orga95406a">
+<h3 id="orga95406a">Algorithmic Differences</h3>
 <div class="container">
 <div class="col">
 
@@ -477,8 +477,8 @@ concludes the proof</li>
 </section>
 </section>
 <section>
-<section id="slide-org6d39c50">
-<h2 id="org6d39c50">Denoising Score Matching [<a href="#vincent2011connection">Vincent, 2011</a>]</h2>
+<section id="slide-org03a1293">
+<h2 id="org03a1293">Denoising Score Matching [<a href="#vincent2011connection">Vincent, 2011</a>]</h2>
 <ul>
 <li>Induce noise pertubation of the data via some “pertubation” distribution</li>
 <li>\(\sigma\) denotes noise level</li>
@@ -504,8 +504,8 @@ concludes the proof</li>
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-org492e8e9">
-<h3 id="org492e8e9">Proofs of the Minimization Equivalence</h3>
+<section id="slide-org89c5038">
+<h3 id="org89c5038">Proofs of the Minimization Equivalence</h3>
 <ul>
 <li>We prove that minimizing \(J_{\mr{NSM}}(\theta)\) is equivalent to minimizing
 \[J_{\mr{D}}(\theta)=\frac{1}{2}\meanp{p_{\sigma}(\tilde{\xxx})}{
@@ -550,8 +550,8 @@ constant equal to the difference between the constant terms of
 </section>
 </section>
 <section>
-<section id="slide-orgad1c2b7">
-<h2 id="orgad1c2b7">Langevin Dynamics in the Noise Perturbed Manifold</h2>
+<section id="slide-org6e56908">
+<h2 id="org6e56908">Langevin Dynamics in the Noise Perturbed Manifold</h2>
 <ul>
 <li>Perturb data with Gaussian noise - \(\mN(0,\sigma)\)</li>
 <li>Train noise conditional score estimator
@@ -573,8 +573,8 @@ constant equal to the difference between the constant terms of
 </section>
 </section>
 <section>
-<section id="slide-org878a10d">
-<h2 id="org878a10d">Why?</h2>
+<section id="slide-org549d1f5">
+<h2 id="org549d1f5">Why?</h2>
 <ul>
 <li>The denoising score matching objective has no Jacobian terms</li>
 <li>The theory behind score matching requires a well-defined \(p(\xxx)\) everywhere
@@ -620,8 +620,8 @@ with near-zero probability
 </section>
 </section>
 <section>
-<section id="slide-orge307655">
-<h2 id="orge307655">Annealed Langevin Dynamics</h2>
+<section id="slide-org7cfdf74">
+<h2 id="org7cfdf74">Annealed Langevin Dynamics</h2>
 <ul>
 <li>Intuition:
 <ul>
@@ -683,8 +683,8 @@ traversed regions at the different noise levels</li>
 </section>
 </section>
 <section>
-<section id="slide-org7171f5e">
-<h2 id="org7171f5e">Practical Considerations</h2>
+<section id="slide-orgc625cf4">
+<h2 id="orgc625cf4">Practical Considerations</h2>
 <ul>
 <li>Step size \(\alpha_{i}\)
 <ul>
@@ -700,14 +700,14 @@ traversed regions at the different noise levels</li>
 </section>
 </section>
 <section>
-<section id="slide-org69e03d3">
-<h2 id="org69e03d3">Experiments</h2>
-<div class="outline-text-2" id="text-org69e03d3">
+<section id="slide-orgbd591d6">
+<h2 id="orgbd591d6">Experiments</h2>
+<div class="outline-text-2" id="text-orgbd591d6">
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-org9852d37">
-<h3 id="org9852d37">Experimental Setup</h3>
+<section id="slide-orge0c1929">
+<h3 id="orge0c1929">Experimental Setup</h3>
 <ul>
 <li>\(\tub{\sigma_{i}}_{i=1}^{10}=\tub{1,\dots,0.01}\)</li>
 <li>\(T=100,~\epsilon=2\times10^{-5}\)</li>
@@ -715,8 +715,8 @@ traversed regions at the different noise levels</li>
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-org5941667">
-<h3 id="org5941667">MNIST, CelebA and CIFAR-10</h3>
+<section id="slide-org7661035">
+<h3 id="org7661035">MNIST, CelebA and CIFAR-10</h3>
 <ul>
 <li>CelebA was center cropped to \(140\times140\) and resized to \(32\times32\)</li>
 <li>state-of-the-art inception score of \(8.87\) on CIFAR-10</li>
@@ -730,8 +730,8 @@ traversed regions at the different noise levels</li>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-orgfa72d9e">
-<h3 id="orgfa72d9e">Sampling Dynamics</h3>
+<section id="slide-org6bb2ead">
+<h3 id="org6bb2ead">Sampling Dynamics</h3>
 
 <div class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/intermediate.png" alt="intermediate.png" height="800" />
@@ -740,8 +740,8 @@ traversed regions at the different noise levels</li>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-orgbaab3b0">
-<h3 id="orgbaab3b0">Compared to other Methods</h3>
+<section id="slide-org9961e0a">
+<h3 id="org9961e0a">Compared to other Methods</h3>
 
 <div class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/results_table.png" alt="results_table.png" />
@@ -751,8 +751,8 @@ traversed regions at the different noise levels</li>
 </section>
 </section>
 <section>
-<section id="slide-orga46f32f">
-<h2 id="orga46f32f">Conclusion</h2>
+<section id="slide-org8d5f40a">
+<h2 id="org8d5f40a">Conclusion</h2>
 <ul>
 <li>New likelihood-free generative modeling framework</li>
 <li>Reach state-of-the-art inception score on CIFAR-10</li>
@@ -766,8 +766,8 @@ traversed regions at the different noise levels</li>
 </section>
 </section>
 <section>
-<section id="slide-org525de2d">
-<h2 id="org525de2d">References</h2>
+<section id="slide-org0413a35">
+<h2 id="org0413a35">References</h2>
 <div id="includedContent"></div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
