@@ -2,6 +2,7 @@
 title: presentations
 layout: page
 permalink: /presentations/
+nav: true
 ---
 
 ### Academic

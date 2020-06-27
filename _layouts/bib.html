@@ -1,109 +1,107 @@
 ---
 ---
 
-<!-- See /_sass/ublications.scss for styles-->
-
-{% if entry.abbr %}
-  {% if site.data.venues[entry.abbr] %}
-    <abbr>[<a href="{{site.data.venues[entry.abbr].url}}" target="_blank">{{entry.abbr}}</a>]</abbr>
-  {% else %}
-    <abbr>[{{entry.abbr}}]</abbr>
-  {% endif %}
-{% endif %}
-
-<div id="{{entry.key}}">
-  {% if entry.type == "thesis" %}
-    {{reference}}
-  {% else %}
-    <span class="title">{{entry.title}}</span>
-    <span class="author">
-      {% for author in entry.author_array %}
-        {% if forloop.length == 1 %}
-          {% if author.last == site.scholar.last_name %}
-            <em>{{author.last}}, {{author.first}}</em>
-          {% else %}
-            {{author.last}}, {{author.first}}
-          {% endif %}
-        {% else %}
-          {% unless forloop.last %}
-            {% if author.last == site.scholar.last_name %}
-              <em>{{author.last}}, {{author.first}}</em>,
-            {% else %}
-              {% if site.data.coauthors[author.last] %}
-                <a href="{{site.data.coauthors[author.last].url}}" target="_blank">{{author.last}}, {{author.first}}</a>,
-              {% else %}
-                {{author.last}}, {{author.first}},
-              {% endif %}
-            {% endif %}
-          {% else %}
-            {% if author.last == site.scholar.last_name %}
-              and <em>{{author.last}}, {{author.first}}</em>
-            {% else %}
-              {% if site.data.coauthors[author.last] %}
-                and <a href="{{site.data.coauthors[author.last].url}}" target="_blank">{{author.last}}, {{author.first}}</a>
-              {% else %}
-                and {{author.last}}, {{author.first}}
-              {% endif %}
-            {% endif %}
-          {% endunless %}
-        {% endif %}
-      {% endfor %}
-    </span>
-
-    <span class="periodical">
-    {% if entry.type == "article" %}
-      <em>{{entry.journal}}</em>
-    {% elsif entry.type == "inproceedings" %}
-      <em>In {{entry.booktitle}}</em>
+<div class="row">
+  <div class="col-sm-2 abbr">
+  {% if entry.abbr %}
+    {% if site.data.venues[entry.abbr] %}
+    <abbr class="badge"><a href="{{site.data.venues[entry.abbr].url}}" target="_blank">{{entry.abbr}}</a></abbr>
+    {% else %}
+    <abbr class="badge">{{entry.abbr}}</abbr>
     {% endif %}
-    {% if entry.year %}
-      {{entry.year}}
-    {% endif %}
-    </span>
   {% endif %}
-
-    <!--
-         The "more" class for the buttons are custom and adds a "hand curser" when hovering.
-         See the /_sass/amunk-bib and /assets/css as well as search "add custom css to jekyll"
-         to see how this is done
-
-         Further for bottons the id after '_' must match the id for dropDown boxes further down
-    -->
-  <span class="links">
-      [<a class="btnId bibtex" id="b_{{key}}-bibtex">BIB</a>]
-  {% if entry.abstract %}
-      [<a class="btnId abstract" id="b_{{key}}-abstract">ABS</a>]
-  {% endif %}
-  {% if entry.arxiv %}
-    [<a href="http://arxiv.org/abs/{{ entry.arxiv }}" target="_blank">arXiv</a>]
-  {% endif %}
-  {% if entry.url %}
-    [<a href="{{ entry.url }}" target="_blank">HTML</a>]
-  {% endif %}
-  {% if link %}
-    [<a href="{{link}}" target="_blank">PDF</a>]
-  {% endif %}
-  {% if entry.supp %}
-    [<a href="{{ entry.supp | prepend: '/assets/pdf/' | prepend: site.baseurl | prepend: site.url }}" target="_blank">Supp</a>]
-  {% endif %}
-  {% if entry.poster %}
-    [<a href="{{ entry.poster | prepend: '/assets/pdf/' | prepend: site.baseurl | prepend: site.url }}" target="_blank">Poster</a>]
-  {% endif %}
-  {% if entry.slides %}
-    [<a href="{{ entry.slides | prepend: '/assets/pdf/' | prepend: site.baseurl | prepend: site.url }}" target="_blank">Slides</a>]
-  {% endif %}
-  {% if entry.code %}
-    [<a href="{{ entry.code }}" target="_blank">Code</a>]
-  {% endif %}
-  </span>
-
-  <!-- Hidden bibtex block -->
-  <!-- Hidden bibtex block -->
-  <div class="snippet-to-copy hidden-bibtex" id="{{key}}-bibtex"><pre>{{ entry.bibtex }}</pre></div>
-  <!-- Hidden abstract block -->
-  {% if entry.abstract %}
-  <div class="hidden-abstract" id="{{key}}-abstract" style="display:none;">
-      <div> {{ entry.abstract }} </div>
   </div>
-  {% endif %}
+
+  <div id="{{entry.key}}" class="col-sm-8">
+    {% if entry.type == "thesis" %}
+      {{reference}}
+    {% else %}
+      <span class="title">{{entry.title}}</span>
+      <span class="author">
+        {% for author in entry.author_array %}
+          {% if forloop.length == 1 %}
+            {% if author.last == site.scholar.last_name %}
+              <em>{{author.last}}, {{author.first}}</em>
+            {% else %}
+              {{author.last}}, {{author.first}}
+            {% endif %}
+          {% else %}
+            {% unless forloop.last %}
+              {% if author.last == site.scholar.last_name %}
+                <em>{{author.last}}, {{author.first}}</em>,
+              {% else %}
+                {% if site.data.coauthors[author.last] %}
+                  <a href="{{site.data.coauthors[author.last].url}}" target="_blank">{{author.last}}, {{author.first}}</a>,
+                {% else %}
+                  {{author.last}}, {{author.first}},
+                {% endif %}
+              {% endif %}
+            {% else %}
+              {% if author.last == site.scholar.last_name %}
+                and <em>{{author.last}}, {{author.first}}</em>
+              {% else %}
+                {% if site.data.coauthors[author.last] %}
+                  and <a href="{{site.data.coauthors[author.last].url}}" target="_blank">{{author.last}}, {{author.first}}</a>
+                {% else %}
+                  and {{author.last}}, {{author.first}}
+                {% endif %}
+              {% endif %}
+            {% endunless %}
+          {% endif %}
+        {% endfor %}
+      </span>
+
+      <span class="periodical">
+      {% if entry.type == "article" %}
+        <em>{{entry.journal}}</em>
+      {% elsif entry.type == "inproceedings" %}
+        <em>In {{entry.booktitle}}</em>
+      {% endif %}
+      {% if entry.year %}
+        {{entry.year}}
+      {% endif %}
+      </span>
+    {% endif %}
+
+      <!--
+          The "more" class for the buttons are custom and adds a "hand curser" when hovering.
+          See the /_sass/amunk and /assets/css as well as search "add custom css to jekyll"
+          to see how this is done
+
+          Further for bottons the id after '_' must match the id for dropDown boxes further down
+      -->
+    <span class="links">
+        [<a class="btnId bibtex" id="b_{{key}}-bibtex">BIB</a>]
+    {% if entry.abstract %}
+        [<a class="btnId abstract" id="b_{{key}}-abstract">ABS</a>]
+    {% endif %}
+    {% if entry.arxiv %}
+      [<a href="http://arxiv.org/abs/{{ entry.arxiv }}" target="_blank">arXiv</a>]
+    {% endif %}
+    {% if entry.html %}
+      [<a href="{{ entry.html }}" target="_blank">HTML</a>]
+    {% endif %}
+    {% if entry.supp %}
+      [<a href="{{ entry.supp | prepend: '/assets/pdf/' | relative_url }}" target="_blank">Supp</a>]
+    {% endif %}
+    {% if entry.poster %}
+      [<a href="{{ entry.poster | prepend: '/assets/pdf/' | relative_url }}" target="_blank">Poster</a>]
+    {% endif %}
+    {% if entry.slides %}
+      [<a href="{{ entry.slides | prepend: '/assets/pdf/' | relative_url }}" target="_blank">Slides</a>]
+    {% endif %}
+    {% if entry.code %}
+      [<a href="{{ entry.code }}" target="_blank">Code</a>]
+    {% endif %}
+    </span>
+
+    <!-- Hidden bibtex block -->
+    <div class="snippet-to-copy hidden" id="{{key}}-bibtex"><pre>{{ entry.bibtex }}</pre></div>
+    <!-- Hidden abstract block -->
+    {% if entry.abstract %}
+    <div class="hidden" id="{{key}}-abstract" style="display:none;">
+        <p> {{ entry.abstract }} </p>
+    </div>
+    {% endif %}
+  </div>
 </div>

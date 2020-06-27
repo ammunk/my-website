@@ -13,7 +13,7 @@ for(var i=0;i<btns.length;i++){btns[i].addEventListener('mouseleave',clearToolti
                                btns[i].addEventListener('blur',clearTooltip);}
 function clearTooltip(e){e.currentTarget.setAttribute('class','btn');
                          e.currentTarget.removeAttribute('aria-label');}
-function showTooltip(elem,msg){elem.setAttribute('class','btn tooltipped tooltipped-s');
+function showTooltip(elem,msg){elem.setAttribute('class','btn tooltipped tooltipped-s tooltipped-no-delay');
                                elem.setAttribute('aria-label',msg);}
 function fallbackMessage(action){var actionMsg='';
                                  var actionKey=(action==='cut'?'X':'C');

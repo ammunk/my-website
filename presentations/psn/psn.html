@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>Deep Probabilistic Surrogate Networks for Universal Simulator Approximation</title>
+<title>Probabilistic Surrogate Networks for Universal Simulator Approximation</title>
 <meta name="author" content="Andreas Munk, Adam Ścibior, Atılım Güneş Baydin,@@latex:\\@@ @@html:<br>@@Andrew Stewart, Goran Fernlund,@@latex:\\@@ @@html:<br>@@Anoush Poursartip, Frank Wood"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
@@ -26,20 +26,20 @@
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://ammunk.com/assets/js/mathjax-config.js" defer> </script>
 <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"> </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script> $(function(){$("#includedContent").load("./bibtex.html");}); </script>
-<meta name="description" content="Deep Probabilistic Surrogate Networks for Universal Simulator Approximation">
+<meta name="description" content="Probabilistic Surrogate Networks for Universal Simulator Approximation">
+<script type="text/javascript" src=""></script>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
 <section id="sec-title-slide">
 <section id="sec-title-slide">
-    <h1 class="title">Deep Probabilistic Surrogate Networks for Universal Simulator Approximation</h1><h2 class="author">Andreas Munk, Adam Ścibior, Atılım Güneş Baydin, <br>Andrew Stewart, Goran Fernlund, <br>Anoush Poursartip, Frank Wood</h2><h4 class="email"><a href="mailto:amunk@cs.ubc.ca">amunk@cs.ubc.ca</a></h4><h4 class="date">January 28, 2020</h4>
+    <h1 class="title">Probabilistic Surrogate Networks for Universal Simulator Approximation</h1><h2 class="author">Andreas Munk, Adam Ścibior, Atılım Güneş Baydin, <br>Andrew Stewart, Goran Fernlund, <br>Anoush Poursartip, Frank Wood</h2><h4 class="email"><a href="mailto:amunk@cs.ubc.ca">amunk@cs.ubc.ca</a></h4><h4 class="date">January 28, 2020</h4>
 </section>
 
 </section>
@@ -246,13 +246,13 @@
 </p>
 </div>
 <section>
-<section id="slide-org8a89328">
-<h2 id="org8a89328">Probabilistic Programs [<a href="#van2018introduction">van&nbsp;de Meent et&nbsp;al., 2018</a>]</h2>
+<section id="slide-orgd766d3d">
+<h2 id="orgd766d3d">Probabilistic Programs [<a href="#van2018introduction">van&nbsp;de Meent et&nbsp;al., 2018</a>]</h2>
 <div class="container">
 <div class="col">
 
 <div class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/example_program.svg" class="org-svg" height="900">
+<p><object type="image/svg+xml" data="../../assets/img/psn/figs/example_program.svg" class="org-svg" height="900">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
@@ -278,8 +278,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-orga5cadae">
-<h2 id="orga5cadae">Inference Compilation (IC) [<a href="#le2016inference">Le et&nbsp;al., 2017</a>]</h2>
+<section id="slide-org4cadf41">
+<h2 id="org4cadf41">Inference Compilation (IC) [<a href="#le2016inference">Le et&nbsp;al., 2017</a>]</h2>
 <div class="container">
 <div class="col-item">
 <ul>
@@ -312,8 +312,8 @@ marginal \(p(\xxx_{\mr{obs}})\)
 </section>
 </section>
 <section>
-<section id="slide-org0390320">
-<h2 id="org0390320">Probabilistic Surrogate Network (PSN)</h2>
+<section id="slide-org19d69a6">
+<h2 id="org19d69a6">Probabilistic Surrogate Network (PSN)</h2>
 <div class="container">
 <div class="col-item">
 <ul>
@@ -339,11 +339,11 @@ marginal \(p(\xxx_{\mr{obs}})\)
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-org294581b">
-<h3 id="org294581b">The Communication Interface</h3>
+<section id="slide-org4407f5d">
+<h3 id="org4407f5d">The Communication Interface</h3>
 
 <div class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/inference-program-surrogate.svg" class="org-svg" height="1100">
+<p><object type="image/svg+xml" data="../../assets/img/psn/figs/inference-program-surrogate.svg" class="org-svg" height="1100">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
@@ -352,11 +352,11 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-org2be6d6a">
-<h2 id="org2be6d6a">Simulating the Curing of Composite Materials</h2>
+<section id="slide-org20ed2a1">
+<h2 id="org20ed2a1">Simulating the Curing of Composite Materials</h2>
 
 <div class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/wing_problem.svg" class="org-svg" height="800">
+<p><object type="image/svg+xml" data="../../assets/img/psn/figs/wing_problem.svg" class="org-svg" height="800">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
@@ -364,34 +364,34 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-orgd5ee418">
-<h2 id="orgd5ee418">Faster Simulation</h2>
+<section id="slide-orgc862b5c">
+<h2 id="orgc862b5c">Faster Simulation</h2>
 <ul>
 <li><b>~30 times faster simulation</b></li>
 
 </ul>
 
 <div class="figure">
-<p><img src="https://ammunk.com/assets/img/psn/figs/heatmap_guess.gif" alt="heatmap_guess.gif" height="800" />
+<p><img src="../../assets/img/psn/figs/heatmap_guess.gif" alt="heatmap_guess.gif" height="800" />
 </p>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-orgebfa010">
-<h3 id="orgebfa010">Control Flow Program</h3>
+<section id="slide-orgd5c2262">
+<h3 id="orgd5c2262">Control Flow Program</h3>
 
 <div class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/simple_program.svg" class="org-svg" height="900">
+<p><object type="image/svg+xml" data="../../assets/img/psn/figs/toy_program.svg" class="org-svg" height="900">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-org91a236e">
-<h3 id="org91a236e">Address Transitions</h3>
+<section id="slide-org4e8223a">
+<h3 id="org4e8223a">Address Transitions</h3>
 
 <div class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/address_transition_orig.svg" class="org-svg" width="2400">
+<p><object type="image/svg+xml" data="../../assets/img/psn/figs/address_transition_orig.svg" class="org-svg" width="2400">
 Sorry, your browser does not support SVG.</object>
 </p>
 <p><span class="figure-number">Figure 6: </span>Address transition graph generated by the original program</p>
@@ -399,7 +399,7 @@ Sorry, your browser does not support SVG.</object>
 
 
 <div class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/address_transition_surr.svg" class="org-svg" width="2400">
+<p><object type="image/svg+xml" data="../../assets/img/psn/figs/address_transition_surr.svg" class="org-svg" width="2400">
 Sorry, your browser does not support SVG.</object>
 </p>
 <p><span class="figure-number">Figure 7: </span>Address transition graph generated by the PSN</p>
@@ -408,8 +408,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-orgb5585fa">
-<h2 id="orgb5585fa">Faster Inference</h2>
+<section id="slide-org5ab418f">
+<h2 id="org5ab418f">Faster Inference</h2>
 <ul>
 <li>Infer \(\meanp{p(\xlat|\xobs)}{\mu_w}\)</li>
 <li>\(\mu_w\) is the empirical mean across the time window
@@ -420,7 +420,7 @@ depth $30$mm</li>
 </ul>
 
 <div class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/psn/figs/posterior_box_plot.svg" class="fragment (appear)" height="700">
+<p><object type="image/svg+xml" data="../../assets/img/psn/figs/posterior_box_plot.svg" class="fragment (appear)" height="700">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
@@ -428,8 +428,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-org5a2e4ba">
-<h2 id="org5a2e4ba">References</h2>
+<section id="slide-org131ee40">
+<h2 id="org131ee40">References</h2>
 <div id="includedContent"></div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
