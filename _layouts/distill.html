@@ -15,7 +15,7 @@
     <script type="text/json">{
       "title": "{{ page.title }}",
       "description": "{{ page.description }}",
-      "published": "{{ page.date }}",
+      "published": "{{ page.date | date_to_string }}",
       "authors": [
         {% for author in page.authors %}
         {
@@ -23,8 +23,8 @@
           "authorURL": "{{ author.url }}",
           "affiliations": [
             {
-              "name": "{{ author.affiliations.name }}",
-              "url": "{{ author.affiliations.url }}"
+              "name": "{{ author.affiliation }}",
+              "url": "{{ author.affiliation_url }}"
             }
           ]
         }{% if forloop.last == false %},{% endif %}
