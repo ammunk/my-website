@@ -128,6 +128,7 @@ include:
   - papers
   - js-files
   - _pages
+  - reveal.js
 
 # Plug-ins
 plugins:
