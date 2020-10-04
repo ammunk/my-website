@@ -1,21 +1,109 @@
 ---
 title: Ants on a Log
 layout: post
-date: 2020-01-30 08:03:00-0400
+date: 2020-10-03 19:11:00-0400
 comments: true
 ---
 
 {% include mathjax-macros.html %}
 
+<div id="outline-container-org89ecd75" class="outline-2">
+<h2 id="org89ecd75"><a href="https://physics.montana.edu/avorontsov/teaching/problemoftheweek/documents/problem_Math004.pdf">Problem Statement</a></h2>
+<div class="outline-text-2" id="text-org89ecd75">
+<p>
+\(N\) ants are dropped on a log with length \(L\). Each ant travels either left or
+right with constant speed \(c\). When two ants collide, they bounce off each
+other, reversing their direction. When an ant reaches the end of the log, it
+falls off. The initial position of each is follows a i.i.d. and follows a
+uniform distribution \(\mU(0, L)\).
+</p>
+
+<p>
+Questions:
+</p>
+
+<ol class="org-ol">
+<li>Whats is the longest possible time it could take for all ants to fall off the log?</li>
+<li>What is the average time it takes for all ants to fall off?</li>
+</ol>
 
 
 <div class="container">
-<button  class="btn btnId spoiler-button" id="b_spoiler-ants" data-text-swap="Hide!" data-text-original="!Show spoiler!">!Show spoiler!</button>
+<button  class="btn btnId spoiler-button" id="b_spoiler-ants1" data-text-swap="Hide!" data-text-original="!Show Answer to Q1!">!Show Answer to Q1!</button>
 </div>
 
 
-<div id="spoiler-ants" style="display:none">
+<div id="spoiler-ants1" style="display:none">
 <p>
-Hello!
+First we realize that the bouncing dynamics is equivalent to pretending the ants
+do not bounce at all and simply walk straight through each other. It follows
+that the ant that has to walk the <b>longest</b> distance determines when <b>all</b> ants
+has fallen off the log.
 </p>
+
+<p>
+The longest possible distance is \(L\) and so the maximum time \(t_{\mr{max}}\) over
+all possible ways the ants can placed on the log is,
+</p>
+
+<p>
+\[t_{\mr{max}}=\frac{L}{c}\].
+</p>
+</div>
+
+<div class="container">
+<button  class="btn btnId spoiler-button" id="b_spoiler-ants2" data-text-swap="Hide!" data-text-original="!Show Answer to Q2!">!Show Answer to Q2!</button>
+</div>
+
+<div id="spoiler-ants2" style="display:none">
+<p>
+To answer this question we simply refer consider the same dynamics and work out
+\(\mean{t_{\mr{max}}}\) using order statistics. Recall the $k$th order statistics
+is denoted \(X_{(k)}\), where \(X_{(k)}\) is the \(k\)&rsquo;th largest random value out of
+a sequence of \(N>k\) random variables such that for all \(k'\lt N\) \(X_{(k'\lt
+k)}\lt X_{(k)}\lt X_{(k'\gt k)}\). The distribution of \(X_{(k)}\) is given by,
+</p>
+
+<p>
+\[
+p_{k}(X_{(k)})=\frac{N!}{(k-1)!(N-k)!}P(X\leq
+X_{(k)})^{k-1}P(X>X_{(k)})^{N-k}p(X_{(k)}).
+\]
+</p>
+
+<p>
+Since an ant&rsquo;s position is uniformly distributed, we have that \(P(X\leq
+X_{(k)})=\frac{X_{(k)}}{L}\) and \(P(X>X_{(k)})=1-\frac{X_{(k)}}{L}\). To answer
+Q2, we notice that just like for Q1, we have that the ant with the longest
+distance determines the time for all ants to fall off. That is, considering that
+we can view the ants as being able to walk through each other, we look for the
+biggest distance any ant has to walk, i.e., the $N$th order statistics. This
+leads to,
+</p>
+
+\begin{align*}
+\meanp{p_{N}(X_{(N)})}{X_{(N)}}&=\int_{X_{(N)}=0}^{X_{(N)}=L} X_{(N)} \frac{N!}{(N-N)!(N-1)!}\paren{X_{(N)}\frac{1-X_{(N)}}{L}}^{N-N}\paren{\frac{X_{(N)}}{L}}^{N-1}\frac{1}{L} \dm{X_{(N)}} \\
+&= \frac{N}{L^{N}}\int_{X_{(N)}=0}^{X_{(N)}=L}X_{(N)}^{N}\dm{X_{(N)}}= \frac{N}{N+1}\frac{L^{N+1}}{L^{N}} = \frac{N}{N+1}L.
+\end{align*}
+
+<p>
+Such that,
+</p>
+
+<p>
+\[
+\mean{t_{\mr{ants~off}}}= \frac{\meanp{p_{N}(X_{(N)})}{X_{(N)}}}{c} = \frac{N}{N+1}\frac{L}{c}.
+\]
+</p>
+
+
+<p>
+Note that this derivation takes into account that the ants could face either
+way. Even though it is never explicitly accounted for, we achieve it by
+considering the distribution of <b>unsigned</b> (i.e. which direction they have to
+do) distances.
+</p>
+
+</div>
+</div>
 </div>
