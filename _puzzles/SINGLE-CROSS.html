@@ -1,0 +1,214 @@
+---
+title: Single-Cross
+layout: post
+date: 2020-10-04 11:11:00-0400
+comments: true
+---
+
+{% include mathjax-macros.html %}
+
+<div id="outline-container-orge557e7f" class="outline-2">
+<h2 id="orge557e7f"><a href="https://www.janestreet.com/puzzles/single-cross/">Singe-Cross</a></h2>
+<div class="outline-text-2" id="text-orge557e7f">
+<p>
+A random line segment of length \(D\) is chosen on a plane marked with an infinite
+checkerboard grid (i.e., a unit side length square grid). What length \(D\)
+maximizes the probability that the segment crosses exactly one line on the
+checkerboard grid, and what is this maximal probability?
+</p>
+
+<div class="container">
+<button  class="btn btnId spoiler-button" id="b_spoiler-cross" data-text-swap="Hide!" data-text-original="!Show Answer!">!Show Answer!</button>
+</div>
+
+<div id="spoiler-cross" style="display:none">
+
+<p>
+We need only consider the case where \(D\leq \sqrt{2}\), i.e. the diagonal length
+of a square. Up until that point greater \(D\) would imply decreasing the
+probability of never hitting a line on the checkerboard. At for \(D=\sqrt{2}\) the
+probability of never hitting a line is zero (0). Therefore if \(D\gt \sqrt{2}\)
+the probability of hitting <b>more</b> than one line would increase while the chances
+of hitting <b>only one</b> line would decrease.
+</p>
+
+<p>
+I will go through the answer for \(D\leq1\) and otherwise refer to the <a href="https://www.janestreet.com/static/pdfs/puzzles/feb-2020-solution.pdf">official
+answer</a> for the case of \(1\leq D \leq \sqrt{2}\).
+</p>
+
+<p>
+To see the solution we consider the possible outcomes:
+</p>
+
+<ol id="upper-al" class="org-ol">
+<li>Only a vertical line is crossed</li>
+<li>Only a horizontal line is crossed</li>
+<li>A horizontal <b>and</b> a vertical line is crossed</li>
+</ol>
+
+<p>
+We need \(P(A\cup B)\), and since the event \(A\), \(B\), and \(C\) are mutually
+exclusive we have \(P(A\cup B) = P(A) + P(B)\). The (easy) way to solve this and
+optimize for \(D\), is to figure out how to connect these probabilities with the
+<b>number</b> (\(N\)) of crosses.
+</p>
+
+<p>
+Firstly, we consider dividing \(N\) into the number of vertical crosses and
+horizontal crosses \(N=N_{\mr{v}} + N_{\mr{h}}\). Next we describe the state of
+the line segment in terms of its $x,y$-position and rotation relative to
+vertical \(\theta\). We then deduce from the problem statement that all these
+quantities make up three <b>independent uniformly distributed</b> random variables.
+</p>
+
+<div class="container-center-col">
+<div class="col-center">
+
+<div id="orge93989d" class="figure">
+<p><object type="image/svg+xml" data="../../assets/img/puzzles/single_cross.svg" class="org-svg" width="380">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+<div class="col-center" style="width:380;">
+<p>
+Figure <a href="#orge93989d">1</a>: Random position of a line segment (red) of length \(D\),
+rotated \(\theta\) degrees relative to the vertical axis.
+</p>
+</div>
+</div>
+
+
+<p>
+Then from Figure <a href="#orge93989d">1</a> we see that for a given \(\theta\) we have,
+</p>
+
+<p>
+\[
+\mean{N|\theta} = \mean{N_{\mr{v}}|\theta} + \mean{N_{\mr{h}}|\theta} = D \sin(\theta) + D\cos{\theta}
+\]
+</p>
+
+<p>
+Then we use the 8-fold symmetry of the rotation of the line segment. To be
+specific, considering dividing the rotational space \(\theta\in\br{0,2\pi}\) into
+first eight (8) sub-intervals \(I_{n}=\br{n\frac{\pi}{4}, (n+1)\frac{\pi}{4}}\)
+for \(n\in\tub{0,\dots,7}\). Clearly, conditioned on the line segment rotation
+lying in any subinterval, the expected number of line crosses is the same. To
+see this consider that every time we traverse into a difference subinterval we
+can also rotate our perspective. This means that we cannot tell which direction
+is horizontal and which is vertical. By the total law of expectation the
+expected number of line crosses is,
+</p>
+
+<p>
+\[
+\mean{N} = \mean{\mean{N|I}} = \sum_{n=0}^{n=7}\mean{N|I_{n}}P(I_{n}).
+\]
+</p>
+
+<p>
+Again due to the before-argued symmetry, \(\mean{N|I_{n}}\) is the same for all
+\(I_{n}\). Therefore we can take it outside the sum, and denote this conditional
+probability as \(\mean{N|\hat{I}}\), where \(\hat{I}\) indicates we can choose any
+subinterval. By considering say \(\hat{I}=I_{0}\) and accounting for the uniform
+distribution on \(\hat{I}=\br{0,\frac{\pi}{4}\), this leads to,
+</p>
+
+<p>
+\[
+\mean{N} =\frac{4}{\pi}\int_{0}^{\frac{\pi}{4}}D\paren{\sin(\theta)+\cos(\theta)}\dm{\theta} = \frac{D 4}{\pi}
+\]
+</p>
+
+<p>
+However, we can actually, write \(\mean{N}\) in terms of event \(A\), \(B\), and \(C\),
+and thereby relate what we just calculated. By writing \(N=N_{\mr{only~v}} +
+N_{\mr{only~v}} + N_{\mr{both~v,h}}\) we have,
+</p>
+
+\begin{align*}
+\mean{N} &= \mean{N_{\mr{only~v}}} + \mean{N_{\mr{only~v}}} +
+\mean{N_{\mr{both~v,h}}} \\
+&= \mean{\mathbb{1}_{\mr{only~v}}(N)} + \mean{\mathbb{1}_{\mr{only~h}}(N)} + 2\mean{\mathbb{1}_{\mr{both~v,h}}(N)} \\
+&= P(A) + P(B) + 2P(C),
+\end{align*}
+<p>
+where the factors in front of the indicator functions reflect the actual
+possible number \(N\) can take given that event occur.
+</p>
+
+<div class="container-center-col">
+<div class="col-center">
+
+<div id="org271e0eb" class="figure">
+<p><object type="image/svg+xml" data="../../assets/img/puzzles/single_cross.svg" class="org-svg" width="380">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+<div class="col-center" style="width:380;">
+<p>
+Figure <a href="#org271e0eb">2</a>: Using the center of the line segment, the shaded areas
+are the permissible regions corresponding to case \(C\) for a fixed \(\theta\). Each
+shaded region has the same area. Since checkerboard is full of unit squares we
+find \(P(C)=\frac{\text{permissible area}}{\text{total
+area}}=\frac{D^{2}\sin(\theta)\cos(\theta)}{1}\)
+</p>
+</div>
+</div>
+
+<p>
+All that is left is to work out \(P(C)\). Conditioned on a specific \(\theta\) we
+can from Figure <a href="#org271e0eb">2</a> see that \(P(C|\theta)\) is equal to the shaded area, which
+is
+</p>
+
+
+<p>
+\[
+P(C|\theta)=D^{2}\sin(\theta)\cos(\theta).
+\]
+</p>
+
+<p>
+Again, using the 8-fold symmetry for \(\theta\), we find
+</p>
+
+\begin{align*}
+P(C) &=\frac{4}{\pi} \int_{0}^{\frac{\pi}{4}}D^{2}\sin{\theta}\cos{\theta} \\
+& = \frac{4D^{2}}{\pi}\br{-\frac{\cos{2\theta}}{4}}_{\theta=0}^{\theta=\frac{\pi}{4}}\\
+& = \frac{D^{2}}{\pi}
+\end{align*}
+
+<p>
+With this we finally get
+</p>
+
+<p>
+\[
+P(A\cup B;D) = P(A) + P(B) = \mean{N} - 2P(C) = \frac{4D}{\pi} - \frac{2D^{2}}{\pi}
+= \frac{2}{\pi}\paren{2D - D^{2}}
+\]
+</p>
+
+<p>
+which attains its maximum at \(D=1\), with \(P(A \cup B ; D=1) = \frac{2}{\pi}\)
+</p>
+
+<p>
+We can also derive this results from a more tedious approach, which involves
+integrating over the space of possible acceptable outcomes (where the line
+segment crosses exactly once). Then we can divide this &ldquo;volume&rdquo;
+(three-dimensional space \((x,y,\theta)\)) by the total &ldquo;volume&rdquo; of possible ways
+the segment could land. In fact this approach may lead to an easier way to show
+that for the probability of crossing exactly one line for \(1\leq D\leq \sqrt{2}\)
+in fact must be smaller than for \(D=1\). This can be achieved by placing bounds
+on the integrals for the aforementioned &ldquo;volume&rdquo;. I won&rsquo;t go into the details
+here as this approach is much more tedious than the one provided above.
+</p>
+
+</div>
+</div>
+</div>

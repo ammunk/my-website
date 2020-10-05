@@ -6,3 +6,10 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+ol#upper-al{
+    list-style-type: upper-alpha;
+}
+ol#lower-al{
+    list-style-type: lower-alpha;
+}

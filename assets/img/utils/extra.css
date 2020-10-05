@@ -6,7 +6,7 @@
     font-size:smaller;
 }
 
-/*See https://css-tricks.com/snippets/css/complete-guide-grid/ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container */
+/*See https://css-tricks.com/snippets/css/a-guide-to-flexbox/ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container */
 .container{
     display: flex;
     justify-content: space-evenly;
@@ -14,9 +14,22 @@
 .col{
     margin: auto;
 }
+.col-center{
+    align-self: center;
+}
 .col-list{
-    self-align: flex-start;
+    align-self: flex-start;
     margin: auto;
+}
+.container-center{
+    display: flex;
+    justify-content: center;
+}
+.container-center-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 /*https://stackoverflow.com/questions/23082660/how-to-style-images-in-reveal-js */
 .reveal section img { background:none; border:none; box-shadow:none; }
