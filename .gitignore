@@ -8,3 +8,4 @@ Gemfile.lock
 package-lock.json
 **auctex*
 **auto
+.tweet-cache/
