@@ -335,13 +335,8 @@ footer.sticky-bottom {
       .title {
         font-weight: bolder;
       }
-      .clippy{
+      .copy-btn{
           position:relative;
-      }
-      .snippet-to-copy{
-          position: relative;
-      }
-      .btn{
           -webkit-transition: opacity .3s ease-in-out;
           -o-transition: opacity .3s ease-in-out;
           transition: opacity .3s ease-in-out;
@@ -350,8 +345,12 @@ footer.sticky-bottom {
           position: absolute;
           right: 4px;
           top: -4px;
+          background-color: $white-color;
       }
-      .snippet-to-copy:hover .btn,.snippet .btn:focus{
+      .snippet-to-copy{
+          position: relative;
+      }
+      .snippet-to-copy:hover .copy-btn,.snippet .btn:focus{
           opacity:1;
       }
       .author {
@@ -365,20 +364,6 @@ footer.sticky-bottom {
         > em {
           border-bottom: 1px solid;
           font-style: normal;
-        }
-      }
-      .links {
-        a.btn {
-          color: var(--global-text-color);
-          border: 1px solid var(--global-text-color);
-          padding-left: 1rem;
-          padding-right: 1rem;
-          padding-top: 0.25rem;
-          padding-bottom: 0.25rem;
-          &:hover {
-            color: var(--global-theme-color);
-            border-color: var(--global-theme-color);
-          }
         }
       }
       .hidden {
@@ -402,6 +387,29 @@ footer.sticky-bottom {
           padding: 10px;
           overflow: auto;
         }
+      }
+      // why we use !important: https://stackoverflow.com/questions/28261287/how-to-change-btn-color-in-bootstrap
+      .links{
+        a.btn-outline-primary {
+          color: var(--global-text-color) !important;
+          border-color: var(--global-text-color) !important;
+          &:hover {
+            color: var(--global-theme-color) !important;
+            border-color: var(--global-theme-color) !important;
+          }
+        }
+      }
+      .btn-outline-secondary {
+        color: var(--global-text-color) !important;
+        border-color: var(--global-bg-color) !important;
+          &:hover {
+            color: var(--global-text-color) !important;
+            border-color: var(--global-bg-color) !important;
+          }
+          &:active {
+            color: var(--global-theme-color) !important;
+            border-color: var(--global-bg-color) !important;
+          }
       }
     }
   }

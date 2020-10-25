@@ -23,27 +23,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/{{ site.fontawesome.version }}/css/all.min.css"  integrity="{{ site.fontawesome.integrity }}" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/{{ site.academicons.version }}/css/academicons.min.css" integrity="{{ site.academicons.integrity }}" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
-<!-- Centering Figures -->
-<link rel="stylesheet" type="text/css" href="https://ammunk.com/assets/img/utils/extra.css"></link>
-
-<!-- Clipboard Buttons -->
-<script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
-
-<!-- Load MathJax -->
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script src="{{ '/assets/js/mathjax-config.js' | prepend: site.baseurl | prepend: site.url }}" defer></script>
-<script type="text/javascript" id="MathJax-script" defer
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-</script>
-<style>
-  p.MyMathJax {display: none;}
-</style>
 
 <!-- Code Syntax Highlighting -->
 <link rel="stylesheet" href="https://gitcdn.link/repo/jwarby/jekyll-pygments-themes/master/{{ site.highlight_theme }}.css" />
 
 <!-- Styles -->
-<link rel="shortcut icon" href="{{ '/assets/img/favicon.ico' | relative_url }}">
+<link rel="shortcut icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type=image/svg-xml>
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
 <link rel="canonical" href="{{ page.url | replace:'index.html','' | relative_url }}">
@@ -52,3 +37,12 @@
 {% if site.enable_darkmode %}
   <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
 {% endif %}
+
+
+<!-- MY STUFF -->
+
+<!-- Centering Figures -->
+<link rel="stylesheet" type="text/css" href="https://ammunk.com/assets/img/utils/extra.css"></link>
+
+<!-- Clipboard Buttons -->
+<script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>

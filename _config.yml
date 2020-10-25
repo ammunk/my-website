@@ -1,8 +1,11 @@
 # -----------------------------------------------------------------------------
 # Site settings
 # -----------------------------------------------------------------------------
-title: Andreas Munk
-name: Andreas Munk
+
+title: blank # the website title (if blank, full name will be used instead)
+first_name: Andreas
+middle_name: M.
+last_name: Munk
 email: andreas@ammunk.com
 description: > # this means to ignore newlines until "url:"
   My personal website for notes and listing publications
@@ -14,6 +17,10 @@ description: > # this means to ignore newlines until "url:"
 url: "https://ammunk.com" # the base hostname & protocol for your site
 baseurl:  # the subpath of your site, e.g. /blog/
 last_updated: true # leave blank if you don't want to display last updated
+
+# -----------------------------------------------------------------------------
+# Layout
+# -----------------------------------------------------------------------------
 
 navbar_fixed: true
 footer_fixed: true
@@ -177,7 +184,7 @@ enable_google_analytics:  false
 enable_mansory:           true
 enable_math:              true
 enable_tooltips:          false
-enable_darkmode:          false
+enable_darkmode:          true
 show_social_icons:        false
 
 # -----------------------------------------------------------------------------
