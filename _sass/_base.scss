@@ -386,6 +386,7 @@ footer.sticky-bottom {
           line-height: 1.4em;
           padding: 10px;
           overflow: auto;
+          color: var(--global-text-color);
         }
       }
       // why we use !important: https://stackoverflow.com/questions/28261287/how-to-change-btn-color-in-bootstrap
