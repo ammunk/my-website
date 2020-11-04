@@ -63,8 +63,8 @@ given that we know \(p(\yyy|\xxx)\).
 </p>
 
 <p>
-Define \(i\in{i,\dots,K}\) and \(k\in{1,\dots,K}\) where \(K\) is the number of
-classes and consider the following loss function,
+Define \(i\in\tub{i,\dots,K}\) and \(k\in\tub{1,\dots,K}\) where \(K\) is the number
+of classes and consider the following loss function,
 </p>
 
 <p>
@@ -74,9 +74,9 @@ classes and consider the following loss function,
 </p>
 
 <p>
-where \(i\) is the &ldquo;\(\theta\)&rdquo; i.e. how we classify \(\xxx\). This loss functions
-simply says that there is some loss associated with guessing class \(i\) but the
-real class was \(k\).
+where the parameter &ldquo;\(\theta\)&rdquo; is the \(i\) i.e. how we classify \(\xxx\). This loss
+functions simply says that there is some cost associated with guessing class \(i\)
+but the real class was \(k\).
 </p>
 
 <p>
@@ -85,7 +85,7 @@ The minimization \eqref{opt} now becomes
 
 <p>
 \[
-\min\meanp{p(\cdot)}{\mL(\cdot;\theta)} =\min \int\sum_{k=1}^K a_{ik} p(y|\xxx)p(\xxx)\dm{\xxx}.
+\min\meanp{p(\cdot)}{\mL(\cdot;\theta)} =\min \int\sum_{k=1}^K l_{ik} p(y|\xxx)p(\xxx)\dm{\xxx}.
 \]
 </p>
 
@@ -98,25 +98,25 @@ decision regions in classification problems, by setting,
 \[
 l_{ik}=\begin{cases}
 0 & \mr{if}~i=k\\
--a & \mr{otherwise}
-\end{cases}.
+a & \mr{otherwise}
+\end{cases}
 \] 
 </p>
 
 <p>
 Here we placed no loss contribution for correct classification whereas there is
 some loss \(a\) for being wrong (same loss for all classes). Clearly, we minimize
-the loss by choosing \(i\) such that we minimize \(\sum_{k=1}^K a_{ik}p(y=k|\xxx)\)
+the loss by choosing \(i\) such that we minimize \(\sum_{k=1}^K l_{ik}p(y=k|\xxx)\)
 for all \(\xxx\) (as \(p(\xxx)\) is independent of \(k\)). Because we penalize being
 wrong equally across all classes, we should choose to predict the class
-\(i=k=\argmax_{k}p(y=k|\xxx)\), i.e. predict the class \(k\) with highest
-probability.
+\(i=\argmax_{i}p(y=i|\xxx)\), i.e. predict the class \(i\) with highest probability.
 </p>
 
 <p>
 It should now be clear that by redefining \(l_{ik}\) we can introduce different
 penalizing strategies for making erroneous decisions, like the medical example
-discussed earlier.
+discussed earlier. This in turn would result in having to make potentially
+different decisions.
 </p>
 </div>
 </div>
