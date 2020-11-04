@@ -1,9 +1,10 @@
 {% if site.enable_math %}
 <!-- MathJax -->
+<script src="{{ '/assets/js/mathjax-config.js' | prepend: site.baseurl | prepend: site.url }}" defer></script>
 <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@{{ site.mathjax.version }}/es5/tex-mml-chtml.js"></script>
 <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script src="{{ '/assets/js/mathjax-config.js' | prepend: site.baseurl | prepend: site.url }}" defer></script>
-<script type="text/javascript" id="MathJax-script" defer
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
 </script>
+<style>
+        p.MyMathJax {display: none;}
+</style>
 {% endif %}
