@@ -311,7 +311,7 @@ Generally we frame GANs as a minimax game,
 </ul>
 
 <p>
-\[ h(p_{\theta},a_\phi) = \meanp{x\sim p_\mr{true}}{\log f_\phi(x)} + \meanp{x\sim p_{\theta}}{\log (1 - f_\phi(x))}\]
+\[ h(p_{\theta},f_\phi) = \meanp{x\sim p_\mr{true}}{\log f_\phi(x)} + \meanp{x\sim p_{\theta}}{\log (1 - f_\phi(x))}\]
 </p>
 
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
@@ -493,7 +493,7 @@ The Adversarial Lipschitz Penalty (ALP),
 \[ \mL_{\mr{ALP}} = \max\paren{0,\frac{d_{\mY}(f(x),f(x+r'))}{d_{\mX}(x,x+r')} - K}\]
 </p>
 <ul>
-<li>Also considered the two-sided penalty (without \(\max(\cdot,\cdot)\), but was found less stable.</li>
+<li>Also considered the two-sided penalty (without \(\max(\cdot,\cdot)\)), but was found less stable.</li>
 
 </ul></li>
 
@@ -575,7 +575,7 @@ with \(d_{\mY}(f(x),f(x+r'))=\abs{f(x)-f(x+r')}\) and \(d_{\mX}(x,x+r')=\norm{x-
 <section id="slide-org8c3e70e">
 <h3 id="org8c3e70e">CIFAR-10</h3>
 
-<div id="orgdcde972" class="figure">
+<div id="org02f9dce" class="figure">
 <p><img src="../../../assets/img/adv_lip_reg/figs/cifar10_images.png" alt="cifar10_images.png" width="1400" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Random samples using WGAN-ALP with (a) and without (b) batch normalization (BN).</p>
@@ -585,7 +585,7 @@ with \(d_{\mY}(f(x),f(x+r'))=\abs{f(x)-f(x+r')}\) and \(d_{\mX}(x,x+r')=\norm{x-
 <section id="slide-org8538f75">
 <h3 id="org8538f75">Comparison to other methods</h3>
 
-<div id="orgd1995a3" class="figure">
+<div id="org25e535b" class="figure">
 <p><img src="../../../assets/img/adv_lip_reg/figs/cifar10_table.png" alt="cifar10_table.png" width="1400" />
 </p>
 </div>
