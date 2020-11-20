@@ -69,6 +69,7 @@
 \newcommand{\mS}{\mathcal{S}}
 \newcommand{\mH}{\mathcal{H}}
 \newcommand{\mX}{\mathcal{X}}
+\newcommand{\mY}{\mathcal{Y}}
 \newcommand{\mP}{\mathcal{P}}
 \newcommand{\mW}{\mathcal{W}}
 \newcommand{\mZ}{\mathcal{Z}}

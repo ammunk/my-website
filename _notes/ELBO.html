@@ -7,9 +7,9 @@ comments: true
 
 {% include mathjax-macros.html %}
 
-<div id="outline-container-orgdc45508" class="outline-2">
-<h2 id="orgdc45508">Introduction</h2>
-<div class="outline-text-2" id="text-orgdc45508">
+<div id="outline-container-orgb974914" class="outline-2">
+<h2 id="orgb974914">Introduction</h2>
+<div class="outline-text-2" id="text-orgb974914">
 <p>
 This note aims at deriving the <i>evidence lower bound</i> (ELBO) and motivate it
 using a Bayesian inference perspective. Here we consider an observed variable
@@ -33,7 +33,7 @@ Bayes</i> (VB), etc.
 It is within VB that we find the ELBO is an essential mathematical expression
 that allows for approximating the posterior distribution \(q(x|y)\approx p(x|y)\).
 It has been used successfully in many applications and machine learning methods
-such as Variational autoencoders (VAEs) [<a href="#kingma2014a">Kingma and Welling, 2014</a>]. For a more in-depth
+such as Variational autoencoders (VAEs) [<a href="#kingma2014a">kingma2014a</a>]. For a more in-depth
 explanation of VB and also the ELBO I suggest looking into excellent the pattern
 recognition book by Bishop [<a href="#bishop2006a">Bishop, 2006</a>] and the review paper on variational
 inference [<a href="#blei2017a">Blei et&nbsp;al., 2017</a>].
@@ -41,9 +41,9 @@ inference [<a href="#blei2017a">Blei et&nbsp;al., 2017</a>].
 </div>
 </div>
 
-<div id="outline-container-org08dcc58" class="outline-2">
-<h2 id="org08dcc58">The ELBO</h2>
-<div class="outline-text-2" id="text-org08dcc58">
+<div id="outline-container-org61eb6b5" class="outline-2">
+<h2 id="org61eb6b5">The ELBO</h2>
+<div class="outline-text-2" id="text-org61eb6b5">
 <p>
 We will derive the ELBO from an inference perspective, i.e. we want to
 approximate \(p(x|y)\) with \(q(x|y;\theta)\). Here we explicitly parameterized \(q\)
@@ -64,9 +64,9 @@ and we shall see two different ways to derive that expression.
 </p>
 </div>
 
-<div id="outline-container-org428b862" class="outline-3">
-<h3 id="org428b862">From the KL divergence</h3>
-<div class="outline-text-3" id="text-org428b862">
+<div id="outline-container-orgd2d986e" class="outline-3">
+<h3 id="orgd2d986e">From the KL divergence</h3>
+<div class="outline-text-3" id="text-orgd2d986e">
 <p>
 To measure closeness between \(q\) and \(p\) and consider the
 Kullback&#x2013;Leibler (KL) divergence,
@@ -99,9 +99,9 @@ Because the KL-divergence is non-negative we identify \(\ln p(y)\ge\mL\), making
 </div>
 </div>
 
-<div id="outline-container-org36c5d7f" class="outline-3">
-<h3 id="org36c5d7f">From maximizing the model evidence</h3>
-<div class="outline-text-3" id="text-org36c5d7f">
+<div id="outline-container-org681ef31" class="outline-3">
+<h3 id="org681ef31">From maximizing the model evidence</h3>
+<div class="outline-text-3" id="text-org681ef31">
 <p>
 As shown above there is a direct connection between the evidence \(p(y)\) and the
 ELBO \(\mL\) and we will here derive the expression of \(\mL\) directly from \(\ln
@@ -137,9 +137,9 @@ which is exactly the expression in \eqref{elbo}
 </div>
 
 
-<div id="outline-container-org6081e15" class="outline-2">
-<h2 id="org6081e15">Related topics</h2>
-<div class="outline-text-2" id="text-org6081e15">
+<div id="outline-container-orgbf2d2f4" class="outline-2">
+<h2 id="orgbf2d2f4">Related topics</h2>
+<div class="outline-text-2" id="text-orgbf2d2f4">
 <p>
 The topics of VB and the ELBO, relates to a series of other
 topics some of which I will be making other notes about. Some of these topics 
@@ -167,7 +167,7 @@ And much, much more.
 </td>
 <td class="bibtexitem">
 Bishop, C.&nbsp;M. (2006).
- <em>Pattern recognition and machine learning</em>.
+ <em>Pattern Recognition and Machine Learning</em>.
  Springer,.
 
 </td>
@@ -191,18 +191,6 @@ Blei, D.&nbsp;M., Kucukelbir, A., and McAuliffe, J.&nbsp;D. (2017).
 
 <tr valign="top">
 <td align="right" class="bibtexnumber">
-[<a name="kingma2014a">Kingma and Welling, 2014</a>]
-</td>
-<td class="bibtexitem">
-Kingma, D.&nbsp;P. and Welling, M. (2014).
- Auto-encoding variational bayes.
-
-</td>
-</tr>
-
-
-<tr valign="top">
-<td align="right" class="bibtexnumber">
 [<a name="le2016inference">Le et&nbsp;al., 2017</a>]
 </td>
 <td class="bibtexitem">
@@ -211,6 +199,7 @@ Le, T.&nbsp;A., Baydin, A.&nbsp;G., and Wood, F. (2017).
  In <em>Proceedings of the 20th International Conference on
   Artificial Intelligence and Statistics</em>, volume&nbsp;54 of <em>Proceedings of
   Machine Learning Research</em>, pages 1338--1348, Fort Lauderdale, FL, USA. PMLR.
+[&nbsp;<a href="http://arxiv.org/abs/1610.09900">arXiv</a>&nbsp;]
 
 </td>
 </tr>

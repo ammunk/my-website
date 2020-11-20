@@ -69,6 +69,7 @@
 \def\mS{\mathcal{S}}
 \def\mH{\mathcal{H}}
 \def\mX{\mathcal{X}}
+\def\mY{\mathcal{Y}}
 \def\mP{\mathcal{P}}
 \def\mW{\mathcal{W}}
 \def\mZ{\mathcal{Z}}

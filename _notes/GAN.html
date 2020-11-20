@@ -7,11 +7,11 @@ comments: true
 
 {% include mathjax-macros.html %}
 
-<div id="outline-container-org2443613" class="outline-2">
-<h2 id="org2443613">GANs</h2>
-<div class="outline-text-2" id="text-org2443613">
+<div id="outline-container-orgcac0074" class="outline-2">
+<h2 id="orgcac0074">GANs</h2>
+<div class="outline-text-2" id="text-orgcac0074">
 <p>
-Generative Adversarial Nets (GANs) [<a href="#goodfellow2014a">Goodfellow et&nbsp;al., 2014</a>] is a form of deep
+Generative Adversarial Nets (GANs) [<a href="#goodfellow2014a">goodfellow2014a</a>] is a form of deep
 generative modeling, trained as a minimax &ldquo;two-player game&rdquo;. A generator \(G\) is
 trained to fool a discriminator \(D\). The purpose of the discriminator is to
 differentiate between real data and artificially generated data. The generator
@@ -25,7 +25,7 @@ The discriminator \(D: \real^d \rightarrow \br{0,1}\) can be considered the
 probability that \(x\) is real, i.e. \(D(x,\theta) = p_\phi(y=1|x)\). The generator
 is a function defining the distribution \(p_\phi(x|y=0)\), s.t. \(x=G(z,\phi)\) with
 \(z\sim p(z)\) - see the reparameterization trick used in e.g. VAEs
-[<a href="#kingma2014a">Kingma and Welling, 2014</a>]. This allows us to define the expected log-likelihood over
+[<a href="#kingma2014a">kingma2014a</a>]. This allows us to define the expected log-likelihood over
 generated data as,
 </p>
 
@@ -87,9 +87,9 @@ found in [<a href="#mohamed2016learning">Mohamed and Lakshminarayanan, 2016</a>]
 </div>
 </div>
 
-<div id="outline-container-org655d8e1" class="outline-2">
-<h2 id="org655d8e1">Adversarially Learned Inference</h2>
-<div class="outline-text-2" id="text-org655d8e1">
+<div id="outline-container-orgf1f52cf" class="outline-2">
+<h2 id="orgf1f52cf">Adversarially Learned Inference</h2>
+<div class="outline-text-2" id="text-orgf1f52cf">
 <p>
 Adversarially Learned Inference (ALI) [<a href="#dumoulin2016adversarially">Dumoulin et&nbsp;al., 2016</a>], can be
 considered an extension to GANs, in the sense that it not only learns a
@@ -116,15 +116,15 @@ Thus, following the same procedure as for GANs, we find the following loss, \[
 \mL(\phi,\theta_x, \theta_z) = \pi\meanp{p(x,z|y=1)}{\ln{D(x,z,\theta)}} +
 (1-\pi)\meanp{p(x,z|y=0)}{\ln(1-D(x,z,\theta))}, \] where the generator networks
 \(G_x\) and \(G_z\) are implicitly found through the expectations. Using the
-reparameterization trick [<a href="#kingma2014a">Kingma and Welling, 2014</a>], we can thus train both generators.
+reparameterization trick [<a href="#kingma2014a">kingma2014a</a>], we can thus train both generators.
 </p>
 </div>
 
-<div id="outline-container-orgc29bcb0" class="outline-3">
-<h3 id="orgc29bcb0">Propositions</h3>
-<div class="outline-text-3" id="text-orgc29bcb0">
+<div id="outline-container-org2eb5bb8" class="outline-3">
+<h3 id="org2eb5bb8">Propositions</h3>
+<div class="outline-text-3" id="text-org2eb5bb8">
 <p>
-As proven in [<a href="#goodfellow2014a">Goodfellow et&nbsp;al., 2014</a>], the following two propositions holds for ALI
+As proven in [<a href="#goodfellow2014a">goodfellow2014a</a>], the following two propositions holds for ALI
 (and is an extension to those for GANs),
 </p>
 
@@ -158,33 +158,7 @@ Dumoulin, V., Belghazi, I., Poole, B., Mastropietro, O., Lamb, A., Arjovsky,
   M., and Courville, A. (2016).
  Adversarially learned inference.
  <em>arXiv preprint arXiv:1606.00704</em>.
-
-</td>
-</tr>
-
-
-<tr valign="top">
-<td align="right" class="bibtexnumber">
-[<a name="goodfellow2014a">Goodfellow et&nbsp;al., 2014</a>]
-</td>
-<td class="bibtexitem">
-Goodfellow, I.&nbsp;J., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D.,
-  Ozair, S., Courville, A., and Bengio, Y. (2014).
- Generative adversarial nets.
- <em>Advances in Neural Information Processing Systems 27 (nips
-  2014)</em>, 27(January):2672--2680.
-
-</td>
-</tr>
-
-
-<tr valign="top">
-<td align="right" class="bibtexnumber">
-[<a name="kingma2014a">Kingma and Welling, 2014</a>]
-</td>
-<td class="bibtexitem">
-Kingma, D.&nbsp;P. and Welling, M. (2014).
- Auto-encoding variational bayes.
+[&nbsp;<a href="http://arxiv.org/abs/1606.00704">arXiv</a>&nbsp;]
 
 </td>
 </tr>
@@ -198,6 +172,7 @@ Kingma, D.&nbsp;P. and Welling, M. (2014).
 Mohamed, S. and Lakshminarayanan, B. (2016).
  Learning in implicit generative models.
  <em>arXiv preprint arXiv:1610.03483</em>.
+[&nbsp;<a href="http://arxiv.org/abs/1610.03483">arXiv</a>&nbsp;]
 
 </td>
 </tr>
