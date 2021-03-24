@@ -9,3 +9,5 @@ package-lock.json
 **auctex*
 **auto
 .tweet-cache/
+vendor
+.bundle
