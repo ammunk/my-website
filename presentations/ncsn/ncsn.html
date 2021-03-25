@@ -41,19 +41,19 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#/slide-org0d400e1">Generative Modeling by Estimating Gradients of the Data Distribution [<a href="#/slide-song2019generativea">Song and Ermon, 2019</a>]</a></li>
-<li><a href="#/slide-org84d0cd9">Langevin Dynamics [<a href="#/slide-wibisono2018sampling">Wibisono, 2018</a>]</a></li>
-<li><a href="#/slide-orgfab4e36">Score Matching [<a href="#/slide-hyvarinen2005estimation">Hyv&auml;rinen, 2005</a>]</a>
+<li><a href="#/slide-org410518f">Generative Modeling by Estimating Gradients of the Data Distribution [<a href="#/slide-song2019generative">Song and Ermon, </a>]</a></li>
+<li><a href="#/slide-org84d0cd9">Langevin Dynamics [<a href="#/slide-wibisono2018sampling">Wibisono, </a>]</a></li>
+<li><a href="#/slide-orgfab4e36">Score Matching [<a href="#/slide-hyvarinen2005estimation">Hyvärinen, </a>]</a>
 <ul>
 <li><a href="#/slide-orgcc97abe">Proofs of the Objective Reduction</a></li>
 </ul>
 </li>
-<li><a href="#/slide-org3ccfa23">Sliced Score Matching [<a href="#/slide-song2019sliced">Song et&nbsp;al., 2019</a>]</a>
+<li><a href="#/slide-org3ccfa23">Sliced Score Matching [<a href="#/slide-song2019sliced">Song et&nbsp;al., </a>]</a>
 <ul>
 <li><a href="#/slide-org7827bd8">Algorithmic Differences</a></li>
 </ul>
 </li>
-<li><a href="#/slide-orgdf3a68e">Denoising Score Matching [<a href="#/slide-vincent2011connection">Vincent, 2011</a>]</a>
+<li><a href="#/slide-orgdf3a68e">Denoising Score Matching [<a href="#/slide-vincent2011connection">Vincent, </a>]</a>
 <ul>
 <li><a href="#/slide-org059b6e4">Proofs of the Minimization Equivalence</a></li>
 </ul>
@@ -280,8 +280,8 @@
 </p>
 </div>
 <section>
-<section id="slide-org0d400e1">
-<h2 id="org0d400e1">Generative Modeling by Estimating Gradients of the Data Distribution [<a href="#song2019generativea">Song and Ermon, 2019</a>]</h2>
+<section id="slide-org410518f">
+<h2 id="org410518f">Generative Modeling by Estimating Gradients of the Data Distribution [<a href="#song2019generative">Song and Ermon, </a>]</h2>
 <ul>
 <li>Likelihood-free generative modeling</li>
 <li>Propose an annealed Langevin Dynamics</li>
@@ -296,13 +296,13 @@
 <li>Achieve state-of-the-art inception score on CIFAR-10</li>
 
 </ul>
-
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
 </section>
 </section>
 <section>
 <section id="slide-org84d0cd9">
-<h2 id="org84d0cd9">Langevin Dynamics [<a href="#wibisono2018sampling">Wibisono, 2018</a>]</h2>
+<h2 id="org84d0cd9">Langevin Dynamics [<a href="#wibisono2018sampling">Wibisono, </a>]</h2>
 <div class="container">
 <div class="col-list" style="text-align:left">
 <ul>
@@ -335,7 +335,7 @@ proposal \[q(\xxx_{t+1}|\xxx_{t}) =\mN(\xxx_{t}+\grad_{\xxx}\ln
 <li>Assuming \(\epsilon\) is small enough and t is sufficiently large, the
 acceptance rate goes to one</li>
 <li>Used also for inference - see e.g. <i>Stochastic Gradient Langevin Dynamics</i>
-[<a href="#welling2011bayesian">Welling and Teh, 2011</a>]</li>
+[<a href="#welling2011bayesian">Welling and Teh, </a>]</li>
 <li>Think of Langevin Dynamics as a form of a Markov Chain</li>
 
 </ul>
@@ -346,7 +346,7 @@ acceptance rate goes to one</li>
 </section>
 <section>
 <section id="slide-orgfab4e36">
-<h2 id="orgfab4e36">Score Matching [<a href="#hyvarinen2005estimation">Hyv&auml;rinen, 2005</a>]</h2>
+<h2 id="orgfab4e36">Score Matching [<a href="#hyvarinen2005estimation">Hyvärinen, </a>]</h2>
 <ul>
 <li>Can we estimate \(\grad_{\xxx}\ln p(\xxx)\)?</li>
 <li>Define \(s_{\theta}(\xxx)=\grad_{\xxx}\ln q_{\theta}(\xxx),
@@ -417,13 +417,13 @@ now prove that
 concludes the proof</li>
 
 </ul>
-
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
 </section>
 </section>
 <section>
 <section id="slide-org3ccfa23">
-<h2 id="org3ccfa23">Sliced Score Matching [<a href="#song2019sliced">Song et&nbsp;al., 2019</a>]</h2>
+<h2 id="org3ccfa23">Sliced Score Matching [<a href="#song2019sliced">Song et&nbsp;al., </a>]</h2>
 <ul>
 <li>Preferably no Jacobian in score matching</li>
 <li>Projects the score functions onto a random direction \(\vvv\in\real^{d}\)</li>
@@ -448,7 +448,7 @@ concludes the proof</li>
 <div class="container">
 <div class="col">
 
-<div id="orgb8d37a2" class="figure">
+<div id="orgd084ae5" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/score_alg.png" alt="score_alg.png" height="450" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Score matching algorithm</p>
@@ -456,7 +456,7 @@ concludes the proof</li>
 </div>
 <div class="col">
 
-<div id="org4af43b7" class="figure">
+<div id="orga5d117b" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/sliced_score_alg.png" alt="sliced_score_alg.png" height="450" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Sliced score matching algorithm</p>
@@ -468,7 +468,7 @@ concludes the proof</li>
 </section>
 <section>
 <section id="slide-orgdf3a68e">
-<h2 id="orgdf3a68e">Denoising Score Matching [<a href="#vincent2011connection">Vincent, 2011</a>]</h2>
+<h2 id="orgdf3a68e">Denoising Score Matching [<a href="#vincent2011connection">Vincent, </a>]</h2>
 <ul>
 <li>Induce noise pertubation of the data via some “pertubation” distribution</li>
 <li>\(\sigma\) denotes noise level</li>
@@ -487,7 +487,7 @@ concludes the proof</li>
 <li>Notice that as \(\sigma\rightarrow 0\) then
 \(p_{\sigma}(\tilde{\xxx})\rightarrow p(\xxx)\)
 <ul>
-<li>Exploited by [<a href="#song2019generativea">Song and Ermon, 2019</a>]</li>
+<li>Exploited by [<a href="#song2019generative">Song and Ermon, </a>]</li>
 
 </ul></li>
 
@@ -535,8 +535,8 @@ constant equal to the difference between the constant terms of
 \(J_{\mr{NSM}}(\theta)\) and \(J_{\mr{D}}(\theta)\)</li>
 
 </ul>
-
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
 </section>
 </section>
 <section>
@@ -589,7 +589,7 @@ with near-zero probability
 \(p(\xxx)=\frac{1}{5}\mN((-5,-5),\III) + \frac{4}{5}\mN((5,5),\III)\)
 </p>
 
-<div id="org175146a" class="figure">
+<div id="orga428c9d" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/score_estimator.png" alt="score_estimator.png" width="1500" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Left \(\grad_{\xxx}\ln p(\xxx)\). Right \(s_{\theta}(\xxx)\). Darker color implies higher density. Squares are regions where \(s_{\theta}(\xxx)\approx\grad_{\xxx}\ln p(\xxx)\)</p>
@@ -601,7 +601,7 @@ with near-zero probability
 \(p(\xxx)=\frac{1}{5}\mN((-5,-5),\III) + \frac{4}{5}\mN((5,5),\III)\)
 </p>
 
-<div id="orgb042187" class="figure">
+<div id="org79e3267" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/dynamics_issues.png" alt="dynamics_issues.png" width="1600" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Samples from \(p(\xxx)\) using different methods. a) Exact sampling b) Using LD with exact score c) Annealed LD</p>
@@ -655,7 +655,7 @@ level
 
 </ul>
 
-<div id="org70ba1f7" class="figure">
+<div id="orga055bdf" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/algorithm.png" alt="algorithm.png" width="700" />
 </p>
 </div>
@@ -678,7 +678,7 @@ traversed regions at the different noise levels</li>
 <ul>
 <li>Step size \(\alpha_{i}\)
 <ul>
-<li>Should decrease over time to ensure convergence [<a href="#welling2011bayesian">Welling and Teh, 2011</a>]</li>
+<li>Should decrease over time to ensure convergence [<a href="#welling2011bayesian">Welling and Teh, </a>]</li>
 <li>Held fixed at each noise level for NCSNs</li>
 
 </ul></li>
@@ -694,7 +694,6 @@ traversed regions at the different noise levels</li>
 <h2 id="org9d066ab">Experiments</h2>
 <div class="outline-text-2" id="text-org9d066ab">
 </div>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
 <section id="slide-org10dba38">
 <h3 id="org10dba38">Experimental Setup</h3>
@@ -713,7 +712,7 @@ traversed regions at the different noise levels</li>
 
 </ul>
 
-<div id="org64bfd6e" class="figure">
+<div id="orgb3857ad" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/samples.png" alt="samples.png" width="1800" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Random samples using annealed Langevin dynamics for a) MNIST b) CelebA c) CIFAR-10</p>
@@ -723,7 +722,7 @@ traversed regions at the different noise levels</li>
 <section id="slide-org51e195d">
 <h3 id="org51e195d">Sampling Dynamics</h3>
 
-<div id="org4dd99c1" class="figure">
+<div id="org629b562" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/intermediate.png" alt="intermediate.png" height="800" />
 </p>
 <p><span class="figure-number">Figure 7: </span>Intermediate samples of annealed Langevin dynamics.</p>
@@ -733,7 +732,7 @@ traversed regions at the different noise levels</li>
 <section id="slide-org6e96ca3">
 <h3 id="org6e96ca3">Compared to other Methods</h3>
 
-<div id="org89d65be" class="figure">
+<div id="org78e1342" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/results_table.png" alt="results_table.png" />
 </p>
 </div>
@@ -749,10 +748,10 @@ traversed regions at the different noise levels</li>
 <li>Not clear how well this methods scales to higher dimensions</li>
 
 </ul>
-
-
-
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+
+
 </section>
 </section>
 <section>
@@ -766,8 +765,9 @@ traversed regions at the different noise levels</li>
 </div>
 <script src="https://ammunk.com/reveal.js/dist/reveal.js"></script>
 <script src="https://ammunk.com/reveal.js/plugin/highlight/highlight.js"></script>
-<script src="https://ammunk.com/reveal.js/"></script>
+<script src="https://ammunk.com/reveal.js/plugin/search/search.js"></script>
 <script src="https://ammunk.com/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="https://ammunk.com/reveal.js/plugin/notes/notes.js"></script>
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
@@ -796,7 +796,7 @@ transition: 'linear',
 transitionSpeed: 'default',
 
 // Plugins with reveal.js 4.x
-plugins: [ RevealHighlight, , RevealZoom ],
+plugins: [ RevealHighlight, RevealSearch, RevealZoom, RevealNotes ],
 
 // Optional libraries used to extend reveal.js
 dependencies: [

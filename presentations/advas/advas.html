@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="author" content="Andreas Munk"/>
+<title>Assisting the Adversary to Improve GAN Training</title>
+<meta name="author" content="Andreas Munk, William Harvey, Frank Wood"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
 <link rel="stylesheet" href="https://ammunk.com/reveal.js/dist/reveal.css"/>
 
-<link rel="stylesheet" href="https://ammunk.com/reveal.js/dist/theme/beige.css" id="theme"/>
+<link rel="stylesheet" href="https://ammunk.com/reveal.js/dist/theme/serif.css" id="theme"/>
 
 <link rel="stylesheet" href="https://ammunk.com/assets/img/utils/extra.css"/>
 <link rel="stylesheet" href="https://ammunk.com/reveal.js/plugin/highlight/zenburn.css"/>
@@ -17,12 +18,30 @@
 <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"> </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script> $(function(){$("#includedContent").load("./bibtex.html");}); </script>
-<meta name="description" content="Deep Probabilistic Surrogate Networks for Universal Simulator Approximation">
+<meta name="description" content="Assisting the Adversary to Improve GAN Training">
 <script type="text/javascript" src=""></script>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
+<section id="sec-title-slide">
+<section id="sec-title-slide">
+    <h1 class="title">Assisting the Adversary to Improve GAN Training</h1><h2 class="author">Andreas Munk, William Harvey, Frank Wood</h2><h4 class="email"><a href="mailto:amunk@cs.ubc.ca">amunk@cs.ubc.ca</a></h4><h4 class="date">March 26, 2021</h4>
+</section>
+
+</section>
+<section id="table-of-contents-section">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-orgf1a623c">Generative adversarial networks (GANS) [<a href="#/slide-goodfellow2014generative">Goodfellow et&nbsp;al., </a>]</a></li>
+<li><a href="#/slide-org49f6054">Wasserstein GAN [<a href="#/slide-arjovsky2017wasserstein">Arjovsky et&nbsp;al., </a>]</a></li>
+<li><a href="#/slide-org0a2406b">References</a></li>
+</ul>
+</div>
+</div>
+</section>
 <div id="hiddenMathbox" style="display: none;">
 <p>
 \(
@@ -227,88 +246,69 @@
 </p>
 </div>
 
-
 <section>
-<section id="slide-orgdbf961b">
-<h2 id="orgdbf961b">Beyond Hasty V4</h2>
-<div class="support">
-<div class="container">
-<div class="col">
-
-<div id="org1e2d0c9" class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/utils/plai.svg" class="org-svg" height="80">
-Sorry, your browser does not support SVG.</object>
-</p>
-</div>
-</div>
-<div class="col">
-
-<div id="orgf2d3d5e" class="figure">
-<p><object type="image/svg+xml" data="figs/oxford.svg" class="org-svg" height="80">
-Sorry, your browser does not support SVG.</object>
-</p>
-</div>
-</div>
-<div class="col crop">
-
-<div id="org9986609" class="figure">
-<p><img src="figs/DARPA-logo.png" alt="DARPA-logo.png" height="80" />
-</p>
-</div>
-</div>
-<div class="col">
-
-<div id="org3a02d16" class="figure">
-<p><object type="image/svg+xml" data="figs/intel.svg" class="org-svg" height="80">
-Sorry, your browser does not support SVG.</object>
-</p>
-</div>
-</div>
-<div class="col">
-
-<div id="orgd225dc2" class="figure">
-<p><img src="figs/crn_logo.png" alt="crn_logo.png" height="80" />
-</p>
-</div>
-</div>
-<div class="col">
-
-<div id="org7db3fc9" class="figure">
-<p><object type="image/svg+xml" data="https://ammunk.com/assets/img/utils/ubc.svg" class="org-svg" height="80">
-Sorry, your browser does not support SVG.</object>
-</p>
-</div>
-</div>
-</div>
-
-<div style="width:100%; text-align:center; font-size:smaller;">
-<p>
-Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a>
-</p>
-</div>
-</div>
-
-
-<div id="org00d6921" class="figure">
-<p><img src="https://ammunk.com/assets/img/psn_short/figs/wing_plus_logo.png" alt="wing_plus_logo.png" height="900" />
-</p>
-</div>
-
-<div class="slide-footer">Munk, Ścibior, Baydin, Stewart, Fernlund, Poursartip & Wood. Deep Probabilistic Surrogate Networks for Universal Simulator Approximation, PROGPROB2020</div>
-</section>
-<section>
+<section id="slide-orgf1a623c">
+<h2 id="orgf1a623c">Generative adversarial networks (GANS) [<a href="#goodfellow2014generative">Goodfellow et&nbsp;al., </a>]</h2>
 <ul>
-<li><b>10 times faster inversion</b></li>
-<li><b>30 times faster simulation</b></li>
-<li>Our framework is model-agnostic</li>
+<li>A generator is a neural network \(g:\mZ\rightarrow\mX\subseteq\real^{D_{x}}\) which maps from a random vector \(\zzz\in\mZ\) to an output \(\xxx \in \mX\)
+<ul>
+<li>\(g\) characterizes a distribution \(p_{\theta}(\xxx)\), where \(\theta\in\Theta\subseteq\mathbb{R}^{D_g}\) denotes the generator&rsquo;s parameters</li>
+
+</ul></li>
+<li>Aim is to match \(p_{\theta}\) with some real target distribution \(p_{\mr{real}}\)</li>
+<li>A critic/discriminator \(f_\phi:\mX\rightarrow \mF\) with parameters \(\phi\in\Phi\subseteq\real^{D_f}\)</li>
+
+<li><p>
+Generally we frame GANs as a minimax game,
+</p>
+
+<p>
+\[\min_{\theta}\max_{\phi}h(p_{\theta},f_\phi)\]
+</p></li>
+
+<li>Originally Goodfellow et al. (2014) defined</li>
 
 </ul>
 
-<div id="orgc6b2cc1" class="figure">
-<p><img src="https://ammunk.com/assets/img/psn_short/figs/heatmap_guess.gif" alt="heatmap_guess.gif" width="60%" />
+<p>
+\[ h(p_{\theta},f_\phi) = \meanp{x\sim p_\mr{true}}{\log f_\phi(x)} + \meanp{x\sim p_{\theta}}{\log (1 - f_\phi(x))}\]
 </p>
-</div>
-<div class="slide-footer">Munk, Ścibior, Baydin, Stewart, Fernlund, Poursartip & Wood. Deep Probabilistic Surrogate Networks for Universal Simulator Approximation, PROGPROB2020</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+</section>
+</section>
+<section>
+<section id="slide-org49f6054">
+<h2 id="org49f6054">Wasserstein GAN [<a href="#arjovsky2017wasserstein">Arjovsky et&nbsp;al., </a>]</h2>
+<ul>
+<li>Wasserstein Distance \(W_{p}(P_{1},P_{2})=\paren{\inf_{\gamma\in\Gamma(P_{1},P_{2})}\meanp{\gamma}{d(x_{1},x_{2})^{p}}}^{\frac{1}{p}}\)</li>
+<li>Kantorovich-Rubinstein duality [<a href="#villani2008optimal">Villani, </a>],
+\[ W_{1}(P_{1},P_{2}) = \sup_{\norm{f}_{\mr{L}}\leq1}\paren{\meanp{P_{1}}{f} - \meanp{P_{2}}{f}} \]</li>
+<li>WGAN:
+\[ \min_{\theta}\max_{\phi}\meanp{p_\mr{true}}{f_{\phi}} - \meanp{p_{\theta}}{f_\phi}, \quad \mr{s.t.}~\norm{f_{\phi}}_{\mr{L}}\leq 1\]</li>
+
+<li>Notice the Lipschitz constraint \(\norm{f_{\phi}}_{\mr{Lip}}\leq 1\)</li>
+<li>Constraint imposed using weight clipping \(\Phi\subseteq \mW = \br{-w,w}^{D_{f}}\), where \(w\) is some constant
+<ul>
+<li>Ensures global\(^{*}\) Lipschitz continuity with some unknown Lipschitz constant \(L\geq 0\)
+<ul>
+<li>\(^{*}\text{assuming}\) for all \(\phi\in\mW,~f_{\phi}\) is Lipschitz continuous or \(\mX\) is compact</li>
+<li>Generally consider \(LW_{1}(P_{1},P_{2})\)</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+</section>
+</section>
+<section>
+<section id="slide-org0a2406b">
+<h2 id="org0a2406b">References</h2>
+<div id="includedContent"></div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
 </section>
 </div>
@@ -336,8 +336,8 @@ hashOneBasedIndex: false,
 pdfSeparateFragments: true,
 
 overview: true,
-width: 2700,
-height: 1600,
+width: 2000,
+height: 1400,
 margin: 0.00,
 minScale: 0.30,
 maxScale: 2.50,

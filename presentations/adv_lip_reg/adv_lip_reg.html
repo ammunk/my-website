@@ -39,20 +39,20 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#/slide-org1e4f979">Penalization of Lipschitz constraint violation [<a href="#/slide-terjek2020adversarial">Terj&eacute;k, 2020</a>]</a></li>
-<li><a href="#/slide-org83ac86e">Generative adversarial networks (GANS) [<a href="#/slide-goodfellow2014generative">Goodfellow et&nbsp;al., 2014</a>]</a></li>
-<li><a href="#/slide-org6ffc5b5">Wasserstein GAN [<a href="#/slide-arjovsky2017wassersteina">Arjovsky et&nbsp;al., 2017</a>]</a>
+<li><a href="#/slide-org1e4f979">Penalization of Lipschitz constraint violation [<a href="#/slide-terjek2020adversarial">Terjék, </a>]</a></li>
+<li><a href="#/slide-org83ac86e">Generative adversarial networks (GANS) [<a href="#/slide-goodfellow2014generative">Goodfellow et&nbsp;al., </a>]</a></li>
+<li><a href="#/slide-orgec2ceff">Wasserstein GAN [<a href="#/slide-arjovsky2017wasserstein">Arjovsky et&nbsp;al., </a>]</a>
 <ul>
 <li><a href="#/slide-org6c0d5a5">Lipschitz Continuity</a></li>
 </ul>
 </li>
-<li><a href="#/slide-orgbe345c7">Improved Wasserstein GAN (WGAN-GP) [<a href="#/slide-gulrajani2017improveda">Gulrajani et&nbsp;al., 2017</a>]</a>
+<li><a href="#/slide-org1a0a777">Improved Wasserstein GAN (WGAN-GP) [<a href="#/slide-gulrajani2017improved">Gulrajani et&nbsp;al., </a>]</a>
 <ul>
 <li><a href="#/slide-org07e9a93">Lipschitz Continuity and Differentiability</a></li>
 </ul>
 </li>
 <li><a href="#/slide-orge1d5e06">Can we do better?</a></li>
-<li><a href="#/slide-org766b2bf">Adversarial Lipschitz regularization (ALR) [<a href="#/slide-terjek2020adversarial">Terj&eacute;k, 2020</a>]</a>
+<li><a href="#/slide-org766b2bf">Adversarial Lipschitz regularization (ALR) [<a href="#/slide-terjek2020adversarial">Terjék, </a>]</a>
 <ul>
 <li><a href="#/slide-orgc229fcb">\(^{*}\text{Assumptions}\)</a></li>
 </ul>
@@ -276,19 +276,19 @@
 </div>
 <section>
 <section id="slide-org1e4f979">
-<h2 id="org1e4f979">Penalization of Lipschitz constraint violation [<a href="#terjek2020adversarial">Terj&eacute;k, 2020</a>]</h2>
+<h2 id="org1e4f979">Penalization of Lipschitz constraint violation [<a href="#terjek2020adversarial">Terjék, </a>]</h2>
 <ul>
-<li>Required for Wasserstein Adversarial Networks [<a href="#arjovsky2017wassersteina">Arjovsky et&nbsp;al., 2017</a>]</li>
-<li>Explicit regularization was previously thought infeasible [<a href="#petzka2018regularization">Petzka et&nbsp;al., 2018</a>]</li>
+<li>Required for Wasserstein Adversarial Networks [<a href="#arjovsky2017wasserstein">Arjovsky et&nbsp;al., </a>]</li>
+<li>Explicit regularization was previously thought infeasible [<a href="#petzka2018regularization">Petzka et&nbsp;al., </a>]</li>
 
 </ul>
-
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
 </section>
 </section>
 <section>
 <section id="slide-org83ac86e">
-<h2 id="org83ac86e">Generative adversarial networks (GANS) [<a href="#goodfellow2014generative">Goodfellow et&nbsp;al., 2014</a>]</h2>
+<h2 id="org83ac86e">Generative adversarial networks (GANS) [<a href="#goodfellow2014generative">Goodfellow et&nbsp;al., </a>]</h2>
 <ul>
 <li>A generator is a neural network \(g:\mZ\rightarrow\mX\subseteq\real^{D_{x}}\) which maps from a random vector \(\zzz\in\mZ\) to an output \(\xxx \in \mX\)
 <ul>
@@ -313,16 +313,16 @@ Generally we frame GANs as a minimax game,
 <p>
 \[ h(p_{\theta},f_\phi) = \meanp{x\sim p_\mr{true}}{\log f_\phi(x)} + \meanp{x\sim p_{\theta}}{\log (1 - f_\phi(x))}\]
 </p>
-
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
 </section>
 </section>
 <section>
-<section id="slide-org6ffc5b5">
-<h2 id="org6ffc5b5">Wasserstein GAN [<a href="#arjovsky2017wassersteina">Arjovsky et&nbsp;al., 2017</a>]</h2>
+<section id="slide-orgec2ceff">
+<h2 id="orgec2ceff">Wasserstein GAN [<a href="#arjovsky2017wasserstein">Arjovsky et&nbsp;al., </a>]</h2>
 <ul>
 <li>Wasserstein Distance \(W_{p}(P_{1},P_{2})=\paren{\inf_{\gamma\in\Gamma(P_{1},P_{2})}\meanp{\gamma}{d(x_{1},x_{2})^{p}}}^{\frac{1}{p}}\)</li>
-<li>Kantorovich-Rubinstein duality [<a href="#villani2008optimal">Villani, 2008</a>],
+<li>Kantorovich-Rubinstein duality [<a href="#villani2008optimal">Villani, </a>],
 \[ W_{1}(P_{1},P_{2}) = \sup_{\norm{f}_{\mr{L}}\leq1}\paren{\meanp{P_{1}}{f} - \meanp{P_{2}}{f}} \]</li>
 <li>WGAN:
 \[ \min_{\theta}\max_{\phi}\meanp{p_\mr{true}}{f_{\phi}} - \meanp{p_{\theta}}{f_\phi}, \quad \mr{s.t.}~\norm{f_{\phi}}_{\mr{L}}\leq 1\]</li>
@@ -340,8 +340,8 @@ Generally we frame GANs as a minimax game,
 </ul></li>
 
 </ul>
-
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
 </section>
 <section id="slide-org6c0d5a5">
 <h3 id="org6c0d5a5">Lipschitz Continuity</h3>
@@ -364,16 +364,16 @@ In particular consider \(\mX\subseteq\real^{D_{x}}\) and \(\mY\subseteq\real^{D_
 \[\forall (x,x') \in\mX\times\mX, \norm{f(x)-f(x')}_{2} \leq L \norm{x-x'}_{2}\]
 </p></li>
 
-<li>For more information on Lipschitz continuity and deep neural networks, see e.g. [<a href="#virmaux2018lipschitz">Virmaux and Scaman, 2018</a>].</li>
+<li>For more information on Lipschitz continuity and deep neural networks, see e.g. [<a href="#virmaux2018lipschitz">Virmaux and Scaman, </a>].</li>
 
 </ul>
-
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
 </section>
 </section>
 <section>
-<section id="slide-orgbe345c7">
-<h2 id="orgbe345c7">Improved Wasserstein GAN (WGAN-GP) [<a href="#gulrajani2017improveda">Gulrajani et&nbsp;al., 2017</a>]</h2>
+<section id="slide-org1a0a777">
+<h2 id="org1a0a777">Improved Wasserstein GAN (WGAN-GP) [<a href="#gulrajani2017improved">Gulrajani et&nbsp;al., </a>]</h2>
 <ul>
 <li>Weight clipping reduces the function space</li>
 <li>Soft regularization by considering the Lipschitz constraint with respect to the optimal coupling \(\gamma^{*}\)
@@ -393,7 +393,7 @@ In particular consider \(\mX\subseteq\real^{D_{x}}\) and \(\mY\subseteq\real^{D_
 <h3 id="org07e9a93">Lipschitz Continuity and Differentiability</h3>
 <ul>
 <li><p>
-<i>Using Theorem 3.1.6 in [<a href="#federer2014geometric">Federer, 1969</a>], we have that if \(f:\real^{n}\rightarrow\real^{m}\) is locally Lipschitz continuous function, then \(f\) is differentiable almost everywhere (except for a set of Lebesque measure zero). If \(f\) is Lipschitz continuous, then</i>
+<i>Using Theorem 3.1.6 in [<a href="#federer2014geometric">Federer, </a>], we have that if \(f:\real^{n}\rightarrow\real^{m}\) is locally Lipschitz continuous function, then \(f\) is differentiable almost everywhere (except for a set of Lebesque measure zero). If \(f\) is Lipschitz continuous, then</i>
 </p>
 
 <p>
@@ -433,7 +433,7 @@ Choose \(\vvv=\frac{\grad_{x}f}{\norm{\grad_{x}f}}\) such that
 
 </ol></li>
 <li><p>
-[<a href="#petzka2018regularization">Petzka et&nbsp;al., 2018</a>] addresses point (2), by instead using the regularizer
+[<a href="#petzka2018regularization">Petzka et&nbsp;al., </a>] addresses point (2), by instead using the regularizer
 \[\lambda\meanp{p_{\tau}}{\max(0,\norm{\grad_{x}f(x)}_{2}-1)^{2}},\]
 </p>
 
@@ -452,7 +452,7 @@ where \(p_{\tau}\) is another random pertubation distribution similar to \(p_{i}
 </section>
 <section>
 <section id="slide-org766b2bf">
-<h2 id="org766b2bf">Adversarial Lipschitz regularization (ALR) [<a href="#terjek2020adversarial">Terj&eacute;k, 2020</a>]</h2>
+<h2 id="org766b2bf">Adversarial Lipschitz regularization (ALR) [<a href="#terjek2020adversarial">Terjék, </a>]</h2>
 <ul>
 <li>Previous methods impose soft Lipschitz constraints in the form of (estimated) expectations
 <ul>
@@ -498,8 +498,8 @@ The Adversarial Lipschitz Penalty (ALP),
 </ul></li>
 
 </ul>
-
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
 </section>
 <section id="slide-orgc229fcb">
 <h3 id="orgc229fcb">\(^{*}\text{Assumptions}\)</h3>
@@ -530,7 +530,7 @@ The Adversarial Lipschitz Penalty (ALP),
 <section id="slide-org556f3ae">
 <h2 id="org556f3ae">WGAN-ALP</h2>
 <ul>
-<li>Following [<a href="#miyato2019virtual">Miyato et&nbsp;al., 2019</a>] one can for every \(x\) find an approximation \(\epsilon r_{k}\approx r'\), where \(\epsilon\sim p_{\epsilon}\) and
+<li>Following [<a href="#miyato2019virtual">Miyato et&nbsp;al., </a>] one can for every \(x\) find an approximation \(\epsilon r_{k}\approx r'\), where \(\epsilon\sim p_{\epsilon}\) and
 \[r_{i+1}=\vt{\frac{\grad_{r}d_{\mY}(f(x),f(x+r))}{\norm{\grad_{r}d_{\mY}(f(x),f(x+r))}_{2}}}_{r=\xi r_{i}}\]
 <ul>
 <li>\(r_{0}\) is a random unit vector, and \(k=1\) is empirically found to be sufficient</li>
@@ -559,7 +559,6 @@ with \(d_{\mY}(f(x),f(x+r'))=\abs{f(x)-f(x+r')}\) and \(d_{\mX}(x,x+r')=\norm{x-
 <h2 id="org7847026">Experiments</h2>
 <div class="outline-text-2" id="text-org7847026">
 </div>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
 <section id="slide-orgcf09329">
 <h3 id="orgcf09329">Experimental setup</h3>
@@ -575,7 +574,7 @@ with \(d_{\mY}(f(x),f(x+r'))=\abs{f(x)-f(x+r')}\) and \(d_{\mX}(x,x+r')=\norm{x-
 <section id="slide-org8c3e70e">
 <h3 id="org8c3e70e">CIFAR-10</h3>
 
-<div id="org02f9dce" class="figure">
+<div id="org8b03e1d" class="figure">
 <p><img src="../../../assets/img/adv_lip_reg/figs/cifar10_images.png" alt="cifar10_images.png" width="1400" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Random samples using WGAN-ALP with (a) and without (b) batch normalization (BN).</p>
@@ -585,7 +584,7 @@ with \(d_{\mY}(f(x),f(x+r'))=\abs{f(x)-f(x+r')}\) and \(d_{\mX}(x,x+r')=\norm{x-
 <section id="slide-org8538f75">
 <h3 id="org8538f75">Comparison to other methods</h3>
 
-<div id="org25e535b" class="figure">
+<div id="org5fc40dd" class="figure">
 <p><img src="../../../assets/img/adv_lip_reg/figs/cifar10_table.png" alt="cifar10_table.png" width="1400" />
 </p>
 </div>
@@ -619,8 +618,9 @@ with \(d_{\mY}(f(x),f(x+r'))=\abs{f(x)-f(x+r')}\) and \(d_{\mX}(x,x+r')=\norm{x-
 </div>
 <script src="https://ammunk.com/reveal.js/dist/reveal.js"></script>
 <script src="https://ammunk.com/reveal.js/plugin/highlight/highlight.js"></script>
-<script src="https://ammunk.com/reveal.js/"></script>
+<script src="https://ammunk.com/reveal.js/plugin/search/search.js"></script>
 <script src="https://ammunk.com/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="https://ammunk.com/reveal.js/plugin/notes/notes.js"></script>
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
@@ -649,7 +649,7 @@ transition: 'linear',
 transitionSpeed: 'default',
 
 // Plugins with reveal.js 4.x
-plugins: [ RevealHighlight, , RevealZoom ],
+plugins: [ RevealHighlight, RevealSearch, RevealZoom, RevealNotes ],
 
 // Optional libraries used to extend reveal.js
 dependencies: [
