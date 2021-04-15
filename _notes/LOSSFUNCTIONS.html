@@ -22,9 +22,9 @@ functions would be equal to a utility function we then maximize.
 </p>
 
 <p>
-A loss function \(\mL(\cdot)\) takes as argument whatever defines our loss.
+A loss function \(\gL(\cdot)\) takes as argument whatever defines our loss.
 For instance, for a classification problem (or regression problem with scalar
-predictions) \(\mL(\cdot)=\mL(\xxx,y)\). Typically, we have control of the loss
+predictions) \(\gL(\cdot)=\gL(\vx,y)\). Typically, we have control of the loss
 via some parameter (otherwise we have no problem to begin with as there is
 nothing we can do to minimize our loss&#x2026;). We denote these &ldquo;parameters&rdquo;
 \(\theta\), and emphasize they they can represent anything from the set of
@@ -36,11 +36,13 @@ the expected loss,
 </p>
 
 <p>
-\[
-\beq{opt}
-\theta^* = \argmin_{\theta}\meanp{p(\cdot)}{\mL(\cdot;\theta)}
-\eeq
-\]
+$$
+</p>
+\begin{equation}\label{eq:opt}
+\theta^* = \argmin_{\theta}\E_{p(\cdot)}\br{\gL(\cdot;\theta)}
+\end{equation}
+<p>
+$$
 </p>
 
 <p>
@@ -54,12 +56,12 @@ more heavily than the opposite scenario. That is to say we want to be quite
 certain about deeming someone being healthy, because being wrong could be fatal.
 </p>
 
-<div id="outline-container-org2e33e2f" class="outline-2">
-<h2 id="org2e33e2f">Decision Region Example</h2>
-<div class="outline-text-2" id="text-org2e33e2f">
+<div id="outline-container-orgc9910c7" class="outline-2">
+<h2 id="orgc9910c7">Decision Region Example</h2>
+<div class="outline-text-2" id="text-orgc9910c7">
 <p>
-As an example we can re-derive our previous result on how to classify \(\xxx\)
-given that we know \(p(\yyy|\xxx)\).
+As an example we can re-derive our previous result on how to classify \(\vx\)
+given that we know \(p(\vy|\vx)\).
 </p>
 
 <p>
@@ -69,23 +71,23 @@ of classes and consider the following loss function,
 
 <p>
 \[
-\mL(\yyy=k,\xxx;\theta)=l_{ik}
+\gL(\vy=k,\vx;\theta)=l_{ik}
 \]
 </p>
 
 <p>
-where the parameter &ldquo;\(\theta\)&rdquo; is the \(i\) i.e. how we classify \(\xxx\). This loss
+where the parameter &ldquo;\(\theta\)&rdquo; is the \(i\) i.e. how we classify \(\vx\). This loss
 functions simply says that there is some cost associated with guessing class \(i\)
 but the real class was \(k\).
 </p>
 
 <p>
-The minimization \eqref{opt} now becomes
+The minimization \eqref{eq:opt} now becomes
 </p>
 
 <p>
 \[
-\min\meanp{p(\cdot)}{\mL(\cdot;\theta)} =\min \int\sum_{k=1}^K l_{ik} p(y|\xxx)p(\xxx)\dm{\xxx}.
+\min\E_{p(\cdot)}\br{\gL(\cdot;\theta)} =\min \int\sum_{k=1}^K l_{ik} p(y|\vx)p(\vx)\dm{\vx}.
 \]
 </p>
 
@@ -106,10 +108,10 @@ a & \mr{otherwise}
 <p>
 Here we placed no loss contribution for correct classification whereas there is
 some loss \(a\) for being wrong (same loss for all classes). Clearly, we minimize
-the loss by choosing \(i\) such that we minimize \(\sum_{k=1}^K l_{ik}p(y=k|\xxx)\)
-for all \(\xxx\) (as \(p(\xxx)\) is independent of \(k\)). Because we penalize being
+the loss by choosing \(i\) such that we minimize \(\sum_{k=1}^K l_{ik}p(y=k|\vx)\)
+for all \(\vx\) (as \(p(\vx)\) is independent of \(k\)). Because we penalize being
 wrong equally across all classes, we should choose to predict the class
-\(i=\argmax_{i}p(y=i|\xxx)\), i.e. predict the class \(i\) with highest probability.
+\(i=\argmax_{i}p(y=i|\vx)\), i.e. predict the class \(i\) with highest probability.
 </p>
 
 <p>
@@ -121,12 +123,12 @@ different decisions.
 </div>
 </div>
 
-<div id="outline-container-org4b4eb1d" class="outline-2">
-<h2 id="org4b4eb1d">\(\mL\) is arbitrary</h2>
-<div class="outline-text-2" id="text-org4b4eb1d">
+<div id="outline-container-orgb1f13e2" class="outline-2">
+<h2 id="orgb1f13e2">\(\gL\) is arbitrary</h2>
+<div class="outline-text-2" id="text-orgb1f13e2">
 <p>
-We may choose \(\mL\) freely in such a way that we incorporate desired properties
-associated with the optimization problem \eqref{opt}. This is in contrast to,
+We may choose \(\gL\) freely in such a way that we incorporate desired properties
+associated with the optimization problem \eqref{eq:opt}. This is in contrast to,
 for instance, minimizing the divergence between two distribution which <i><b>is</b></i>
 principled and hold a very specific meaning. In general I wouldn&rsquo;t consider the
 loss function as principled since any given arbitrary loss function need not be
@@ -136,14 +138,14 @@ regression problem.
 </p>
 
 <p>
-However, in some cases a specific choice of loss function \(\mL\) will coincide
+However, in some cases a specific choice of loss function \(\gL\) will coincide
 with a principled objective (if it is associated with a set of assumptions),
 such as certain maximum likelihood approaches - see table below for a small set
 of examples,
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption class="t-above"><span class="table-number">Table 1:</span> A few forms of maximum log-likelihood formulations \(\argmax_{\theta}\ln p(\yyy|\xxx;\theta;\theta)\) and their coinciding minimum loss function \(\theta=\argmin_{\theta}\mL(\xxx,\yyy;\theta)\)</caption>
+<caption class="t-above"><span class="table-number">Table 1:</span> A few forms of maximum log-likelihood formulations \(\argmax_{\theta}\ln p(\vy|\vx;\theta;\theta)\) and their coinciding minimum loss function \(\theta=\argmin_{\theta}\gL(\vx,\vy;\theta)\)</caption>
 
 <colgroup>
 <col  class="org-left" />
@@ -152,19 +154,19 @@ of examples,
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left">Density \(p(\yyy\vert\xxx)\)</th>
-<th scope="col" class="org-left">Loss function \(\mL\)</th>
+<th scope="col" class="org-left">Density \(p(\vy\vert\vx)\)</th>
+<th scope="col" class="org-left">Loss function \(\gL\)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="org-left">\(\yyy\sim \mN(f(\xxx),\cdot)\)</td>
-<td class="org-left">\(\mL=\norm{\yyy-f(\xxx)}^2\)</td>
+<td class="org-left">\(\vy\sim \mN(f(\vx),\cdot)\)</td>
+<td class="org-left">\(\gL=\norm{\vy-f(\vx)}^2\)</td>
 </tr>
 
 <tr>
-<td class="org-left">\(\yyy\sim \mr{Laplace}(f(\xxx),\cdot)\)</td>
-<td class="org-left">\(\mL=\abs{\yyy-f(\xxx)}\)</td>
+<td class="org-left">\(\vy\sim \mr{Laplace}(f(\vx),\cdot)\)</td>
+<td class="org-left">\(\gL=\abs{\vy-f(\vx)}\)</td>
 </tr>
 </tbody>
 </table>

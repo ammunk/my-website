@@ -15,7 +15,7 @@ comments: true
 right with constant speed \(c\). When two ants collide, they bounce off each
 other, reversing their direction. When an ant reaches the end of the log, it
 falls off. The initial position of each is follows a i.i.d. and follows a
-uniform distribution \(\mU(0, L)\).
+uniform distribution \(\mathcal{U}(0, L)\).
 </p>
 
 <p>
@@ -58,7 +58,7 @@ all possible ways the ants can placed on the log is,
 <div id="spoiler-ants2" style="display:none">
 <p>
 To answer this question we simply refer consider the same dynamics and work out
-\(\mean{t_{\mr{max}}}\) using order statistics. Recall the $k$th order statistics
+\(\E\br{t_{\mr{max}}}\) using order statistics. Recall the $k$th order statistics
 is denoted \(X_{(k)}\), where \(X_{(k)}\) is the \(k\)&rsquo;th largest random value out of
 a sequence of \(N>k\) random variables such that for all \(k'\lt N\) \(X_{(k'\lt
 k)}\lt X_{(k)}\lt X_{(k'\gt k)}\). The distribution of \(X_{(k)}\) is given by,
@@ -82,7 +82,7 @@ leads to,
 </p>
 
 \begin{align*}
-\meanp{p_{N}(X_{(N)})}{X_{(N)}}&=\int_{X_{(N)}=0}^{X_{(N)}=L} X_{(N)} \frac{N!}{(N-N)!(N-1)!}\paren{X_{(N)}\frac{1-X_{(N)}}{L}}^{N-N}\paren{\frac{X_{(N)}}{L}}^{N-1}\frac{1}{L} \dm{X_{(N)}} \\
+\E_{p_{N}}\br{(X_{(N)})}{X_{(N)}}&=\int_{X_{(N)}=0}^{X_{(N)}=L} X_{(N)} \frac{N!}{(N-N)!(N-1)!}\paren{X_{(N)}\frac{1-X_{(N)}}{L}}^{N-N}\paren{\frac{X_{(N)}}{L}}^{N-1}\frac{1}{L} \dm{X_{(N)}} \\
 &= \frac{N}{L^{N}}\int_{X_{(N)}=0}^{X_{(N)}=L}X_{(N)}^{N}\dm{X_{(N)}}= \frac{N}{N+1}\frac{L^{N+1}}{L^{N}} = \frac{N}{N+1}L.
 \end{align*}
 
@@ -92,7 +92,7 @@ Such that,
 
 <p>
 \[
-\mean{t_{\mr{ants~off}}}= \frac{\meanp{p_{N}(X_{(N)})}{X_{(N)}}}{c} = \frac{N}{N+1}\frac{L}{c}.
+\E\br{t_{\mr{ants~off}}}= \frac{\E_{p_{N}}\br{(X_{(N)})}{X_{(N)}}}{c} = \frac{N}{N+1}\frac{L}{c}.
 \]
 </p>
 
