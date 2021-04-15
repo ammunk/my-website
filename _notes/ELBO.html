@@ -33,10 +33,10 @@ Bayes</i> (VB), etc.
 It is within VB that we find the ELBO is an essential mathematical expression
 that allows for approximating the posterior distribution \(q(x|y)\approx p(x|y)\).
 It has been used successfully in many applications and machine learning methods
-such as Variational autoencoders (VAEs) [<a href="#kingma2014autoencoding">Kingma and Welling, </a>]. For a more in-depth
+such as Variational autoencoders (VAEs) [<a href="#kingma2014autoencoding">Kingma and Welling, 2014</a>]. For a more in-depth
 explanation of VB and also the ELBO I suggest looking into excellent the pattern
-recognition book by Bishop [<a href="#bishop2006a">Bishop, </a>] and the review paper on variational
-inference [<a href="#blei2017a">Blei et&nbsp;al., </a>].
+recognition book by Bishop [<a href="#bishop2006a">Bishop, 2006</a>] and the review paper on variational
+inference [<a href="#blei2017a">Blei et&nbsp;al., 2017</a>].
 </p>
 </div>
 </div>
@@ -50,13 +50,13 @@ approximate \(p(x|y)\) with \(q(x|y;\theta)\). Here we explicitly parameterized 
 with \(\theta\) and we shall assume the flexibility of \(q\) is precisely defined by
 \(\theta\). The objective then is to find \(\theta\) such that \(q(x|y;\theta)\approx
 p(x|y)\). This requires some mathematical expression which tells us how to find
-such a \(\theta\) and the ELBO is one such expression. We denote the ELBO as \(\mL\)
+such a \(\theta\) and the ELBO is one such expression. We denote the ELBO as \(\gL\)
 and as we will see it takes the following form,
 </p>
 
 \begin{equation}
-\eqlab{elbo}
-\mL = \meanp{q(x|y;\theta)}{\ln{\frac{p(x,y)}{q(x|y;\theta)}}},
+\label{eq:elbo}
+\gL = \E_{q(x|y;\theta)}\br{\ln{\frac{p(x,y)}{q(x|y;\theta)}}},
 \end{equation}
 
 <p>
@@ -73,13 +73,15 @@ Kullback&#x2013;Leibler (KL) divergence,
 </p>
 
 <p>
-\[
-\balnn
-  \kl{q(x|y;\theta)}{p(x|y)} &= -\int \ln{\frac{p(x|y)}{q(x|y;\theta)}} q(x|y;\theta)\dm x\nn\\
+$$
+</p>
+\begin{align*}
+  \mr{KL}\br{q(x|y;\theta)|p(x|y)} &= -\int \ln{\frac{p(x|y)}{q(x|y;\theta)}} q(x|y;\theta)\dm x\nn\\
 & = -\br{ \int \ln{\frac{p(x,y)}{q(x|y;\theta)}} q(x|y;\theta)\dm x  - \int \ln p(y) q(x|y;\theta)\dm x } \nn\\
-& = -\meanp{q(x|y;\theta)}{\ln{\frac{p(x,y)}{q(x|y;\theta)}}} \dm x  + \ln p(y),\nn
-\ealnn
-\]
+& = -\E_{q(x|y;\theta)}\br{\ln{\frac{p(x,y)}{q(x|y;\theta)}}} \dm x  + \ln p(y),\nn
+\end{align*}
+<p>
+$$
 </p>
 
 <p>
@@ -88,13 +90,13 @@ which we rearrange to,
 
 <p>
 \[
-  \ln p(y) = \kl{q(x|y;\theta)}{p(x|y)} + \meanp{q(x|y;\theta)}{\ln{\frac{p(x,y)}{q(x|y;\theta)}}} = \kl{q(x|y)}{p_{\theta}(x|y)} + \mL.
+  \ln p(y) = \mr{KL}\br{q(x|y;\theta)|p(x|y)} + \E_{q(x|y;\theta)}\br{\ln{\frac{p(x,y)}{q(x|y;\theta)}}} = \mr{KL}\br{q(x|y)|p_{\theta}(x|y)} + \gL.
 \]
 </p>
 
 <p>
-Because the KL-divergence is non-negative we identify \(\ln p(y)\ge\mL\), making
-\(\mL\) a lower bound on the evidence \(p(y)\), hence the name.
+Because the KL-divergence is non-negative we identify \(\ln p(y)\ge\gL\), making
+\(\gL\) a lower bound on the evidence \(p(y)\), hence the name.
 </p>
 </div>
 </div>
@@ -104,17 +106,17 @@ Because the KL-divergence is non-negative we identify \(\ln p(y)\ge\mL\), making
 <div class="outline-text-3" id="text-org681ef31">
 <p>
 As shown above there is a direct connection between the evidence \(p(y)\) and the
-ELBO \(\mL\) and we will here derive the expression of \(\mL\) directly from \(\ln
+ELBO \(\gL\) and we will here derive the expression of \(\gL\) directly from \(\ln
 p(y)\) using <a href="https://en.wikipedia.org/wiki/Jensen%27s_inequality">Jensen&rsquo;s inequality</a>,
 </p>
 
 <p>
 \[
-f(\mean{x}) \le \mean{f(x)}, \quad \text{for a convex function}~f,
+f(\E\br{x}) \le \E\br{f(x)}, \quad \text{for a convex function}~f,
 \]
 or
 \[
-f(\mean{x}) \ge \mean{f(x)}, \quad \text{for a concave function}~f.
+f(\E\br{x}) \ge \E\br{f(x)}, \quad \text{for a concave function}~f.
 \]
 </p>
 
@@ -127,7 +129,7 @@ With this we can write,
 \balnn
 \ln p(y) &= \ln \int p(y|x)p(x) \dm x \nn\\
 &= \ln \int \frac{p(y,x)}{q(x|y;\theta)}q(x|y;\theta) \dm x \nn\\
-&\ge \meanp{q(x|y;\theta)}{\ln\frac{p(y,x)}{q(x|y;\theta)}},\nn
+&\ge \E_{q(x|y;\theta)}\br{\ln\frac{p(y,x)}{q(x|y;\theta)}},\nn
 \ealnn
 \]
 which is exactly the expression in \eqref{elbo}
@@ -149,7 +151,7 @@ include but is certainly not limited:
 <ul class="org-ul">
 <li>The <i>expectation maximization</i> (EM) algorithm</li>
 <li>VAEs</li>
-<li>Inference compilation [<a href="#le2016inference">Le et&nbsp;al., </a>]</li>
+<li>Inference compilation [<a href="#le2016inference">Le et&nbsp;al., 2017</a>]</li>
 </ul>
 
 <p>
@@ -163,10 +165,10 @@ And much, much more.
 
 <tr valign="top">
 <td align="right" class="bibtexnumber">
-[<a name="bishop2006a">Bishop, </a>]
+[<a name="bishop2006a">Bishop, 2006</a>]
 </td>
 <td class="bibtexitem">
-Bishop, C.&nbsp;M.
+Bishop, C.&nbsp;M. (2006).
  <em>Pattern Recognition and Machine Learning</em>.
  Springer,.
 
@@ -176,12 +178,13 @@ Bishop, C.&nbsp;M.
 
 <tr valign="top">
 <td align="right" class="bibtexnumber">
-[<a name="blei2017a">Blei et&nbsp;al., </a>]
+[<a name="blei2017a">Blei et&nbsp;al., 2017</a>]
 </td>
 <td class="bibtexitem">
-Blei, D.&nbsp;M., Kucukelbir, A., and McAuliffe, J.&nbsp;D.
+Blei, D.&nbsp;M., Kucukelbir, A., and McAuliffe, J.&nbsp;D. (2017).
  Variational inference: A review for statisticians.
- 112(518):859--877.
+ <em>Journal of the American Statistical Association</em>,
+  112(518):859--877.
 [&nbsp;<a href="http://dx.doi.org/10.1080/01621459.2017.1285773">DOI</a>&nbsp;]
 
 </td>
@@ -190,13 +193,13 @@ Blei, D.&nbsp;M., Kucukelbir, A., and McAuliffe, J.&nbsp;D.
 
 <tr valign="top">
 <td align="right" class="bibtexnumber">
-[<a name="kingma2014autoencoding">Kingma and Welling, </a>]
+[<a name="kingma2014autoencoding">Kingma and Welling, 2014</a>]
 </td>
 <td class="bibtexitem">
-Kingma, D.&nbsp;P. and Welling, M.
+Kingma, D.&nbsp;P. and Welling, M. (2014).
  Auto-encoding variational bayes.
-[&nbsp;<a href="http://arxiv.org/abs/1312.6114">arXiv</a>&nbsp;| 
-<a href="http://arxiv.org/abs/1312.6114">http</a>&nbsp;]
+ <em>arXiv:1312.6114 [cs, stat]</em>.
+[&nbsp;<a href="http://arxiv.org/abs/1312.6114">arXiv</a>&nbsp;]
 
 </td>
 </tr>
@@ -204,14 +207,14 @@ Kingma, D.&nbsp;P. and Welling, M.
 
 <tr valign="top">
 <td align="right" class="bibtexnumber">
-[<a name="le2016inference">Le et&nbsp;al., </a>]
+[<a name="le2016inference">Le et&nbsp;al., 2017</a>]
 </td>
 <td class="bibtexitem">
-Le, T.&nbsp;A., Baydin, A.&nbsp;G., and Wood, F.
+Le, T.&nbsp;A., Baydin, A.&nbsp;G., and Wood, F. (2017).
  Inference compilation and universal probabilistic programming.
  In <em>Proceedings of the 20th International Conference on
   Artificial Intelligence and Statistics</em>, volume&nbsp;54 of <em>Proceedings of
-  Machine Learning Research</em>, pages 1338--1348. PMLR.
+  Machine Learning Research</em>, pages 1338--1348, Fort Lauderdale, FL, USA. PMLR.
 [&nbsp;<a href="http://arxiv.org/abs/1610.09900">arXiv</a>&nbsp;]
 
 </td>

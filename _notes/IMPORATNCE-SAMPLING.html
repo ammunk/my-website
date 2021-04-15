@@ -17,24 +17,26 @@ asymptotic convergence of our estimates.
 
 <p>
 Using IS we estimate the expected value of \(f(x)\) under \(p\), i.e.
-\(\meanp{p}{f(x)}\) by noticing, 
+\(\E_{p}\br{f(x)}\) by noticing,
 </p>
 
 <p>
-\[
-\balnn
-\meanp{p}{f(x)} &= \int f(x) p(x) \dm{x} \\
+$$
+</p>
+\begin{align*}
+\E_{p}\br{f(x)} &= \int f(x) p(x) \dm{x} \\
 &= \int f(x) \frac{p(x)}{q(x)} q(x) \dm{x}\\
-&= \meanp{q} {f(x)\frac{p(x)}{q(x)}}\\
+&= \E_{q}\br{f(x)\frac{p(x)}{q(x)}}\\
 &\approx \frac{1}{N}\sum_{n=1}^Nf(x^n)\frac{p(x^n)}{q(x^n)},\quad x^n\sim q.
-\ealnn
-\]
+\end{align*}
+<p>
+$$
 </p>
 
 <p>
 where the approximation comes from the Monte Carlo estimation of the
 expectation. This estimation is unbiased and converges asymptotically to
-\(\meanp{p}{f(x)}\) for \(N\rightarrow\infty\).
+\(\E_{p}\br{f(x)}\) for \(N\rightarrow\infty\).
 </p>
 
 <div id="outline-container-org377e735" class="outline-2">
@@ -48,9 +50,9 @@ may estimate properties of the posterior \(p(x|y)\), as follows,
 <p>
 \[
 \balnn
-\meanp{p}{f(x)|y} &= \int f(x) p(x|y) \dm{x} \\
+\E_{p}\br{f(x)|y} &= \int f(x) p(x|y) \dm{x} \\
 &= \frac{1}{p(y)}\int f(x) \frac{p(x,y)}{q(x)} q(x) \dm{x}\\
-&= \frac{1}{p(y)}\meanp{q} {f(x)\frac{p(x,y)}{q(x)}}\\
+&= \frac{1}{p(y)}\E_{q}\br{f(x)\frac{p(x,y)}{q(x)}}\\
 &\approx \frac{\frac{1}{N}\sum_{n=1}^Nf(x^n)\frac{p(x^n,y)}{q(x^n}}{p(y)},\quad x^n\sim q.
 \ealnn
 \]
@@ -78,20 +80,20 @@ To see this we consider the <a href="https://www.stat.ubc.ca/~bouchard/courses/s
 Therefore we can write,
 </p>
 
-\begin{equation}\eqlab{pos_est}
-\meanp{p}{f(x)|y}\approx\frac{\sum_{n=1}^Nf(x^n)w^k}{\sum_{n=1}^Nw^k}, \quad
+\begin{equation}\label{eq:pos_est}
+\E_{p}\br{f(x)|y}\approx\frac{\sum_{n=1}^Nf(x^n)w^k}{\sum_{n=1}^Nw^k}, \quad
 w^k=\frac{p(x^k,y}{q(x^k)}, \quad x\sim q(x)
 \end{equation}
 
 <p>
-Of course \eqref{pos_est} is only asymptotically correct, and while the
+Of course \eqref{eq:pos_est} is only asymptotically correct, and while the
 denominator and numerator are individually unbiased estimates, the fact that we
 need to normalize using the averaging of the weights, \eqref{pos_est} is not
 unbiased.
 </p>
 
 <p>
-For more information about such sampling techniques see e.g. [<a href="#bishop2006a">Bishop, </a>]</p>
+For more information about such sampling techniques see e.g. [<a href="#bishop2006a">Bishop, 2006</a>]</p>
 
 <div id="bibliography">
 <h2>References</h2>
@@ -100,10 +102,10 @@ For more information about such sampling techniques see e.g. [<a href="#bishop20
 
 <tr valign="top">
 <td align="right" class="bibtexnumber">
-[<a name="bishop2006a">Bishop, </a>]
+[<a name="bishop2006a">Bishop, 2006</a>]
 </td>
 <td class="bibtexitem">
-Bishop, C.&nbsp;M.
+Bishop, C.&nbsp;M. (2006).
  <em>Pattern Recognition and Machine Learning</em>.
  Springer,.
 

@@ -568,10 +568,10 @@
 <li>Langevin Dynamics are: \[\dm{X}_{t} = \grad \ln p(X_t)\dm{t} +
   \sqrt{2}\dm{W}_{t}\]
 with the distribution of \(X_{t}\) following these dynamics converging to \(p\)</li>
-<li>The discretized version for small time steps \(\epsilon\) is \[\Delta \xxx =
-  \grad_{\xxx}\ln p(\xxx)\epsilon + \zzz,\quad \zzz\sim\mN(0,\sqrt{2\epsilon}\III)\]</li>
-<li>Equivalently \[\xxx_{t+1}\sim\mN(\xxx_{t}+\grad_{\xxx}\ln p(\xxx)\epsilon,
-  \sqrt{2\epsilon}\III)\]</li>
+<li>The discretized version for small time steps \(\epsilon\) is \[\Delta \vx =
+  \grad_{\vx}\ln p(\vx)\epsilon + \vz,\quad \vz\sim\mN(0,\sqrt{2\epsilon}\mI)\]</li>
+<li>Equivalently \[\vx_{t+1}\sim\mN(\vx_{t}+\grad_{\vx}\ln p(\vx)\epsilon,
+  \sqrt{2\epsilon}\mI)\]</li>
 
 </ul>
 
@@ -586,8 +586,8 @@ with the distribution of \(X_{t}\) following these dynamics converging to \(p\)<
 <div class="col-list" style="text-align:left">
 <ul>
 <li>May correct for the discretization error using Metropolis-Hastings with
-proposal \[q(\xxx_{t+1}|\xxx_{t}) =\mN(\xxx_{t}+\grad_{\xxx}\ln
-  p(\xxx)\epsilon, \sqrt{2\epsilon}\III)\]</li>
+proposal \[q(\vx_{t+1}|\vx_{t}) =\mN(\vx_{t}+\grad_{\vx}\ln
+  p(\vx)\epsilon, \sqrt{2\epsilon}\mI)\]</li>
 <li>Assuming \(\epsilon\) is small enough and t is sufficiently large, the
 acceptance rate goes to one</li>
 <li>Used also for inference - see e.g. <i>Stochastic Gradient Langevin Dynamics</i>
@@ -604,24 +604,24 @@ acceptance rate goes to one</li>
 <section id="slide-orgfab4e36">
 <h2 id="orgfab4e36">Score Matching [<a href="#hyvarinen2005estimation">Hyv&auml;rinen, 2005</a>]</h2>
 <ul>
-<li>Can we estimate \(\grad_{\xxx}\ln p(\xxx)\)?</li>
-<li>Define \(s_{\theta}(\xxx)=\grad_{\xxx}\ln q_{\theta}(\xxx),
+<li>Can we estimate \(\grad_{\vx}\ln p(\vx)\)?</li>
+<li>Define \(s_{\theta}(\vx)=\grad_{\vx}\ln q_{\theta}(\vx),
   ~s_{\theta}:\real^{d}\rightarrow\real^{d}\)</li>
-<li>Train \(s_{\theta}\) to match \(\grad_{\xxx}\ln p(\xxx)\) by minimizing,
-\[\begin{align*}J(\theta)&=\frac{1}{2}\meanp{p(\xxx)}{\norm{s_{\theta}(\xxx) -
-  \grad_{\xxx}\ln p(\xxx)}^2} \\ &=
-  \meanp{p(\xxx)}{\mr{tr}(\grad_{\xxx}s_{\theta}(\xxx)) +
-  \frac{1}{2}\norm{s_{\theta}(\xxx)}^2} + \mr{const}\end{align*}\]</li>
-<li><i>Consistency</i>: Assuming \(\exists\theta^{*}(s_{\theta^{*}}(\xxx)=\grad_{\xxx}\ln
-  p(\xxx))\) then \(J(\theta)=0\Leftrightarrow\theta=\theta^{*}\)</li>
+<li>Train \(s_{\theta}\) to match \(\grad_{\vx}\ln p(\vx)\) by minimizing,
+\[\begin{align*}J(\theta)&=\frac{1}{2}\E_{p(\vx)}\br{\norm{s_{\theta}(\vx) -
+  \grad_{\vx}\ln p(\vx)}^2} \\ &=
+  \E_{p(\vx)}\br{\mr{tr}(\grad_{\vx}s_{\theta}(\vx)) +
+  \frac{1}{2}\norm{s_{\theta}(\vx)}^2} + \mr{const}\end{align*}\]</li>
+<li><i>Consistency</i>: Assuming \(\exists\theta^{*}(s_{\theta^{*}}(\vx)=\grad_{\vx}\ln
+  p(\vx))\) then \(J(\theta)=0\Leftrightarrow\theta=\theta^{*}\)</li>
 <li>Involves Jacobian of (Hessian of \(q\))</li>
 <li>Weak regularity conditions:
 <ul>
-<li>\(p(\xxx)\) is differentiable</li>
-<li>\(\meanp{p(\xxx)}{\norm{s_{\theta}(\xxx)}^{2}}<\infty,~\forall \theta\)</li>
-<li>\(\meanp{p(\xxx)}{\norm{\grad_{\xxx}\ln p(\xxx)}^{2}}<\infty\)</li>
-<li>\(\lim\limits_{\norm{\xxx}\rightarrow\infty}
-    p(\xxx)s_{\theta}(\xxx)=\ooo,~\forall \theta\)</li>
+<li>\(p(\vx)\) is differentiable</li>
+<li>\(\E_{p(\vx)}\br{\norm{s_{\theta}(\vx)}^{2}}<\infty,~\forall \theta\)</li>
+<li>\(\E_{p(\vx)}\br{\norm{\grad_{\vx}\ln p(\vx)}^{2}}<\infty\)</li>
+<li>\(\lim\limits_{\norm{\vx}\rightarrow\infty}
+    p(\vx)s_{\theta}(\vx)=\vec{0},~\forall \theta\)</li>
 
 </ul></li>
 
@@ -632,24 +632,24 @@ acceptance rate goes to one</li>
 <h3 id="orgcc97abe">Proofs of the Objective Reduction</h3>
 <ul>
 <li>We need only consider
-\(-\intd{\xxx}p(\xxx)\trans{s_{\theta}(\xxx)}\grad_{\xxx}\ln
-  p(\xxx)=-\sum_{i}\intd{\xxx}p(\xxx)s_{i}(\xxx)\frac{\pp \ln p(\xxx)}{\pp
-  x_{i}}=-\sum_{i}\intd{\xxx}s_{i}(\xxx)\frac{\pp p(\xxx)}{\pp x_{i}}\), where
-\(s_{i}(\xxx)=s_{\theta}(\xxx)_{i}\)</li>
+\(-\intd{\vx}p(\vx)\trans{s_{\theta}(\vx)}\grad_{\vx}\ln
+  p(\vx)=-\sum_{i}\intd{\vx}p(\vx)s_{i}(\vx)\frac{\pp \ln p(\vx)}{\pp
+  x_{i}}=-\sum_{i}\intd{\vx}s_{i}(\vx)\frac{\pp p(\vx)}{\pp x_{i}}\), where
+\(s_{i}(\vx)=s_{\theta}(\vx)_{i}\)</li>
 <li>We restrict our attention to a single \(i\) as the derivation holds for every
 \(i\)</li>
 
-<li>Using the shorthand notation \(\pp_{i}f(\xxx)=\frac{\pp f(\xxx)}{\pp x_{i}}\) we
+<li>Using the shorthand notation \(\pp_{i}f(\vx)=\frac{\pp f(\vx)}{\pp x_{i}}\) we
 now prove that
-\[\intd{\xxx}s_{i}(\xxx)\pp_{i}p(\xxx)=-\intd{\xxx}p(\xxx)\pp_{i}s_{i}(\xxx)\]</li>
+\[\intd{\vx}s_{i}(\vx)\pp_{i}p(\vx)=-\intd{\vx}p(\vx)\pp_{i}s_{i}(\vx)\]</li>
 
-<li>Recall that for a differentiable function \(h(\xxx)=p(\xxx)s_{i}(\xxx)\) we have
-\[\pp_{i}h(\xxx)=\pp_{i}\paren{p(\xxx)s_{i}(\xxx)} =
-  p(\xxx)\pp_{i}s_{i}(\xxx)+s_{i}(\xxx)\pp_{i}p(\xxx)\] and so
-\[\int_{b}^{a}\dm{x_{i}}\pp_{i}h(\xxx) =
+<li>Recall that for a differentiable function \(h(\vx)=p(\vx)s_{i}(\vx)\) we have
+\[\pp_{i}h(\vx)=\pp_{i}\paren{p(\vx)s_{i}(\vx)} =
+  p(\vx)\pp_{i}s_{i}(\vx)+s_{i}(\vx)\pp_{i}p(\vx)\] and so
+\[\int_{b}^{a}\dm{x_{i}}\pp_{i}h(\vx) =
   h(x_{1},\dots,x_{i-1},a,x_{i+1},\dots,x_{d})
   -h(x_{1},\dots,x_{i-1},b,x_{i+1},\dots,x_{d}) =
-  \int_{b}^{a}p(\xxx)\pp_{i}s_{i}(\xxx)+s_{i}(\xxx)\pp_{i}p(\xxx)\dm{x_{i}}\]</li>
+  \int_{b}^{a}p(\vx)\pp_{i}s_{i}(\vx)+s_{i}(\vx)\pp_{i}p(\vx)\dm{x_{i}}\]</li>
 
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
@@ -657,19 +657,19 @@ now prove that
 <section>
 <ul>
 <li>From the regularity conditions we have
-\(\lim\limits_{\norm{\xxx}\rightarrow\infty}
-  p(\xxx)s_{\theta}(\xxx)=\ooo,~\forall \theta\),
-\[\int_{-\infty}^{\infty}\dm{x_{i}}\pp_{i}h(\xxx) =
+\(\lim\limits_{\norm{\vx}\rightarrow\infty}
+  p(\vx)s_{\theta}(\vx)=\vec{0},~\forall \theta\),
+\[\int_{-\infty}^{\infty}\dm{x_{i}}\pp_{i}h(\vx) =
   \lim\limits_{a\rightarrow\infty,b\rightarrow-\infty}
   \br{h(x_{1},\dots,x_{i-1},a,x_{i+1},\dots,x_{d})
   -h(x_{1},\dots,x_{i-1},b,x_{i+1},\dots,x_{d})}=0\] \[\Downarrow\]
-\[\int_{-\infty}^{\infty}p(\xxx)\pp_{i}s_{i}(\xxx)\dm{x_{i}} =
-  -\int_{-\infty}^{\infty}s_{i}(\xxx)\pp_{i}p(\xxx)\dm{x_{i}}\]</li>
+\[\int_{-\infty}^{\infty}p(\vx)\pp_{i}s_{i}(\vx)\dm{x_{i}} =
+  -\int_{-\infty}^{\infty}s_{i}(\vx)\pp_{i}p(\vx)\dm{x_{i}}\]</li>
 <li>Additional outer integrals does not change this and so we have
-\[\intd{\xxx}s_{i}(\xxx)\pp_{i}p(\xxx)=-\intd{\xxx}p(\xxx)\pp_{i}s_{i}(\xxx) =
-  -\meanp{p(\xxx)}{\pp_{i}s_{i}(\xxx)}\]</li>
-<li>Identifying \[\sum_{i=1}^{d}\pp_{i}s_{i}(\xxx) =
-  \mr{tr}(\grad_{\xxx}s_{\theta}(\xxx))\]
+\[\intd{\vx}s_{i}(\vx)\pp_{i}p(\vx)=-\intd{\vx}p(\vx)\pp_{i}s_{i}(\vx) =
+  -\E_{p(\vx)}\br{\pp_{i}s_{i}(\vx)}\]</li>
+<li>Identifying \[\sum_{i=1}^{d}\pp_{i}s_{i}(\vx) =
+  \mr{tr}(\grad_{\vx}s_{\theta}(\vx))\]
 concludes the proof</li>
 
 </ul>
@@ -682,16 +682,16 @@ concludes the proof</li>
 <h2 id="org3ccfa23">Sliced Score Matching [<a href="#song2019sliced">Song et&nbsp;al., 2019</a>]</h2>
 <ul>
 <li>Preferably no Jacobian in score matching</li>
-<li>Projects the score functions onto a random direction \(\vvv\in\real^{d}\)</li>
+<li>Projects the score functions onto a random direction \(\vv\in\real^{d}\)</li>
 <li>Leads to the following objective
 \[\begin{align*}J_{\mr{SSM}}(\theta)
-  &=\frac{1}{2}\meanp{p(\vvv)}{\meanp{p(\xxx)}{\norm{\vvvt s_{\theta}(\xxx) -
-  \vvvt\grad_{\xxx}\ln p(\xxx)}^2}}
-  \\ &=\meanp{p(\vvv)}{\meanp{p(\xxx)}{\vvvt\grad_{\xxx}s_{\theta}(\xxx)\vvv +
-  \frac{1}{2}\vvvt s_{\theta}(\xxx)}} + \mr{const}\end{align*}\]
+  &=\frac{1}{2}\E_{p(\vv)}\br{\E_{p(\vx)}\br{\norm{\trans{\vv} s_{\theta}(\vx) -
+  \trans{\vv}\grad_{\vx}\ln p(\vx)}^2}}
+  \\ &=\E_{p(\vv)}\br{\E_{p(\vx)}\br{\trans{\vv}\grad_{\vx}s_{\theta}(\vx)\vv +
+  \frac{1}{2}\trans{\vv} s_{\theta}(\vx)}} + \mr{const}\end{align*}\]
 <ul>
-<li>If \(p(\vvv)=\mN(0,\III)\), \[\meanp{p(\vvv)}{\vvvt s_{\theta}(\xxx)}
-    =\norm{s_{\theta}(\xxx)}^{2}\]</li>
+<li>If \(p(\vv)=\mN(0,\mI)\), \[\E_{p(\vv)}\br{\trans{\vv} s_{\theta}(\vx)}
+    =\norm{s_{\theta}(\vx)}^{2}\]</li>
 
 </ul></li>
 <li>Similar weak regularity conditions and satisfies <i>consistency</i></li>
@@ -704,7 +704,7 @@ concludes the proof</li>
 <div class="container">
 <div class="col">
 
-<div id="orgcf5a308" class="figure">
+<div id="orgf2ea649" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/score_alg.png" alt="score_alg.png" height="450" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Score matching algorithm</p>
@@ -712,7 +712,7 @@ concludes the proof</li>
 </div>
 <div class="col">
 
-<div id="orgb21b20c" class="figure">
+<div id="org1d3c367" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/sliced_score_alg.png" alt="sliced_score_alg.png" height="450" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Sliced score matching algorithm</p>
@@ -729,19 +729,19 @@ concludes the proof</li>
 <li>Induce noise pertubation of the data via some “pertubation” distribution</li>
 <li>\(\sigma\) denotes noise level</li>
 <li>Objective: \[\begin{align*}J_{\mr{NSM}}(\theta)
-  &=\frac{1}{2}\meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
-  \norm{s_{\theta}(\tilde{\xxx}) - \grad_{\tilde{\xxx}}\ln
-  p_{\sigma}(\tilde{\xxx}|\xxx)}^2} \\ &=\meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
-  \frac{1}{2}\norm{s_{\theta}(\tilde{\xxx})}^{2} -
-  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
-  p_{\sigma}(\tilde{\xxx}|\xxx)} + \mr{const}\end{align*}\]</li>
+  &=\frac{1}{2}\E_{p_{\sigma}(\tilde{\vx}|\vx)p(\vx)}\br{
+  \norm{s_{\theta}(\tilde{\vx}) - \grad_{\tilde{\vx}}\ln
+  p_{\sigma}(\tilde{\vx}|\vx)}^2} \\ &=\E_{p_{\sigma}(\tilde{\vx}|\vx)p(\vx)}\br{
+  \frac{1}{2}\norm{s_{\theta}(\tilde{\vx})}^{2} -
+  \trans{s_{\theta}(\tilde{\vx})}\grad_{\tilde{\vx}}\ln
+  p_{\sigma}(\tilde{\vx}|\vx)} + \mr{const}\end{align*}\]</li>
 <li>No Jacobian term</li>
 <li>Minimizing \(J_{\mr{NSM}}\) is equivalent to solving for the optimal
-\(\theta^{*}\) such that \[s_{\theta^{*}}(\tilde{\xxx}) =
-  \grad_{\tilde{\xxx}}\ln\intd{\xxx p(\xxx)} p_{\sigma}(\tilde{\xxx}|\xxx)
-  =\grad_{\tilde{\xxx}}\ln p_{\sigma}(\tilde{\xxx})\]</li>
+\(\theta^{*}\) such that \[s_{\theta^{*}}(\tilde{\vx}) =
+  \grad_{\tilde{\vx}}\ln\intd{\vx p(\vx)} p_{\sigma}(\tilde{\vx}|\vx)
+  =\grad_{\tilde{\vx}}\ln p_{\sigma}(\tilde{\vx})\]</li>
 <li>Notice that as \(\sigma\rightarrow 0\) then
-\(p_{\sigma}(\tilde{\xxx})\rightarrow p(\xxx)\)
+\(p_{\sigma}(\tilde{\vx})\rightarrow p(\vx)\)
 <ul>
 <li>Exploited by [<a href="#song2019generative">Song and Ermon, 2019</a>]</li>
 
@@ -754,20 +754,20 @@ concludes the proof</li>
 <h3 id="org059b6e4">Proofs of the Minimization Equivalence</h3>
 <ul>
 <li>We prove that minimizing \(J_{\mr{NSM}}(\theta)\) is equivalent to minimizing
-\[J_{\mr{D}}(\theta)=\frac{1}{2}\meanp{p_{\sigma}(\tilde{\xxx})}{
-  \norm{s_{\theta}(\tilde{\xxx}) - \grad_{\tilde{\xxx}}\ln
-  p_{\sigma}(\tilde{\xxx})}^2}\]</li>
+\[J_{\mr{D}}(\theta)=\frac{1}{2}\E_{p_{\sigma}(\tilde{\vx})}\br{
+  \norm{s_{\theta}(\tilde{\vx}) - \grad_{\tilde{\vx}}\ln
+  p_{\sigma}(\tilde{\vx})}^2}\]</li>
 <li>We need only show that
-\[\begin{equation}\eqlab{to-prove}\meanp{p_{\sigma}(\tilde{\xxx})}{
-  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
-  p_{\sigma}(\tilde{\xxx})} = \meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
-  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
-  p_{\sigma}(\tilde{\xxx}|\xxx)}\end{equation}\]</li>
-<li>Notice that \[\begin{equation}\eqlab{grad-marg}\grad_{{\tilde{\xxx}}}\ln
-  p_{\sigma}(\tilde{\xxx}) =
-  \grad_{\tilde{\xxx}}\ln\intd{\xxx}p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx) =
-  \frac{1}{p_{\sigma}(\tilde{\xxx})}
-  \intd{\xxx}\grad_{\tilde{\xxx}}p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)
+\[\begin{equation}\eqlab{to-prove}\E_{p_{\sigma}(\tilde{\vx})}\{
+  \trans{s_{\theta}(\tilde{\vx})}\grad_{\tilde{\vx}}\ln
+  p_{\sigma}(\tilde{\vx})} = \E_{p_{\sigma}(\tilde{\vx}|\vx)p(\vx)}\br{
+  \trans{s_{\theta}(\tilde{\vx})}\grad_{\tilde{\vx}}\ln
+  p_{\sigma}(\tilde{\vx}|\vx)}\end{equation}\]</li>
+<li>Notice that \[\begin{equation}\eqlab{grad-marg}\grad_{{\tilde{\vx}}}\ln
+  p_{\sigma}(\tilde{\vx}) =
+  \grad_{\tilde{\vx}}\ln\intd{\vx}p_{\sigma}(\tilde{\vx}|\vx)p(\vx) =
+  \frac{1}{p_{\sigma}(\tilde{\vx})}
+  \intd{\vx}\grad_{\tilde{\vx}}p_{\sigma}(\tilde{\vx}|\vx)p(\vx)
   \end{equation}\]</li>
 
 </ul>
@@ -776,16 +776,16 @@ concludes the proof</li>
 <section>
 <ul>
 <li>Substituting \eqref{grad-marg} into the expression of the left-hand side of
-\eqref{to-prove} we find \[\begin{align*}\meanp{p_{\sigma}(\tilde{\xxx})}{
-  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
-  p_{\sigma}(\tilde{\xxx})} &= \int\trans{s_{\theta}(\tilde{\xxx})}
-  \int\grad_{\tilde{\xxx}}p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)
-  \dm{\xxx}\dm{\tilde{\xxx}} \\ &= \int\int
-  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
-  p_{\sigma}(\tilde{\xxx}|\xxx)p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)
-  \dm{\xxx}\dm{\tilde{\xxx}} \\ &= \meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
-  \trans{s_{\theta}(\tilde{\xxx})}\grad_{\tilde{\xxx}}\ln
-  p_{\sigma}(\tilde{\xxx}|\xxx)}\end{align*}\]</li>
+\eqref{to-prove} we find \[\begin{align*}\E_{p_{\sigma}(\tilde{\vx})}\br{
+  \trans{s_{\theta}(\tilde{\vx})}\grad_{\tilde{\vx}}\ln
+  p_{\sigma}(\tilde{\vx})} &= \int\trans{s_{\theta}(\tilde{\vx})}
+  \int\grad_{\tilde{\vx}}p_{\sigma}(\tilde{\vx}|\vx)p(\vx)
+  \dm{\vx}\dm{\tilde{\vx}} \\ &= \int\int
+  \trans{s_{\theta}(\tilde{\vx})}\grad_{\tilde{\vx}}\ln
+  p_{\sigma}(\tilde{\vx}|\vx)p_{\sigma}(\tilde{\vx}|\vx)p(\vx)
+  \dm{\vx}\dm{\tilde{\vx}} \\ &= \E_{p_{\sigma}(\tilde{\vx}|\vx)p(\vx)}\br{
+  \trans{s_{\theta}(\tilde{\vx})}\grad_{\tilde{\vx}}\ln
+  p_{\sigma}(\tilde{\vx}|\vx)}\end{align*}\]</li>
 <li>Leading to \[J_{\mr{DSM}}(\theta)=J_{\mr{D}}(\theta) + C,\] where \(C\) is a
 constant equal to the difference between the constant terms of
 \(J_{\mr{NSM}}(\theta)\) and \(J_{\mr{D}}(\theta)\)</li>
@@ -801,14 +801,14 @@ constant equal to the difference between the constant terms of
 <ul>
 <li>Perturb data with Gaussian noise - \(\mN(0,\sigma)\)</li>
 <li>Train noise conditional score estimator
-\(s_{\theta}(\tilde{\xxx},\sigma)\approx\grad_{\tilde{\xxx}}\ln
-  p_{\sigma}(\tilde{\xxx})\) (Deep Neural Network)
+\(s_{\theta}(\tilde{\vx},\sigma)\approx\grad_{\tilde{\vx}}\ln
+  p_{\sigma}(\tilde{\vx})\) (Deep Neural Network)
 <ul>
 <li>Called <i>Noise Conditional Score Network</i> (NCSN)</li>
 
 </ul></li>
 <li>Employ Langevin Dynamics in the perturbed space using
-\(s_{\theta}(\tilde{\xxx},\sigma)\)
+\(s_{\theta}(\tilde{\vx},\sigma)\)
 <ul>
 <li>Ensured to be in \(\real^{d}\)</li>
 
@@ -823,17 +823,17 @@ constant equal to the difference between the constant terms of
 <h2 id="orgad288a7">Why?</h2>
 <ul>
 <li>The denoising score matching objective has no Jacobian terms</li>
-<li>The theory behind score matching requires a well-defined \(p(\xxx)\) everywhere
+<li>The theory behind score matching requires a well-defined \(p(\vx)\) everywhere
 in \(\real^{d}\)
 <ul>
-<li>Typically \(p(\xxx)\) has a support restricted to some low dimensional
+<li>Typically \(p(\vx)\) has a support restricted to some low dimensional
 manifold embedding in the ambient space</li>
 
 </ul></li>
-<li>Langevin dynamics (LD) is likely to mix poorly if \(p(\xxx)\) has large regions
+<li>Langevin dynamics (LD) is likely to mix poorly if \(p(\vx)\) has large regions
 with near-zero probability
 <ul>
-<li>May additionally lead to poor training of \(s_{\theta}(\xxx)\)</li>
+<li>May additionally lead to poor training of \(s_{\theta}(\vx)\)</li>
 
 </ul></li>
 
@@ -842,25 +842,25 @@ with near-zero probability
 </section>
 <section>
 <p>
-\(p(\xxx)=\frac{1}{5}\mN((-5,-5),\III) + \frac{4}{5}\mN((5,5),\III)\)
+\(p(\vx)=\frac{1}{5}\mN((-5,-5),\mI) + \frac{4}{5}\mN((5,5),\mI)\)
 </p>
 
-<div id="orgfac82e6" class="figure">
+<div id="orgac414ac" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/score_estimator.png" alt="score_estimator.png" width="1500" />
 </p>
-<p><span class="figure-number">Figure 3: </span>Left \(\grad_{\xxx}\ln p(\xxx)\). Right \(s_{\theta}(\xxx)\). Darker color implies higher density. Squares are regions where \(s_{\theta}(\xxx)\approx\grad_{\xxx}\ln p(\xxx)\)</p>
+<p><span class="figure-number">Figure 3: </span>Left \(\grad_{\vx}\ln p(\vx)\). Right \(s_{\theta}(\vx)\). Darker color implies higher density. Squares are regions where \(s_{\theta}(\vx)\approx\grad_{\vx}\ln p(\vx)\)</p>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
 <section>
 <p>
-\(p(\xxx)=\frac{1}{5}\mN((-5,-5),\III) + \frac{4}{5}\mN((5,5),\III)\)
+\(p(\vx)=\frac{1}{5}\mN((-5,-5),\mI) + \frac{4}{5}\mN((5,5),\mI)\)
 </p>
 
-<div id="orgfe9424e" class="figure">
+<div id="orgac6f7b6" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/dynamics_issues.png" alt="dynamics_issues.png" width="1600" />
 </p>
-<p><span class="figure-number">Figure 4: </span>Samples from \(p(\xxx)\) using different methods. a) Exact sampling b) Using LD with exact score c) Annealed LD</p>
+<p><span class="figure-number">Figure 4: </span>Samples from \(p(\vx)\) using different methods. a) Exact sampling b) Using LD with exact score c) Annealed LD</p>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
@@ -881,15 +881,15 @@ with near-zero probability
 <li>\(\frac{\sigma_{1}}{\sigma_{2}}=\dots=\frac{\sigma_{L-1}}{\sigma_{L}}>1\)</li>
 
 </ul></li>
-<li>Train noise conditional score estimator \(s_{\theta}(\tilde{\xxx},\sigma_{i})\) for every
+<li>Train noise conditional score estimator \(s_{\theta}(\tilde{\vx},\sigma_{i})\) for every
 level
 <ul>
-<li>noise distribution \(p_\sigma(\tilde{\xxx}|\xxx)=\mN(\xxx,\sigma^{2}\III)\)</li>
+<li>noise distribution \(p_\sigma(\tilde{\vx}|\vx)=\mN(\vx,\sigma^{2}\mI)\)</li>
 <li>noise level objective \[l(\theta,\sigma)\triangleq
     J_{\mr{DSM}(\theta,\sigma)}=
-    \frac{1}{2}\meanp{p_{\sigma}(\tilde{\xxx}|\xxx)p(\xxx)}{
-    \norm{s_{\theta}(\tilde{\xxx},\sigma) +
-    \frac{\tilde{\xxx}-\xxx}{\sigma^{2}}}^{2}}\]</li>
+    \frac{1}{2}\E_{p_{\sigma}(\tilde{\vx}|\vx)p(\vx)}\br{
+    \norm{s_{\theta}(\tilde{\vx},\sigma) +
+    \frac{\tilde{\vx}-\vx}{\sigma^{2}}}^{2}}\]</li>
 <li>unified objective using an objective “weight” \(\lambda(\sigma)>0\)
 \[\mL\paren{\theta,\tub{\sigma_{i}}_{i=1}^{L}}\triangleq
     \frac{1}{L}\sum_{i=1}^{L}\lambda(\sigma_{i})l(\theta,\sigma_{i})\]</li>
@@ -911,18 +911,18 @@ level
 
 </ul>
 
-<div id="orgfc49ce0" class="figure">
+<div id="orgc830a62" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/algorithm.png" alt="algorithm.png" width="700" />
 </p>
 </div>
 <ul>
 <li>The final sample of each noise level LD process initializes the next process
 <ul>
-<li>Additionally \(s_{\theta}(\tilde{\xxx})\) is likely well estimated in the
+<li>Additionally \(s_{\theta}(\tilde{\vx})\) is likely well estimated in the
 traversed regions at the different noise levels</li>
 
 </ul></li>
-<li>Samples from \(q_{\theta}(\xxx)\) by running several “MCMC-like” chains</li>
+<li>Samples from \(q_{\theta}(\vx)\) by running several “MCMC-like” chains</li>
 
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
@@ -968,7 +968,7 @@ traversed regions at the different noise levels</li>
 
 </ul>
 
-<div id="org620b8dd" class="figure">
+<div id="orgd54be40" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/samples.png" alt="samples.png" width="1800" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Random samples using annealed Langevin dynamics for a) MNIST b) CelebA c) CIFAR-10</p>
@@ -978,7 +978,7 @@ traversed regions at the different noise levels</li>
 <section id="slide-org51e195d">
 <h3 id="org51e195d">Sampling Dynamics</h3>
 
-<div id="orgae5332d" class="figure">
+<div id="org3389e12" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/intermediate.png" alt="intermediate.png" height="800" />
 </p>
 <p><span class="figure-number">Figure 7: </span>Intermediate samples of annealed Langevin dynamics.</p>
@@ -988,7 +988,7 @@ traversed regions at the different noise levels</li>
 <section id="slide-org6e96ca3">
 <h3 id="org6e96ca3">Compared to other Methods</h3>
 
-<div id="org4c97597" class="figure">
+<div id="org839ba2f" class="figure">
 <p><img src="https://ammunk.com/assets/img/ncsn/figs/results_table.png" alt="results_table.png" />
 </p>
 </div>

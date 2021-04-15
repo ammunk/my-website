@@ -16,57 +16,59 @@ classification problem, and largely builds on section 1.5 in [<a href="#bishop20
 <h2 id="orga03bf79">Finding the Optimal Classification Strategy</h2>
 <div class="outline-text-2" id="text-orga03bf79">
 <p>
-Our goal is to assign \(\xxx\in\mX\) (for instance \(\real^d\)) to one of the \(K\)
+Our goal is to assign \(\vx\in\gX\) (for instance \(\real^d\)) to one of the \(K\)
 classes such that we minimize the probability of making a mistake (or maximize
 the probability of being correct).
 </p>
 
 <p>
 Here we consider the classification problem, where we know a class posterior
-\(p(y=k|\xxx)\), for \(k=1,\dots,K\) with \(K\) being the total number of classes.
+\(p(y=k|\vx)\), for \(k=1,\dots,K\) with \(K\) being the total number of classes.
 </p>
 
 <p>
-Intuitively, given a certain \(\xxx'\) we should predict \(k^*=\argmax_k
-p(y=k|\xxx)\) as the probability of being correct is equal to \(p(y=k^*|\xxx)\)
+Intuitively, given a certain \(\vx'\) we should predict \(k^*=\argmax_k
+p(y=k|\vx)\) as the probability of being correct is equal to \(p(y=k^*|\vx)\)
 which therefore is maximized. However, we will show a different way to derive
 this which (may) give a more fundamental understanding. We can do this by
-considering partitioning the space \(\mX\) into \(K\) regions one for each class
-such that \(\cup_{k=1}^K\mR_k = \mX\) and \(\cap_{k=1}^K \mR_k=\emptyset\), and then
-assign any \(\xxx\in\mR_k\) to the class k. We now consider the event that we
-\(\xxx\) belongs to class \(y=k\) and we accurately assign \(\xxx\) to the region
-\(\mR_k\), and denote that event \(A_k={\xxx\in\mR_k, y=k}\). We see that the
+considering partitioning the space \(\gX\) into \(K\) regions one for each class
+such that \(\cup_{k=1}^K\gR_k = \gX\) and \(\cap_{k=1}^K \gR_k=\emptyset\), and then
+assign any \(\vx\in\gR_k\) to the class k. We now consider the event that we
+\(\vx\) belongs to class \(y=k\) and we accurately assign \(\vx\) to the region
+\(\gR_k\), and denote that event \(A_k={\vx\in\gR_k, y=k}\). We see that the
 probability that we have correctly placed these regions must be equal the
 probability that any of the \(k\) event occur w.r.t. the joint distribution on
-\((\xxx,y=k)\). Using basic probability theory the probability that either of the
+\((\vx,y=k)\). Using basic probability theory the probability that either of the
 \(A_k\) occur is equal to the probability of the union of the \(A_k\) events,
 </p>
 
 <p>
-\[
-\balnn
+$$
+</p>
+\begin{align*}
 P(\mr{correct})&=P(\cup_{k=1}^K A_k)\\
   &=\sum_{k=1}^K P(A_k)\\
-  &=\sum_{k=1}^K p(\xxx\in\mR_k,y=k) \\
-  &=\sum_{k=1}^K\int_{\mR_k}p(\xxx,y=k)\dm{\xxx}\\
-  &=\sum_{k=1}^K\int_{\mR_k}p(y=k|\xxx)p(\xxx)\dm{\xxx}.
-\ealnn
-\]
+  &=\sum_{k=1}^K p(\vx\in\gR_k,y=k) \\
+  &=\sum_{k=1}^K\int_{\gR_k}p(\vx,y=k)\dm{\vx}\\
+  &=\sum_{k=1}^K\int_{\gR_k}p(y=k|\vx)p(\vx)\dm{\vx}.
+\end{align*}
+<p>
+$$
 </p>
 
 <p>
-Since we can choose \(\mR_k\) freely, we should pick each region such that we
-maximize the integrant for each \(\xxx\), i.e. pick \(\mR_k\) that maximizes
-\(p(y=k|\xxx)p(\xxx)\forall \xxx\in\mX\). Because \(p(\xxx)\) is invariant to the
-choice of \(k\) we should pick \(\mR_k=\tub{\xxx:p(y=k|\xxx)>p(y=i), \forall
+Since we can choose \(\gR_k\) freely, we should pick each region such that we
+maximize the integrant for each \(\vx\), i.e. pick \(\gR_k\) that maximizes
+\(p(y=k|\vx)p(\vx)\forall \vx\in\gX\). Because \(p(\vx)\) is invariant to the
+choice of \(k\) we should pick \(\gR_k=\tub{\vx:p(y=k|\vx)>p(y=i), \forall
 i\neq k}\).
 </p>
 
 <p>
 We can also equivalently derive this by minimizing the probability of making
 mistakes. Like before we write the probability of making a mistake, by defining
-\(B_k=\tub{\xxx\in\mR_k, y\neq k}=\cup_{i\neq k}\tub{\xxx\in\mR_k, y=i}\) (we make
-a mistake if we assign \(\xxx\) to class \(k\) but it is not), and so we write,
+\(B_k=\tub{\vx\in\gR_k, y\neq k}=\cup_{i\neq k}\tub{\vx\in\gR_k, y=i}\) (we make
+a mistake if we assign \(\vx\) to class \(k\) but it is not), and so we write,
 </p>
 
 <p>
@@ -74,9 +76,9 @@ a mistake if we assign \(\xxx\) to class \(k\) but it is not), and so we write,
 \balnn
 P(\mr{mistake})&=P(\cup_{k=1}^K B_k)\\
   &=\sum_{k=1}^K P(B_k)\\
-  &=\sum_{k=1}^K \sum_{i\neq k} p(\xxx\in\mR_k,y=i) \\
-  &=\sum_{k=1}^K\sum_{i\neq k}\int_{\mR_k}p(\xxx,y=i)\dm{\xxx}\\
-  &=\sum_{k=1}^K\sum_{i\neq k}\int_{\mR_k}p(y=i|\xxx)p(\xxx)\dm{\xxx}\\
+  &=\sum_{k=1}^K \sum_{i\neq k} p(\vx\in\gR_k,y=i) \\
+  &=\sum_{k=1}^K\sum_{i\neq k}\int_{\gR_k}p(\vx,y=i)\dm{\vx}\\
+  &=\sum_{k=1}^K\sum_{i\neq k}\int_{\gR_k}p(y=i|\vx)p(\vx)\dm{\vx}\\
   &=1 - P(\overline{\cup_{k=1}^K B_k})\\
   &=1 - P(\cup_{k=1}^K A_k),
 \ealnn
@@ -97,7 +99,7 @@ where we are wrong, which is precisely the $B_k$s (and vice versa).
 <div class="outline-text-2" id="text-orgd804e90">
 <p>
 This note has been focusing on situations where we know (or assume to know via a
-trained classifier) the class posterior \(p(y|\xxx)\). Being Bayesian, I certainly
+trained classifier) the class posterior \(p(y|\vx)\). Being Bayesian, I certainly
 prefer taking this probabilistic approach as it allows me to reason about the
 system probabilistically. However, there is no profound reason why one should
 choose to be probabilistic, although there are certain benefits over for
@@ -105,21 +107,25 @@ instance learning a <i><b>decision function</b></i>, which has dropped any notio
 probability. Just to name a few:
 </p>
 <ul class="org-ul">
-<li>Learning a posterior \(p(y|\xxx)\) allows one to account for loss functions
+<li>Learning a posterior \(p(y|\vx)\) allows one to account for loss functions
 post-hoc - see <a href="../LOSSFuncTIONS">this note</a> on how to do that.</li>
-<li>We can change the prior at any point as follows
-\[
-  \balnn
-  p(y|\xxx) &\propto p(\xxx|y)p(y) \\
-  &\Downarrow\\
-  \hat{p}(y|\xxx) &\propto \frac{p(\xxx|y)}{p(y)}\hat{p}(y)
-  \ealnn
-  \]
+<li><p>
+We can change the prior at any point as follows
+$$
+</p>
+\begin{align*}
+p(y|\vx) &\propto p(\vx|y)p(y) \\
+&\Downarrow\\
+\hat{p}(y|\vx) &\propto \frac{p(\vx|y)}{p(y)}\hat{p}(y)
+\end{align*}
+<p>
+$$
 where \(p(y)\) would be the prior used during training, and \(\hat{p}(y)\) is the
 new prior. <b>Note</b> how this formulation used proportionality, i.e. once the
 prior is changed one would need to renormalize. Of course this is only
-sensible if we can assume the conditional \(p(y|\xxx)\) can be transferred to
-the system with a different prior.</li>
+sensible if we can assume the conditional \(p(y|\vx)\) can be transferred to
+the system with a different prior.
+</p></li>
 </ul>
 
 <div id="bibliography">

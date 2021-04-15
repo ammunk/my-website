@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>Probabilistic Surrogate Networks for Universal Simulator Approximation</title>
-<meta name="author" content="Andreas Munk, Adam Ścibior, Atılım Güneş Baydin,@@latex:\\@@ @@html:<br>@@Andrew Stewart, Goran Fernlund,@@latex:\\@@ @@html:<br>@@Anoush Poursartip, Frank Wood"/>
+<title>Physics-guided Neural Networks (PGNN)</title>
+<meta name="author" content="Anuj Karpatne^{*}, William Watkins^{\dagger}, Jordan Read^{\dagger}, & Vipin Kumar^{*}"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -12,15 +12,13 @@
 <link rel="stylesheet" href="https://ammunk.com/reveal.js/dist/theme/serif.css" id="theme"/>
 
 <link rel="stylesheet" href="https://ammunk.com/assets/img/utils/extra.css"/>
-
-<link rel="stylesheet" href="https://ammunk.com/assets/img/utils/logo_ubc_plai_ox_conv.css"/>
 <link rel="stylesheet" href="https://ammunk.com/reveal.js/plugin/highlight/zenburn.css"/>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://ammunk.com/assets/js/mathjax-config.js" defer> </script>
 <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"> </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script> $(function(){$("#includedContent").load("./bibtex.html");}); </script>
-<meta name="description" content="Probabilistic Surrogate Networks for Universal Simulator Approximation">
+<meta name="description" content="Assisting the Adversary to Improve GAN Training">
 <script type="text/javascript" src=""></script>
 </head>
 <body>
@@ -28,9 +26,44 @@
 <div class="slides">
 <section id="sec-title-slide">
 <section id="sec-title-slide">
-    <h1 class="title">Probabilistic Surrogate Networks for Universal Simulator Approximation</h1><h2 class="author">Andreas Munk, Adam Ścibior, Atılım Güneş Baydin, <br>Andrew Stewart, Goran Fernlund, <br>Anoush Poursartip, Frank Wood</h2><h4 class="email"><a href="mailto:amunk@cs.ubc.ca">amunk@cs.ubc.ca</a></h4><h4 class="date">January 28, 2020</h4>
+    <h1 class="title">Physics-guided Neural Networks (PGNN)</h1><h2 class="author">Anuj Karpatne<sup>*</sup>, William Watkins<sup>&dagger;</sup>, Jordan Read<sup>&dagger;</sup>, &amp; Vipin Kumar<sup>*</sup></h2>
+    <h3 class="affiliation"><sup>&#42;</sup>Department of Computer Science, University of Minnesota, <sup>&#8224;</sup>United States Geological Survey</h3>
+    <h2 class="presented">Presented By</h2>
+    <h3 class="presented">Andreas Munk</h3>
+    <h4 class="email"><a href="mailto:amunk@cs.ubc.ca">amunk@cs.ubc.ca</a></h4><h4 class="date">April 12, 2021</h4>
 </section>
 
+</section>
+<section id="table-of-contents-section">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-org98dcfbe">Where is the physics in modern machine learning?</a></li>
+<li><a href="#/slide-orgd442ba9">Phisycs-guided Neural Networks (PGNN) [<a href="#/slide-karpatne2017physics">Karpatne et&nbsp;al., 2017</a>]</a></li>
+<li><a href="#/slide-orge8b2554">Constructing Hybrid-Physics-Data models</a></li>
+<li><a href="#/slide-orgeeb4776">Using physics-based loss functions</a></li>
+<li><a href="#/slide-org33221ff">Experiments</a></li>
+<li><a href="#/slide-orgd164a81">Lake temperature modeling</a></li>
+<li><a href="#/slide-orgdaf0164">Physical inconsistency for lake temperature modeling</a>
+<ul>
+<li><a href="#/slide-org7dfb59a">Temperature-density relationship of water</a></li>
+<li><a href="#/slide-org5c49ef4">Denisty-depth relationship</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orge7566d5">Loss function for lake temperature modeling</a></li>
+<li><a href="#/slide-org820fd16">Results</a>
+<ul>
+<li><a href="#/slide-org17d80fb">Models and their notation</a></li>
+<li><a href="#/slide-orgf553c64">Root mean squared error (RMSE) and physical inconsistency</a></li>
+<li><a href="#/slide-org41211fb">Relation to training size (Lake Mille Lacs)</a></li>
+<li><a href="#/slide-orgbc2ef8c">Density-depth relationship</a></li>
+</ul>
+</li>
+<li><a href="#/slide-org04bff31">References</a></li>
+</ul>
+</div>
+</div>
 </section>
 <div id="hiddenMathbox" style="display: none;">
 <p>
@@ -491,191 +524,416 @@
 \)
 </p>
 </div>
+
 <section>
-<section id="slide-org372d3a0">
-<h2 id="org372d3a0">Probabilistic Programs [<a href="#van2018introduction">van de Meent et&nbsp;al., 2018</a>]</h2>
+<section id="slide-org98dcfbe">
+<h2 id="org98dcfbe">Where is the physics in modern machine learning?</h2>
+<ul>
+<li>Neural networks (NN) are used for <i>black-box</i> modeling to solve regression and
+classification problems</li>
+
+<li>We cannot know if NNs even approximately captures underlying physical mechanics
+<ul>
+<li>Even if they produce small test scores (e.g. mean-square-error (MSE))</li>
+
+</ul></li>
+
+<li>This obfuscates the functional relationship between input (\(x\)) and output
+(\(y\)) variables
+<ul>
+<li>Potentially impedes further scientific discoveries</li>
+<li>Arguably, this &ldquo;issue&rdquo; is less relevant when modeling a statistical
+relationship between \(x\) and \(y\) - i.e. \(p_{\theta}(y|x)\).
+<ul>
+<li><p>
+Assume a &ldquo;true&rdquo; functional relationship between \(x\) and \(y\) with a noise
+term,
+\[y = f(x) + \epsilon\]
+</p>
+
+<p>
+Any discrepancy between a learned function \(f_{\theta}\) and the true
+function \(f\) may be summarized as uncertainty associated with
+\(p_{\theta}(y|x)\)
+</p></li>
+
+</ul></li>
+
+</ul></li>
+
+<li>The perspective taken in this presentation is that we care about the
+<i>functional</i> relation between \(x\) and \(y\)</li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd442ba9">
+<h2 id="orgd442ba9">Phisycs-guided Neural Networks (PGNN) [<a href="#karpatne2017physics">Karpatne et&nbsp;al., 2017</a>]</h2>
+<ul>
+<li>Combine neural networks with scientific knowledge of physics-based models</li>
+
+<li>Introduce an additional loss term that penalizes relationships between input
+and output variables under the neural network model
+<ul>
+<li>The penalization is defined using known physical mechanics underlying the
+problem at hand</li>
+<li>These mechanics do not solve the problem, but encode certain relationship
+between (subsets) of the variables involved</li>
+
+</ul></li>
+
+<li>This framework can effectively be viewed as constraining the training of the
+neural networks</li>
+
+</ul>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section>
+
+
+<div id="orgb4a7392" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_difference.png" alt="pgnn_difference.png" width="1000" />
+</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+</section>
+</section>
+<section>
+<section id="slide-orge8b2554">
+<h2 id="orge8b2554">Constructing Hybrid-Physics-Data models</h2>
+<ul>
+<li>Consider input variables (observable data or &ldquo;drivers&rdquo;) \(D\in\gD\) and target variable
+\(Y\in\gY\)</li>
+
+<li>Standard neural network model
+<ul>
+<li>\(f_{\mr{NN}}:\gD \rightarrow \gY\) with parameters \(\theta{\mr{NN}}\)</li>
+
+</ul></li>
+
+<li>physics-based model
++\(f_{\mr{PHY}}:\gD \rightarrow \gY\)</li>
+
+<li><i>Hybrid model</i>
+<ul>
+<li>\(f_{\mr{HPD}}:\gX=\gD\times\gY \rightarrow \gY\) with parameters
+\(\theta_{\mr{HPD}}\)</li>
+<li>Also takes outputs from the physics based model</li>
+
+</ul></li>
+
+<li>Define \(\hat{Y}_{\mr{NN}}=f_{\mr{NN}}(D)\) and
+\(\hat{Y}_{\mr{HPD}}=f_{\mr{HPD}}(D,\hat{Y}_{\mr{NN}})\)</li>
+
+</ul>
+
+
+<div id="orga405ee5" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_inputs.png" alt="pgnn_inputs.png" width="900" />
+</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgeeb4776">
+<h2 id="orgeeb4776">Using physics-based loss functions</h2>
+<ul>
+<li><p>
+Consider the following minimization problem
+</p>
+
+<p>
+\[
+  \argmin_{\theta_{i}} \gL(\theta_{i})=\argmin_{\theta_{i}} \underbrace{\gL_{\mr{standard}}(\theta_{i})}_{\mr{"standard loss"}} + \underbrace{\lambda R(\theta_{i})}_{\mr{regularization}} + \underbrace{\lambda_{\mr{PHY}}\gL_{\mr{PHY}}(\theta_{i})}_{\mr{Physical Inconsistency}}, \quad i\in\tub{\mr{NN},\mr{HPD}},
+  \]
+</p>
+
+<p>
+with \(\lambda\) and \(\lambda_{\mr{PHY}}\) being hyperparameters
+</p></li>
+
+<li><p>
+The Physical Inconsistency &ldquo;measures constraint violations&rdquo;
+</p>
+<ul>
+<li>Defines equality and inequality constraints
+\[
+    \gG(Y,Z) = 0 \quad \gH(Y, Z) \leq 0
+    \]</li>
+
+<li>Both \(\gG\) and \(\gH\) are generic forms of physics-based (differentiable)
+equations. Both forms captures a physics-based relationship between the
+variable \(Z\) and \(Y\).
+<ul>
+<li>For instance let \(Z\) describe time and Y the position of an object. If we
+know that the object moves with constant velocity (\(v\)) we can describe
+it&rsquo;s position according to \(Y=f(Z)=v\cdot Z + Z_{0}\).</li>
+<li>In this scenario we would only care about \(\gG(Y,Z)\) which becomes a
+function which uses the knowledge of the velocity to relate \(Y,Z\), e.g.
+\(\gG(Y,Z)=Y-(v\cdot Z_{0})\Rightarrow \gG(f(Z),Z)=0\)</li>
+
+</ul></li>
+
+<li>Leading to the following &ldquo;soft constraint&rdquo;/loss function</li>
+
+</ul>
+<p>
+\[
+    \gL_{\mr{PHY}}(\theta_{i}) = \norm{\gG(f_{\mr{i}}(X),X)}^{2} + \mr{ReLU}(\gH(f_{\mr{i}}(X),X))
+  \]
+</p></li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+</section>
+</section>
+<section>
+<section id="slide-org33221ff">
+<h2 id="org33221ff">Experiments</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd164a81">
+<h2 id="orgd164a81">Lake temperature modeling</h2>
+<ul>
+<li>Predict lake temperatures \(Y\) using PGNN</li>
+
+</ul>
+
+
+<div id="org7f3ea7d" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_watersystem.png" alt="pgnn_watersystem.png" width="1000" />
+</p>
+</div>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section>
+
+
+<div id="org2ee8e7d" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/inputs.png" alt="inputs.png" width="1000" />
+</p>
+<p><span class="figure-number">Figure 4: </span>Input variables \(D\)</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgdaf0164">
+<h2 id="orgdaf0164">Physical inconsistency for lake temperature modeling</h2>
+<div class="outline-text-2" id="text-orgdaf0164">
+</div>
+</section>
+<section id="slide-org7dfb59a">
+<h3 id="org7dfb59a">Temperature-density relationship of water</h3>
+<div>
+\begin{equation}\label{eq:rho}
+\rho(T) = 1000\times \paren{1-\frac{(Y+288.9414)(Y-3.9863)^{2}}{508929.2(Y+68.12963)}}
+\end{equation}
+
+</div>
+
+
+<div id="org4f389f4" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_temp.png" alt="pgnn_temp.png" width="1000" />
+</p>
+</div>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+</section>
+<section id="slide-org5c49ef4">
+<h3 id="org5c49ef4">Denisty-depth relationship</h3>
+<ul>
+<li>Density is monotonically increasing with depth</li>
+
+</ul>
+
+
+<div id="org3c64fde" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_density_depth.png" alt="pgnn_density_depth.png" width="600" />
+</p>
+<p><span class="figure-number">Figure 6: </span>Sketch of depth and density relationship</p>
+</div>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section>
+
+<ul>
+<li><p>
+Consider two depths \(d_{1}\) and \(d_{2}\) at time \(t\), then the density as a
+function of depth and time \(t\) must satisfy
+</p>
+
+<p>
+\[
+  \rho(d_{1},t) - \rho(d_{2},t) \leq 0, \quad d_{1} \leq d_{2}
+  \]
+</p></li>
+
+<li>We can use the above requirement to construct the inequality constraint \(\gH\) for pgnn
+<ul>
+<li>Consider the regular grid of \(n_{d}\) depth values and \(n_{t}\) time-steps</li>
+<li>Consider \(\hat{\rho}(d_{1},t)=\rho(f(\hat{D}))\), where \(\rho(\cdot)\) is from
+\eqref{eq:rho}, the depth value and time value in \(D\) are equal \(d_{1}\) and \(t\)
+respectively, and \(f\) is a function, e.g. \(f_{\mr{PHY}}\)</li>
+<li>Define \(\Delta(k, t) = \hat{\rho(d_{k}, t)} - \hat{\rho(d_{k+1}, t)}\)</li>
+
+</ul></li>
+<li><p>
+The physics regularized loss term then becomes
+</p>
+
+<p>
+\[
+  \gL_{\mr{PHY}}(\theta_{i}) = \frac{1}{n_{t}(n_{d}-1)}-\sum_{t=1}^{n_{t}}\sum_{k}^{n_{d}-1}\mr{ReLU}(\Delta(k,t)),
+  \]
+</p>
+
+<ul>
+<li>Which we can differentiate through</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+</section>
+</section>
+<section>
+<section id="slide-orge7566d5">
+<h2 id="orge7566d5">Loss function for lake temperature modeling</h2>
+<div>
+\begin{align*}
+\gL_{\mr{stand}}(\theta_{i}) &= \frac{1}{n}\sum_{k=1}^{n}\paren{y_{i}-f_{i}(x_{i})^{2}}, \\
+R(\theta_{i}) &= \lambda_{1}\norm{\theta_{i}}_{1} + \lambda_{2}\norm{\theta_{i}}_{2}, \\
+\gL_{\mr{PHY}}(\theta_{i}) &= \frac{1}{n_{t}(n_{d}-1)}-\sum_{t=1}^{n_{t}}\sum_{k}^{n_{d}-1}\mr{ReLU}(\Delta(k,t)),
+\end{align*}
+
+</div>
+
+<ul>
+<li>\(n\) is number of data observations</li>
+<li>\(n_{d}\) is the number of unique depth measurements (different depth values)</li>
+<li>\(n_{t}\) is the number of unique time measurements (day of year)</li>
+<li>\(\Delta(k,t)\) is part of the physical inconsistency loss, defined earlier</li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-org820fd16">
+<h2 id="org820fd16">Results</h2>
+<div class="outline-text-2" id="text-org820fd16">
+</div>
+</section>
+<section id="slide-org17d80fb">
+<h3 id="org17d80fb">Models and their notation</h3>
+<ul>
+<li>NN, SVM, LSBoost: to a standard neural network model trained without physical
+knowledge, support vector machines, and least squared boosted regression tress</li>
+<li>PHY: A state-of-the-art general lake model (simulator)</li>
+<li>PGNN0: uses \(f_{\mr{PHY}}\) (i.e. takes simulated temperatures as additional
+arguments), but does not use \(\gL_{\mr{PHY}}\)</li>
+<li>PGNN: The proposed method</li>
+
+<li>Define the <i>physical inconsistency</i> metric - a number representing the
+fraction of times the density constraint is violated</li>
+
+</ul>
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section id="slide-orgf553c64">
+<h3 id="orgf553c64">Root mean squared error (RMSE) and physical inconsistency</h3>
 <div class="container">
 <div class="col">
 
-<div id="orgdf409e4" class="figure">
-<p><object type="image/svg+xml" data="../../assets/img/psn/figs/example_program.svg" class="org-svg" height="900">
-Sorry, your browser does not support SVG.</object>
+<div id="org3beade5" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_lake_mille.png" alt="pgnn_lake_mille.png" width="700" />
+</p>
+<p><span class="figure-number">Figure 7: </span>Lake Mille Lacs</p>
+</div>
+</div>
+
+<div class="col">
+
+<div id="org2658a64" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_lake_mendota.png" alt="pgnn_lake_mendota.png" width="700" />
+</p>
+<p><span class="figure-number">Figure 8: </span>Lake Mendota</p>
+</div>
+</div>
+<div class="col">
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
+</section>
+<section id="slide-org41211fb">
+<h3 id="org41211fb">Relation to training size (Lake Mille Lacs)</h3>
+<div class="container">
+<div class="col">
+
+<div id="orgfae9f93" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_size_mse.png" alt="pgnn_size_mse.png" width="700" />
+</p>
+</div>
+</div>
+
+<div class="col">
+
+<div id="org1338607" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_consistency_size.png" alt="pgnn_consistency_size.png" width="700" />
 </p>
 </div>
 </div>
 <div class="col">
-
-<ul>
-<li>Infer the posterior distribution \(p(\vx_{\mr{lat}}|\vx_{\mr{obs}})\) over latent variables \(\vx_{\mr{lat}}\) (specified by
-<b>sample</b> statements) conditioned on observed variables \(\vx_{\mr{obs}}\) (specified by <b>observe</b> statements)</li>
-<li data-fragment-index="2" class="fragment appear">We consider the joint distribution over the space of &ldquo;traces&rdquo; \((x_{a_t},
-  a_t)\) for \(t=1,\dots,T\) \[p(\vx, \va) = \prod_{t=1}^T
-  p(a_t|x_{a_1:a_{t-1}},a_{1:t-1}) p(x_{a_t}|x_{a_1:a_{t-1}},a_{1:t})\]</li>
-<li data-fragment-index="2" class="fragment appear">We denoted the set of all variables \(\vx=\vx_{\mr{lat}}\cup\vx_{\mr{obs}}\)</li>
-<li data-fragment-index="3" class="fragment appear">Address transitions are deterministic:
-\(p(a_t|x_{a_1:a_{t-1}},a_{1:t-1})\) is a Kronecker-Delta function</li>
-<li data-fragment-index="4" class="fragment appear">But this notation becomes useful later</li>
-
-</ul>
-</div>
-
-</div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+
 </section>
-</section>
-<section>
-<section id="slide-org957356d">
-<h2 id="org957356d">Inference Compilation (IC) [<a href="#le2016inference">Le et&nbsp;al., 2017</a>]</h2>
+<section id="slide-orgbc2ef8c">
+<h3 id="orgbc2ef8c">Density-depth relationship</h3>
 <div class="container">
-<div class="col-item">
-<ul>
-<li>Self-normalizing sequential importance sampling (SIS)</li>
-<li data-fragment-index="2" class="fragment appear">Draw \(K\) samples \(\vx_{\mr{lat}}^k \overset{i.i.d.}{\sim}q(\vx_{\mr{lat}}|\vx_{\mr{obs}})\) (proposal distribution)</li>
-<li data-fragment-index="3" class="fragment appear">Compute the weights, \[w^k = \frac{p(\vx_{\mr{lat}}^k,\vx_{\mr{obs}})}{q(\vx_{\mr{lat}}^k|\vx_{\mr{obs}})}\]</li>
-<li data-fragment-index="4" class="fragment appear">Approximate the posterior as \[
-  p(\vx_{\mr{lat}}|\vx_{\mr{obs}})\approx\frac{\sum_{k=1}^Kw^k\delta(\vx_{\mr{lat}}^k-\vx_{\mr{lat}})}{\sum_{k=1}^Kw^k}\]</li>
+<div class="col">
 
-</ul>
+<div id="orga06fc86" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_depth_dens_profile_mille.png" alt="pgnn_depth_dens_profile_mille.png" width="700" />
+</p>
+<p><span class="figure-number">Figure 11: </span>Lake Mille Lacs</p>
 </div>
-<div class="col-item">
-<ul>
-<li data-fragment-index="5" class="fragment appear">IC is all about constructing \(q(\vx_{\mr{lat}}|\vx_{\mr{obs}})\) \(\rightarrow\) efficient SIS \[q(\vx_{\mr{lat}}|\vx_{\mr{obs}};\phi) =
-  \prod_{x_{a_t}^{\mr{lat}}\in\vx_{\mr{lat}}}q(x^{\mr{lat}}_{a_t}|\eta_{a_t}(x^{\mr{lat}}_{<{a_t}},\vx_{\mr{obs}},\phi))\]</li>
-<li data-fragment-index="5" class="fragment appear">\(\eta(\cdot)\) is a recurrent neural network</li>
-<li data-fragment-index="6" class="fragment appear">We train \(q(\cdot|\vx_{\mr{obs}};\phi)\) to be close to \(p(\vx_{\mr{lat}}|\vx_{\mr{obs}})\) for all
-\(\vx_{\mr{obs}}\),  <br> by minimizing the expected KL divergence under the
-marginal \(p(\vx_{\mr{obs}})\)
-\[\begin{align}\mL_{\mr{IC}}(\phi)&=\E_{p(\vx_{\mr{obs}})}\br{\mr{KL}\paren{p(\vx_{\mr{lat}}|\vx_{\mr{obs}})}{q(\vx_{\mr{lat}}|\vx_{\mr{obs}};\phi)}}\nonumber\\ &=-\E_{p(\vx)}\br{\log
-  q(\vx_{\mr{lat}}|\vx_{\mr{obs}};\phi)} + \mr{const}\nonumber\end{align}\]</li>
-<li data-fragment-index="7" class="fragment appear">&ldquo;Evaluation based inference&rdquo; requires the simulator to run
-<b>repeatedly</b></li>
+</div>
 
-</ul>
+<div class="col">
+
+
+<div id="org4dfc8c1" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_depth_dens_mendota.png" alt="pgnn_depth_dens_mendota.png" width="700" />
+</p>
+<p><span class="figure-number">Figure 12: </span>Lake Mendota</p>
 </div>
 </div>
+<div class="col">
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
 </section>
 </section>
 <section>
-<section id="slide-org27b95d9">
-<h2 id="org27b95d9">Probabilistic Surrogate Network (PSN)</h2>
-<div class="container">
-<div class="col-item">
-<ul>
-<li><b>IC is still limited by the execution speed of the program</b></li>
-<li data-fragment-index="2" class="fragment appear">How about learning a surrogate model \(s\) that replaces \(p\) as a program when \(p\) is slow?</li>
-<li data-fragment-index="3" class="fragment appear">We structure \(s\) as a distribution over traces factorized exactly like \(p\)
-\[ s(\vx,\va;\theta)=\prod_{t=1}^{T}s(x_{a_t}|\xi_{a_t}(x_{a_1:a_{t-1}},a_{1:t},\theta))s(a_t|\xi_{t-1}(x_{a_1:a_{t-1}},a_{1:t-1},\theta))\]</li>
-<li data-fragment-index="3" class="fragment appear">\(\xi_{a_t}(\cdot)\) and \(\xi_t(\cdot)\) are recurrent neural networks</li>
-
-</ul>
-</div>
-<div class="col-item">
-<ul>
-<li data-fragment-index="4" class="fragment appear">We match \(p\) and \(s\) by minimizing the KL-divergence \[\begin{align*} \mL(\theta)
-  &= \mr{KL}\paren{p(\vx,\va)|s(\vx,\va;\theta)} \\ &= -\E_{p(\vx,\va)}\br{\log
-  s(\vx,\va;\theta)} + \mr{const} \end{align*}\]</li>
-<li data-fragment-index="5" class="fragment appear">Now we <b>have</b> to model the address transitions \(s(a_t|\xi_{t-1}(x_{a_1:a_{t-1}},a_{1:t-1},\theta))\)</li>
-<li data-fragment-index="6" class="fragment appear">For instance a categorical distribution</li>
-<li data-fragment-index="7" class="fragment appear">Fully compatible with the probabilistic programming framework</li>
-
-</ul>
-</div>
-</div>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-</section>
-<section id="slide-org1c4f09e">
-<h3 id="org1c4f09e">The Communication Interface</h3>
-
-<div id="orgf1c1b64" class="figure">
-<p><object type="image/svg+xml" data="../../assets/img/psn/figs/inference-program-surrogate.svg" class="org-svg" height="1100">
-Sorry, your browser does not support SVG.</object>
-</p>
-</div>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-
-</section>
-</section>
-<section>
-<section id="slide-org90dcbcc">
-<h2 id="org90dcbcc">Simulating the Curing of Composite Materials</h2>
-
-<div id="orge84a4f9" class="figure">
-<p><object type="image/svg+xml" data="../../assets/img/psn/figs/wing_problem.svg" class="org-svg" height="800">
-Sorry, your browser does not support SVG.</object>
-</p>
-</div>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-</section>
-</section>
-<section>
-<section id="slide-orge9268b2">
-<h2 id="orge9268b2">Faster Simulation</h2>
-<ul>
-<li><b>~30 times faster simulation</b></li>
-
-</ul>
-
-<div id="orgcaa81d6" class="figure">
-<p><img src="../../assets/img/psn/figs/heatmap_guess.gif" alt="heatmap_guess.gif" height="800" />
-</p>
-</div>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-</section>
-<section id="slide-orga6a3c38">
-<h3 id="orga6a3c38">Control Flow Program</h3>
-
-<div id="org7ee25d3" class="figure">
-<p><object type="image/svg+xml" data="../../assets/img/psn/figs/toy_program.svg" class="org-svg" height="900">
-Sorry, your browser does not support SVG.</object>
-</p>
-</div>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-</section>
-<section id="slide-org7c5b000">
-<h3 id="org7c5b000">Address Transitions</h3>
-
-<div id="orge12f6a6" class="figure">
-<p><object type="image/svg+xml" data="../../assets/img/psn/figs/address_transition_orig.svg" class="org-svg" width="2400">
-Sorry, your browser does not support SVG.</object>
-</p>
-<p><span class="figure-number">Figure 6: </span>Address transition graph generated by the original program</p>
-</div>
-
-
-<div id="org413f44a" class="figure">
-<p><object type="image/svg+xml" data="../../assets/img/psn/figs/address_transition_surr.svg" class="org-svg" width="2400">
-Sorry, your browser does not support SVG.</object>
-</p>
-<p><span class="figure-number">Figure 7: </span>Address transition graph generated by the PSN</p>
-</div>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-</section>
-</section>
-<section>
-<section id="slide-org991d6fb">
-<h2 id="org991d6fb">Faster Inference</h2>
-<ul>
-<li>Infer \(\E_{p(\vx_{\mr{lat}}|\vx_{\mr{obs}})}\br{\mu_w}\)</li>
-<li>\(\mu_w\) is the empirical mean across the time window
-$w=\br{155,165}$min  <br> at a fixed
-depth $30$mm</li>
-<li class="fragment appear"><b>~10 times faster inference</b></li>
-
-</ul>
-
-<div id="orgabca906" class="figure">
-<p><object type="image/svg+xml" data="../../assets/img/psn/figs/posterior_box_plot.svg" class="fragment (appear)" height="700">
-Sorry, your browser does not support SVG.</object>
-</p>
-</div>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-</section>
-</section>
-<section>
-<section id="slide-org5b0d6c7">
-<h2 id="org5b0d6c7">References</h2>
+<section id="slide-org04bff31">
+<h2 id="org04bff31">References</h2>
 <div id="includedContent"></div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
@@ -705,8 +963,8 @@ hashOneBasedIndex: false,
 pdfSeparateFragments: true,
 
 overview: true,
-width: 2400,
-height: 1600,
+width: 2000,
+height: 1400,
 margin: 0.00,
 minScale: 0.30,
 maxScale: 2.50,

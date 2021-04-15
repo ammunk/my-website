@@ -546,9 +546,9 @@
 <section id="slide-org83ac86e">
 <h2 id="org83ac86e">Generative adversarial networks (GANS) [<a href="#goodfellow2014generative">Goodfellow et&nbsp;al., 2014</a>]</h2>
 <ul>
-<li>A generator is a neural network \(g:\mZ\rightarrow\mX\subseteq\real^{D_{x}}\) which maps from a random vector \(\zzz\in\mZ\) to an output \(\xxx \in \mX\)
+<li>A generator is a neural network \(g:\mZ\rightarrow\mX\subseteq\real^{D_{x}}\) which maps from a random vector \(\vz\in\mZ\) to an output \(\vx \in \mX\)
 <ul>
-<li>\(g\) characterizes a distribution \(p_{\theta}(\xxx)\), where \(\theta\in\Theta\subseteq\mathbb{R}^{D_g}\) denotes the generator&rsquo;s parameters</li>
+<li>\(g\) characterizes a distribution \(p_{\theta}(\vx)\), where \(\theta\in\Theta\subseteq\mathbb{R}^{D_g}\) denotes the generator&rsquo;s parameters</li>
 
 </ul></li>
 <li>Aim is to match \(p_{\theta}\) with some real target distribution \(p_{\mr{real}}\)</li>
@@ -567,7 +567,7 @@ Generally we frame GANs as a minimax game,
 </ul>
 
 <p>
-\[ h(p_{\theta},f_\phi) = \meanp{x\sim p_\mr{true}}{\log f_\phi(x)} + \meanp{x\sim p_{\theta}}{\log (1 - f_\phi(x))}\]
+\[ h(p_{\theta},f_\phi) = \E_{x\sim p_\mr{true}}\br{\log f_\phi(x)} + \E_{x\sim p_{\theta}}\br{\log (1 - f_\phi(x))}\]
 </p>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
@@ -577,11 +577,11 @@ Generally we frame GANs as a minimax game,
 <section id="slide-orgec2ceff">
 <h2 id="orgec2ceff">Wasserstein GAN [<a href="#arjovsky2017wasserstein">Arjovsky et&nbsp;al., 2017</a>]</h2>
 <ul>
-<li>Wasserstein Distance \(W_{p}(P_{1},P_{2})=\paren{\inf_{\gamma\in\Gamma(P_{1},P_{2})}\meanp{\gamma}{d(x_{1},x_{2})^{p}}}^{\frac{1}{p}}\)</li>
+<li>Wasserstein Distance \(W_{p}(P_{1},P_{2})=\paren{\inf_{\gamma\in\Gamma(P_{1},P_{2})}\E_{\gamma}\br{d(x_{1},x_{2})^{p}}}^{\frac{1}{p}}\)</li>
 <li>Kantorovich-Rubinstein duality [<a href="#villani2008optimal">Villani, 2008</a>],
-\[ W_{1}(P_{1},P_{2}) = \sup_{\norm{f}_{\mr{L}}\leq1}\paren{\meanp{P_{1}}{f} - \meanp{P_{2}}{f}} \]</li>
+\[ W_{1}(P_{1},P_{2}) = \sup_{\norm{f}_{\mr{L}}\leq1}\paren{\E_{P_{1}}\br{f} - \E_{P_{2}}\br{f}} \]</li>
 <li>WGAN:
-\[ \min_{\theta}\max_{\phi}\meanp{p_\mr{true}}{f_{\phi}} - \meanp{p_{\theta}}{f_\phi}, \quad \mr{s.t.}~\norm{f_{\phi}}_{\mr{L}}\leq 1\]</li>
+\[ \min_{\theta}\max_{\phi}\E_{p_\mr{true}}\br{f_{\phi}} - \E_{p_{\theta}}\br{f_\phi}, \quad \mr{s.t.}~\norm{f_{\phi}}_{\mr{L}}\leq 1\]</li>
 
 <li>Notice the Lipschitz constraint \(\norm{f_{\phi}}_{\mr{Lip}}\leq 1\)</li>
 <li>Constraint imposed using weight clipping \(\Phi\subseteq \mW = \br{-w,w}^{D_{f}}\), where \(w\) is some constant
@@ -640,7 +640,7 @@ In particular consider \(\mX\subseteq\real^{D_{x}}\) and \(\mY\subseteq\real^{D_
 
 </ul></li>
 <li>New objective using gradient penalties (GP)
-\[ \min_{\theta}\max_{\phi}\meanp{p_\mr{true}}{f_{\phi}} - \meanp{p_{\theta}}{f_\phi} + \lambda\meanp{\tilde{x}\sim p_{i}}{\paren{\norm{\grad_{\tilde{x}}f_{\phi}(\tilde{x})}_{2} - 1}^{2}} \]</li>
+\[ \min_{\theta}\max_{\phi}\E_{p_\mr{true}}\br{f_{\phi}} - \E_{p_{\theta}}\br{f_\phi} + \lambda\E_{\tilde{x}\sim p_{i}}\br{\paren{\norm{\grad_{\tilde{x}}f_{\phi}(\tilde{x})}_{2} - 1}^{2}} \]</li>
 
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
@@ -657,17 +657,17 @@ In particular consider \(\mX\subseteq\real^{D_{x}}\) and \(\mY\subseteq\real^{D_
 </p>
 
 <p>
-<i>where \(\norm{\XXX}_{op}=\sup_{\vvv:\norm{\vvv}=1}\norm{\XXX\vvv}_{2}\) is the operator norm of \(\XXX\in\real^{n\times m}\)</i>
+<i>where \(\norm{\mX}_{op}=\sup_{\vv:\norm{\vv}=1}\norm{\mX\vv}_{2}\) is the operator norm of \(\mX\in\real^{n\times m}\)</i>
 </p></li>
 <li><p>
 In particular if \(m=1\), then \(D_{x}f = \trans{(\grad_{x}f)}\) and using Cauchy-Schwartz inequality we have,
 </p>
 
 <p>
-\[\norm{\trans{(\grad_{x}f)}}_{op}=\sup_{\vvv:\norm{\vvv}=1}\abs{\langle\grad_{x}f,\vvv\rangle}\leq\sup_{\vvv:\norm{\vvv}=1}\norm{\grad_{x}f}\norm{\vvv}=\norm{\grad_{x}f}\]
+\[\norm{\trans{(\grad_{x}f)}}_{op}=\sup_{\vv:\norm{\vv}=1}\abs{\langle\grad_{x}f,\vv\rangle}\leq\sup_{\vv:\norm{\vv}=1}\norm{\grad_{x}f}\norm{\vv}=\norm{\grad_{x}f}\]
 </p></li>
 <li><p>
-Choose \(\vvv=\frac{\grad_{x}f}{\norm{\grad_{x}f}}\) such that
+Choose \(\vv=\frac{\grad_{x}f}{\norm{\grad_{x}f}}\) such that
 </p>
 
 <p>
@@ -690,7 +690,7 @@ Choose \(\vvv=\frac{\grad_{x}f}{\norm{\grad_{x}f}}\) such that
 </ol></li>
 <li><p>
 [<a href="#petzka2018regularization">Petzka et&nbsp;al., 2018</a>] addresses point (2), by instead using the regularizer
-\[\lambda\meanp{p_{\tau}}{\max(0,\norm{\grad_{x}f(x)}_{2}-1)^{2}},\]
+\[\lambda\E_{p_{\tau}}\br{\max(0,\norm{\grad_{x}f(x)}_{2}-1)^{2}},\]
 </p>
 
 <p>
@@ -797,7 +797,7 @@ Add ALP to encourage Lipschitz continuity for WGAN,
 </p>
 
 <p>
-\[ h(\theta,\phi)=\meanp{p_\mr{true}}{f_{\phi}} - \meanp{p_{\theta}}{f_\phi} + \lambda\meanp{x\sim p_{\mr{r,g}}}{\mL_{\mr{ALP}}(\phi,x)},\]
+\[ h(\theta,\phi)=\E_{p_\mr{true}}\br{f_{\phi}} - \E_{p_{\theta}}\br{f_\phi} + \lambda\E_{x\sim p_{\mr{r,g}}}\br{\mL_{\mr{ALP}}(\phi,x)},\]
 where \(p_{\mr{r,g}}\) is some combination of \(p_{\mr{true}}\) and \(p_{\theta}\) and
 \[\mL_{\mr{ALP}}(\phi,x)=\max\paren{0,\frac{d_{\mY}(f_{\phi}(x),f_{\phi}(x+r'))}{d_{\mX}(x,x+r')} - K},\]
 </p>
@@ -830,7 +830,7 @@ with \(d_{\mY}(f(x),f(x+r'))=\abs{f(x)-f(x+r')}\) and \(d_{\mX}(x,x+r')=\norm{x-
 <section id="slide-org8c3e70e">
 <h3 id="org8c3e70e">CIFAR-10</h3>
 
-<div id="orgd4367b9" class="figure">
+<div id="orgd5d16ae" class="figure">
 <p><img src="../../../assets/img/adv_lip_reg/figs/cifar10_images.png" alt="cifar10_images.png" width="1400" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Random samples using WGAN-ALP with (a) and without (b) batch normalization (BN).</p>
@@ -840,7 +840,7 @@ with \(d_{\mY}(f(x),f(x+r'))=\abs{f(x)-f(x+r')}\) and \(d_{\mX}(x,x+r')=\norm{x-
 <section id="slide-org8538f75">
 <h3 id="org8538f75">Comparison to other methods</h3>
 
-<div id="org9c632d1" class="figure">
+<div id="org47c4fe1" class="figure">
 <p><img src="../../../assets/img/adv_lip_reg/figs/cifar10_table.png" alt="cifar10_table.png" width="1400" />
 </p>
 </div>
@@ -852,7 +852,7 @@ with \(d_{\mY}(f(x),f(x+r'))=\abs{f(x)-f(x+r')}\) and \(d_{\mX}(x,x+r')=\norm{x-
 <h2 id="org2d0d52b">Remaining issues</h2>
 <ul>
 <li>Still have an expectation to enforce Lipschitz continuity
-\[\meanp{x\sim p_{\mr{r,g}}}{L_{\mr{ALP}}(\phi,x)}=\meanp{x\sim p_{\mr{r,g}}}{\max\paren{0,\frac{d_{\mY}(f_{\phi}(x),f_{\phi}(x+r'))}{d_{\mX}(x,x+r')} - K}}\]
+\[\E_{x\sim p_{\mr{r,g}}}\br{L_{\mr{ALP}}(\phi,x)}=\E_{x\sim p_{\mr{r,g}}}\br{\max\paren{0,\frac{d_{\mY}(f_{\phi}(x),f_{\phi}(x+r'))}{d_{\mX}(x,x+r')} - K}}\]
 <ul>
 <li>How to do away with that as well?</li>
 
