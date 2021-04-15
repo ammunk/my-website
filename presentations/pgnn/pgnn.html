@@ -575,13 +575,13 @@ function \(f\) may be summarized as uncertainty associated with
 <ul>
 <li>Combine neural networks with scientific knowledge of physics-based models</li>
 
-<li>Introduce an additional loss term that penalizes relationships between input
-and output variables under the neural network model
+<li>Introduce an additional loss term that penalizes &ldquo;flawed&rdquo; relationships
+between input and output variables under the neural network model
 <ul>
 <li>The penalization is defined using known physical mechanics underlying the
 problem at hand</li>
-<li>These mechanics do not solve the problem, but encode certain relationship
-between (subsets) of the variables involved</li>
+<li>These mechanics do not (necessarily) solve the problem, but encode certain
+relationship between (subsets) of the variables involved</li>
 
 </ul></li>
 
@@ -595,7 +595,7 @@ neural networks</li>
 <section>
 
 
-<div id="orgb4a7392" class="figure">
+<div id="org090983c" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_difference.png" alt="pgnn_difference.png" width="1000" />
 </p>
 </div>
@@ -607,17 +607,20 @@ neural networks</li>
 <section id="slide-orge8b2554">
 <h2 id="orge8b2554">Constructing Hybrid-Physics-Data models</h2>
 <ul>
-<li>Consider input variables (observable data or &ldquo;drivers&rdquo;) \(D\in\gD\) and target variable
-\(Y\in\gY\)</li>
+<li>Consider input variables (observable data or &ldquo;drivers&rdquo;) \(D\in\gD\) and target
+variable(s) \(Y\in\gY\)</li>
 
 <li>Standard neural network model
 <ul>
-<li>\(f_{\mr{NN}}:\gD \rightarrow \gY\) with parameters \(\theta{\mr{NN}}\)</li>
+<li>\(f_{\mr{NN}}:\gD \rightarrow \gY\) with parameters \(\theta_{\mr{NN}}\)</li>
 
 </ul></li>
 
 <li>physics-based model
-+\(f_{\mr{PHY}}:\gD \rightarrow \gY\)</li>
+<ul>
+<li>\(f_{\mr{PHY}}:\gD \rightarrow \gY\)</li>
+
+</ul></li>
 
 <li><i>Hybrid model</i>
 <ul>
@@ -633,12 +636,11 @@ neural networks</li>
 </ul>
 
 
-<div id="orga405ee5" class="figure">
+<div id="org534590d" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_inputs.png" alt="pgnn_inputs.png" width="900" />
 </p>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-
 
 </section>
 </section>
@@ -652,7 +654,7 @@ Consider the following minimization problem
 
 <p>
 \[
-  \argmin_{\theta_{i}} \gL(\theta_{i})=\argmin_{\theta_{i}} \underbrace{\gL_{\mr{standard}}(\theta_{i})}_{\mr{"standard loss"}} + \underbrace{\lambda R(\theta_{i})}_{\mr{regularization}} + \underbrace{\lambda_{\mr{PHY}}\gL_{\mr{PHY}}(\theta_{i})}_{\mr{Physical Inconsistency}}, \quad i\in\tub{\mr{NN},\mr{HPD}},
+  \argmin_{\theta_{i}} \gL(\theta_{i})=\argmin_{\theta_{i}} \underbrace{\gL_{\mr{standard}}(\theta_{i})}_{\mr{"standard~loss"}} + \underbrace{\lambda R(\theta_{i})}_{\mr{regularization}} + \underbrace{\lambda_{\mr{PHY}}\gL_{\mr{PHY}}(\theta_{i})}_{\mr{Physical~Inconsistency}}, \quad i\in\tub{\mr{NN},\mr{HPD}},
   \]
 </p>
 
@@ -660,38 +662,42 @@ Consider the following minimization problem
 with \(\lambda\) and \(\lambda_{\mr{PHY}}\) being hyperparameters
 </p></li>
 
-<li><p>
-The Physical Inconsistency &ldquo;measures constraint violations&rdquo;
-</p>
+<li>The Physical Inconsistency &ldquo;measures constraint violations&rdquo;
 <ul>
-<li>Defines equality and inequality constraints
+<li>Define equality and inequality constraints
 \[
-    \gG(Y,Z) = 0 \quad \gH(Y, Z) \leq 0
+    \gG(Y,D) = 0 \quad \gH(Y, D) \leq 0
     \]</li>
 
 <li>Both \(\gG\) and \(\gH\) are generic forms of physics-based (differentiable)
 equations. Both forms captures a physics-based relationship between the
-variable \(Z\) and \(Y\).
+variable \(D\) and \(Y\).
 <ul>
-<li>For instance let \(Z\) describe time and Y the position of an object. If we
+<li>For instance let \(D\) describe time and Y the position of an object. If we
 know that the object moves with constant velocity (\(v\)) we can describe
-it&rsquo;s position according to \(Y=f(Z)=v\cdot Z + Z_{0}\).</li>
-<li>In this scenario we would only care about \(\gG(Y,Z)\) which becomes a
-function which uses the knowledge of the velocity to relate \(Y,Z\), e.g.
-\(\gG(Y,Z)=Y-(v\cdot Z_{0})\Rightarrow \gG(f(Z),Z)=0\)</li>
+it&rsquo;s position according to \(Y=f(D)=v\cdot D + D_{0}\).</li>
+<li>Use the knowledge of the velocity to relate \(Y\) and \(D\), e.g.
+\(\gG(Y,D)=Y-(v\cdot D + D_{0})\Rightarrow \gG(f(D),D)=0\)</li>
 
 </ul></li>
 
-<li>Leading to the following &ldquo;soft constraint&rdquo;/loss function</li>
+</ul></li>
+
+</ul>
+
+<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
+</section>
+<section>
+
+<ul>
+<li>Leading to the following loss term (framed as soft constraints)</li>
 
 </ul>
 <p>
 \[
-    \gL_{\mr{PHY}}(\theta_{i}) = \norm{\gG(f_{\mr{i}}(X),X)}^{2} + \mr{ReLU}(\gH(f_{\mr{i}}(X),X))
+    \gL_{\mr{PHY}}(\theta_{i}) = \norm{\gG(f_{\mr{i}}(X),X)}^{2} + \mr{ReLU}(\gH(f_{\mr{i}}(X),X)) \quad i\in\tub{\mr{NN},\mr{HPD}}
   \]
-</p></li>
-
-</ul>
+</p>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
 </section>
@@ -699,7 +705,6 @@ function which uses the knowledge of the velocity to relate \(Y,Z\), e.g.
 <section>
 <section id="slide-org33221ff">
 <h2 id="org33221ff">Experiments</h2>
-
 </section>
 </section>
 <section>
@@ -711,7 +716,7 @@ function which uses the knowledge of the velocity to relate \(Y,Z\), e.g.
 </ul>
 
 
-<div id="org7f3ea7d" class="figure">
+<div id="org5710212" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_watersystem.png" alt="pgnn_watersystem.png" width="1000" />
 </p>
 </div>
@@ -721,7 +726,7 @@ function which uses the knowledge of the velocity to relate \(Y,Z\), e.g.
 <section>
 
 
-<div id="org2ee8e7d" class="figure">
+<div id="org80e1006" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/inputs.png" alt="inputs.png" width="1000" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Input variables \(D\)</p>
@@ -740,13 +745,13 @@ function which uses the knowledge of the velocity to relate \(Y,Z\), e.g.
 <h3 id="org7dfb59a">Temperature-density relationship of water</h3>
 <div>
 \begin{equation}\label{eq:rho}
-\rho(T) = 1000\times \paren{1-\frac{(Y+288.9414)(Y-3.9863)^{2}}{508929.2(Y+68.12963)}}
+\rho(T) = 1000\times \paren{1-\frac{(T+288.9414)(T-3.9863)^{2}}{508929.2(T+68.12963)}}
 \end{equation}
 
 </div>
 
 
-<div id="org4f389f4" class="figure">
+<div id="org9c5427a" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_temp.png" alt="pgnn_temp.png" width="1000" />
 </p>
 </div>
@@ -761,7 +766,7 @@ function which uses the knowledge of the velocity to relate \(Y,Z\), e.g.
 </ul>
 
 
-<div id="org3c64fde" class="figure">
+<div id="org911739a" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_density_depth.png" alt="pgnn_density_depth.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Sketch of depth and density relationship</p>
@@ -783,13 +788,13 @@ function of depth and time \(t\) must satisfy
   \]
 </p></li>
 
-<li>We can use the above requirement to construct the inequality constraint \(\gH\) for pgnn
+<li>We can use the above requirement to construct the inequality constraint \(\gH\)
 <ul>
 <li>Consider the regular grid of \(n_{d}\) depth values and \(n_{t}\) time-steps</li>
-<li>Consider \(\hat{\rho}(d_{1},t)=\rho(f(\hat{D}))\), where \(\rho(\cdot)\) is from
-\eqref{eq:rho}, the depth value and time value in \(D\) are equal \(d_{1}\) and \(t\)
+<li>Consider \(\hat{\rho}(d_{k},t)=\rho(f_{i}(\hat{D}))\), where \(\rho(\cdot)\) is from
+\eqref{eq:rho}, the depth value and time value in \(D\) are equal \(d_{k}\) and \(t\)
 respectively, and \(f\) is a function, e.g. \(f_{\mr{PHY}}\)</li>
-<li>Define \(\Delta(k, t) = \hat{\rho(d_{k}, t)} - \hat{\rho(d_{k+1}, t)}\)</li>
+<li>Define \(\Delta(k, t) = \hat{\rho}(d_{k}, t) - \hat{\rho}(d_{k+1}, t)\), with \(k\in\tub{1,\dots,n_{d}}\)</li>
 
 </ul></li>
 <li><p>
@@ -798,12 +803,12 @@ The physics regularized loss term then becomes
 
 <p>
 \[
-  \gL_{\mr{PHY}}(\theta_{i}) = \frac{1}{n_{t}(n_{d}-1)}-\sum_{t=1}^{n_{t}}\sum_{k}^{n_{d}-1}\mr{ReLU}(\Delta(k,t)),
+  \gL_{\mr{PHY}}(\theta_{i}) = \frac{1}{n_{t}(n_{d}-1)}\sum_{t=1}^{n_{t}}\sum_{k}^{n_{d}-1}\mr{ReLU}(\Delta(k,t)),
   \]
 </p>
 
 <ul>
-<li>Which we can differentiate through</li>
+<li>Which we can differentiate with respect to \(\theta_{i}\)</li>
 
 </ul></li>
 
@@ -819,7 +824,7 @@ The physics regularized loss term then becomes
 \begin{align*}
 \gL_{\mr{stand}}(\theta_{i}) &= \frac{1}{n}\sum_{k=1}^{n}\paren{y_{i}-f_{i}(x_{i})^{2}}, \\
 R(\theta_{i}) &= \lambda_{1}\norm{\theta_{i}}_{1} + \lambda_{2}\norm{\theta_{i}}_{2}, \\
-\gL_{\mr{PHY}}(\theta_{i}) &= \frac{1}{n_{t}(n_{d}-1)}-\sum_{t=1}^{n_{t}}\sum_{k}^{n_{d}-1}\mr{ReLU}(\Delta(k,t)),
+\gL_{\mr{PHY}}(\theta_{i}) &= \frac{1}{n_{t}(n_{d}-1)}\sum_{t=1}^{n_{t}}\sum_{k}^{n_{d}-1}\mr{ReLU}(\Delta(k,t)),
 \end{align*}
 
 </div>
@@ -828,7 +833,7 @@ R(\theta_{i}) &= \lambda_{1}\norm{\theta_{i}}_{1} + \lambda_{2}\norm{\theta_{i}}
 <li>\(n\) is number of data observations</li>
 <li>\(n_{d}\) is the number of unique depth measurements (different depth values)</li>
 <li>\(n_{t}\) is the number of unique time measurements (day of year)</li>
-<li>\(\Delta(k,t)\) is part of the physical inconsistency loss, defined earlier</li>
+<li>\(\Delta(k,t)\) is part of the physical inconsistency loss defined earlier</li>
 
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
@@ -864,7 +869,7 @@ fraction of times the density constraint is violated</li>
 <div class="container">
 <div class="col">
 
-<div id="org3beade5" class="figure">
+<div id="orga912743" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_lake_mille.png" alt="pgnn_lake_mille.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 7: </span>Lake Mille Lacs</p>
@@ -873,7 +878,7 @@ fraction of times the density constraint is violated</li>
 
 <div class="col">
 
-<div id="org2658a64" class="figure">
+<div id="org71b8904" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_lake_mendota.png" alt="pgnn_lake_mendota.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 8: </span>Lake Mendota</p>
@@ -888,7 +893,7 @@ fraction of times the density constraint is violated</li>
 <div class="container">
 <div class="col">
 
-<div id="orgfae9f93" class="figure">
+<div id="orga6dd223" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_size_mse.png" alt="pgnn_size_mse.png" width="700" />
 </p>
 </div>
@@ -896,7 +901,7 @@ fraction of times the density constraint is violated</li>
 
 <div class="col">
 
-<div id="org1338607" class="figure">
+<div id="orgaa0d0b6" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_consistency_size.png" alt="pgnn_consistency_size.png" width="700" />
 </p>
 </div>
@@ -910,7 +915,7 @@ fraction of times the density constraint is violated</li>
 <div class="container">
 <div class="col">
 
-<div id="orga06fc86" class="figure">
+<div id="org95d1ebe" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_depth_dens_profile_mille.png" alt="pgnn_depth_dens_profile_mille.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 11: </span>Lake Mille Lacs</p>
@@ -920,7 +925,7 @@ fraction of times the density constraint is violated</li>
 <div class="col">
 
 
-<div id="org4dfc8c1" class="figure">
+<div id="orgf4c2960" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_depth_dens_mendota.png" alt="pgnn_depth_dens_mendota.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 12: </span>Lake Mendota</p>
