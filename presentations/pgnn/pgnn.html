@@ -595,7 +595,7 @@ neural networks</li>
 <section>
 
 
-<div id="org090983c" class="figure">
+<div id="org5b173b2" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_difference.png" alt="pgnn_difference.png" width="1000" />
 </p>
 </div>
@@ -636,8 +636,8 @@ variable(s) \(Y\in\gY\)</li>
 </ul>
 
 
-<div id="org534590d" class="figure">
-<p><img src="../../../assets/img/pgnn/figs/pgnn_inputs.png" alt="pgnn_inputs.png" width="900" />
+<div id="orgdd63938" class="figure">
+<p><img src="../../../assets/img/pgnn/figs/pgnn_inputs.png" alt="pgnn_inputs.png" width="800" />
 </p>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
@@ -675,9 +675,9 @@ variable \(D\) and \(Y\).
 <ul>
 <li>For instance let \(D\) describe time and Y the position of an object. If we
 know that the object moves with constant velocity (\(v\)) we can describe
-it&rsquo;s position according to \(Y=f(D)=v\cdot D + D_{0}\).</li>
+it&rsquo;s position according to \(Y=f(D)=v\cdot D + Y_{0}\).</li>
 <li>Use the knowledge of the velocity to relate \(Y\) and \(D\), e.g.
-\(\gG(Y,D)=Y-(v\cdot D + D_{0})\Rightarrow \gG(f(D),D)=0\)</li>
+\(\gG(Y,D)=Y-(v\cdot D + Y_{0})\Rightarrow \gG(f(D),D)=0\)</li>
 
 </ul></li>
 
@@ -695,7 +695,7 @@ it&rsquo;s position according to \(Y=f(D)=v\cdot D + D_{0}\).</li>
 </ul>
 <p>
 \[
-    \gL_{\mr{PHY}}(\theta_{i}) = \norm{\gG(f_{\mr{i}}(X),X)}^{2} + \mr{ReLU}(\gH(f_{\mr{i}}(X),X)) \quad i\in\tub{\mr{NN},\mr{HPD}}
+    \gL_{\mr{PHY}}(\theta_{i}) = \norm{\gG(f_{\mr{i}}(D),D)}^{2} + \mr{ReLU}(\gH(f_{\mr{i}}(D),D)) \quad i\in\tub{\mr{NN},\mr{HPD}}
   \]
 </p>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
@@ -716,7 +716,7 @@ it&rsquo;s position according to \(Y=f(D)=v\cdot D + D_{0}\).</li>
 </ul>
 
 
-<div id="org5710212" class="figure">
+<div id="org47f1b6b" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_watersystem.png" alt="pgnn_watersystem.png" width="1000" />
 </p>
 </div>
@@ -726,7 +726,7 @@ it&rsquo;s position according to \(Y=f(D)=v\cdot D + D_{0}\).</li>
 <section>
 
 
-<div id="org80e1006" class="figure">
+<div id="orgf702a26" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/inputs.png" alt="inputs.png" width="1000" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Input variables \(D\)</p>
@@ -751,7 +751,7 @@ it&rsquo;s position according to \(Y=f(D)=v\cdot D + D_{0}\).</li>
 </div>
 
 
-<div id="org9c5427a" class="figure">
+<div id="org8d6e67d" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_temp.png" alt="pgnn_temp.png" width="1000" />
 </p>
 </div>
@@ -766,7 +766,7 @@ it&rsquo;s position according to \(Y=f(D)=v\cdot D + D_{0}\).</li>
 </ul>
 
 
-<div id="org911739a" class="figure">
+<div id="orgd5853a3" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_density_depth.png" alt="pgnn_density_depth.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Sketch of depth and density relationship</p>
@@ -791,7 +791,7 @@ function of depth and time \(t\) must satisfy
 <li>We can use the above requirement to construct the inequality constraint \(\gH\)
 <ul>
 <li>Consider the regular grid of \(n_{d}\) depth values and \(n_{t}\) time-steps</li>
-<li>Consider \(\hat{\rho}(d_{k},t)=\rho(f_{i}(\hat{D}))\), where \(\rho(\cdot)\) is from
+<li>Consider \(\hat{\rho}(d_{k},t)=\rho(f_{i}(D))\), where \(\rho(\cdot)\) is from
 \eqref{eq:rho}, the depth value and time value in \(D\) are equal \(d_{k}\) and \(t\)
 respectively, and \(f\) is a function, e.g. \(f_{\mr{PHY}}\)</li>
 <li>Define \(\Delta(k, t) = \hat{\rho}(d_{k}, t) - \hat{\rho}(d_{k+1}, t)\), with \(k\in\tub{1,\dots,n_{d}}\)</li>
@@ -822,7 +822,7 @@ The physics regularized loss term then becomes
 <h2 id="orge7566d5">Loss function for lake temperature modeling</h2>
 <div>
 \begin{align*}
-\gL_{\mr{stand}}(\theta_{i}) &= \frac{1}{n}\sum_{k=1}^{n}\paren{y_{i}-f_{i}(x_{i})^{2}}, \\
+\gL_{\mr{stand}}(\theta_{i}) &= \frac{1}{n}\sum_{k=1}^{n}\paren{y_{i}-f_{i}(x_{i})}^{2}, \\
 R(\theta_{i}) &= \lambda_{1}\norm{\theta_{i}}_{1} + \lambda_{2}\norm{\theta_{i}}_{2}, \\
 \gL_{\mr{PHY}}(\theta_{i}) &= \frac{1}{n_{t}(n_{d}-1)}\sum_{t=1}^{n_{t}}\sum_{k}^{n_{d}-1}\mr{ReLU}(\Delta(k,t)),
 \end{align*}
@@ -830,10 +830,10 @@ R(\theta_{i}) &= \lambda_{1}\norm{\theta_{i}}_{1} + \lambda_{2}\norm{\theta_{i}}
 </div>
 
 <ul>
-<li>\(n\) is number of data observations</li>
+<li>\(n\) is number of data points</li>
 <li>\(n_{d}\) is the number of unique depth measurements (different depth values)</li>
 <li>\(n_{t}\) is the number of unique time measurements (day of year)</li>
-<li>\(\Delta(k,t)\) is part of the physical inconsistency loss defined earlier</li>
+<li>\(\Delta(k,t)\) is part of the physical inconsistency loss, as defined earlier</li>
 
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
@@ -869,7 +869,7 @@ fraction of times the density constraint is violated</li>
 <div class="container">
 <div class="col">
 
-<div id="orga912743" class="figure">
+<div id="orga150f34" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_lake_mille.png" alt="pgnn_lake_mille.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 7: </span>Lake Mille Lacs</p>
@@ -878,7 +878,7 @@ fraction of times the density constraint is violated</li>
 
 <div class="col">
 
-<div id="org71b8904" class="figure">
+<div id="org801cc4e" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_lake_mendota.png" alt="pgnn_lake_mendota.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 8: </span>Lake Mendota</p>
@@ -893,7 +893,7 @@ fraction of times the density constraint is violated</li>
 <div class="container">
 <div class="col">
 
-<div id="orga6dd223" class="figure">
+<div id="orgec161c0" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_size_mse.png" alt="pgnn_size_mse.png" width="700" />
 </p>
 </div>
@@ -901,7 +901,7 @@ fraction of times the density constraint is violated</li>
 
 <div class="col">
 
-<div id="orgaa0d0b6" class="figure">
+<div id="orgc899b31" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_consistency_size.png" alt="pgnn_consistency_size.png" width="700" />
 </p>
 </div>
@@ -915,7 +915,7 @@ fraction of times the density constraint is violated</li>
 <div class="container">
 <div class="col">
 
-<div id="org95d1ebe" class="figure">
+<div id="org4c434b1" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_depth_dens_profile_mille.png" alt="pgnn_depth_dens_profile_mille.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 11: </span>Lake Mille Lacs</p>
@@ -925,7 +925,7 @@ fraction of times the density constraint is violated</li>
 <div class="col">
 
 
-<div id="orgf4c2960" class="figure">
+<div id="org85e6d1b" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_depth_dens_mendota.png" alt="pgnn_depth_dens_mendota.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 12: </span>Lake Mendota</p>
