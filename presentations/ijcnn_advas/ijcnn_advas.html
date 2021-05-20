@@ -26,30 +26,11 @@
 <div class="slides">
 <section id="sec-title-slide">
 <section id="sec-title-slide">
-    <h1 class="title">Assisting the Adversary to Improve GAN Training</h1><h2 class="author">Andreas Munk, William Harvey &amp; Frank Wood</h2><h3 class="confernce">IJCNN 2021</h3><h4 class="email"><a href="mailto:amunk@cs.ubc.ca">amunk@cs.ubc.ca</a></h4><h4 class="date">March 26, 2021</h4>
+    <h1 class="title">Assisting the Adversary to Improve GAN Training</h1><h2 class="author">Andreas Munk, William Harvey &amp; Frank Wood</h2>
+    <h3 class="affiliation">University of British Columbia</h3>
+    <h3 class="conference">IJCNN 2021</h3><h4 class="email"><a href="mailto:amunk@cs.ubc.ca">amunk@cs.ubc.ca</a></h4><h4 class="date">July, 2021</h4>
 </section>
 
-</section>
-<section id="table-of-contents-section">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#/slide-org1871f51">Closing the gap between theory and practice</a></li>
-<li><a href="#/slide-org6f3727f">Generative adversarial networks (GANs) [<a href="#/slide-goodfellow2014generative">Goodfellow et&nbsp;al., 2014</a>]</a></li>
-<li><a href="#/slide-org1f2383b">Why GANs?</a></li>
-<li><a href="#/slide-org6d06de5"><i>The optimal adversary assumption</i> and the minimization of divergences</a></li>
-<li><a href="#/slide-orgebf1c77">Does an optimal adversary lead to optimal gradients?</a></li>
-<li><a href="#/slide-org5b314b3">Adversary constructors</a></li>
-<li><a href="#/slide-orgccfe802">Assisting the Adversary - introducing AdvAs</a></li>
-<li><a href="#/slide-orgb2051ba">Removing the hyperparameter \(\lambda\)</a></li>
-<li><a href="#/slide-org69e423e">Experiments</a></li>
-<li><a href="#/slide-org8ea9e96">MNIST and WGAN-GP [<a href="#/slide-gulrajani2017improved">Gulrajani et&nbsp;al., 2017</a>]</a></li>
-<li><a href="#/slide-orgd98ab68">CelebA and StyleGan [<a href="#/slide-karras2020analyzing">Karras et&nbsp;al., 2020</a>]</a></li>
-<li><a href="#/slide-orgfde03af">References</a></li>
-</ul>
-</div>
-</div>
 </section>
 <div id="hiddenMathbox" style="display: none;">
 <p>
@@ -483,8 +464,8 @@
 </div>
 
 <section>
-<section id="slide-org1871f51">
-<h2 id="org1871f51">Closing the gap between theory and practice</h2>
+<section id="slide-org0ba99d4">
+<h2 id="org0ba99d4">Closing the gap between theory and practice</h2>
 <ul>
 <li>The GAN framework is a minimax game, that pivots an adversary
 (critic/discriminator) against a generator</li>
@@ -504,7 +485,7 @@ construction of different GANs
 </ul></li>
 
 <li>Accounts for the adversary being suboptimal - <i>The Adversarys Assistant</i>
-(AdvAs) [<a href="#munk2020assisting">Munk et&nbsp;al., 2020</a>]
+(AdvAs)
 <ul>
 <li>A regularizer which encourages the generator to move towards points where
 the current adversary is optimal</li>
@@ -517,10 +498,10 @@ the current adversary is optimal</li>
 </section>
 </section>
 <section>
-<section id="slide-org6f3727f">
-<h2 id="org6f3727f">Generative adversarial networks (GANs) [<a href="#goodfellow2014generative">Goodfellow et&nbsp;al., 2014</a>]</h2>
+<section id="slide-orgc3e995d">
+<h2 id="orgc3e995d">Generative adversarial networks (GANs) [<a href="#goodfellow2014generative">Goodfellow et&nbsp;al., 2014</a>]</h2>
 <ul>
-<li>A generator is a neural network \(g:\gZ\rightarrow\gX\subseteq\real^{D_{x}}\)
+<li>A generator is neural network \(g:\gZ\rightarrow\gX\subseteq\real^{D_{x}}\)
 which maps from a random vector \(\vz\in\gZ\) to an output \(\vx \in \gX\)
 <ul>
 <li>\(g\) characterizes a distribution \(p_{\theta}(\vx)\), where
@@ -529,13 +510,13 @@ parameters</li>
 
 </ul></li>
 
-<li>Aim is to match \(p_{\theta}\) with some real target distribution
+<li data-fragment-index="2" class="fragment appear">Aim is to match \(p_{\theta}\) with some real target distribution
 \(p_{\mr{true}}\)</li>
 
-<li>An adversary \(a_\phi:\gX\rightarrow \gA\) with parameters
+<li data-fragment-index="3" class="fragment appear">An adversary \(a_\phi:\gX\rightarrow \gA\) with parameters
 \(\phi\in\Phi\subseteq\real^{D_a}\)</li>
 
-<li><p>
+<li data-fragment-index="4" class="fragment appear"><p>
 Generally we frame GANs as a minimax game,
 </p>
 
@@ -543,9 +524,9 @@ Generally we frame GANs as a minimax game,
 \[\min_{\theta}\max_{\phi}h(p_{\theta},a_\phi)\]
 </p></li>
 
-<li>If the minimax game of perfectly solved, then \(p_{\theta} = p_{\mr{true}}\)</li>
+<li data-fragment-index="5" class="fragment appear">If the minimax game of perfectly solved, then \(p_{\theta} = p_{\mr{true}}\)</li>
 
-<li><p>
+<li data-fragment-index="6" class="fragment appear"><p>
 Originally Goodfellow et al. (2014) defined \(\gA=\br{0,1}\)
 </p>
 
@@ -560,34 +541,8 @@ Originally Goodfellow et al. (2014) defined \(\gA=\br{0,1}\)
 </section>
 </section>
 <section>
-<section id="slide-org1f2383b">
-<h2 id="org1f2383b">Why GANs?</h2>
-<ul>
-<li>Generative modeling using implicit densities</li>
-
-<li>Produce photo-realistic images [<a href="#zhou2019hype">Zhou et&nbsp;al., 2019</a>]</li>
-
-<li>However, they tend to have unstable training dynamics [<a href="#mescheder2018which">Mescheder et&nbsp;al., 2018</a>]
-<ul>
-<li>Primarily addressed using different GAN objectives or by using various
-regularization techniques when training the adversary</li>
-
-</ul></li>
-
-<li>We focus on regularizing the training of the generator
-<ul>
-<li>Compatible with above-mentioned regularization techniques</li>
-
-</ul></li>
-
-</ul>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-
-</section>
-</section>
-<section>
-<section id="slide-org6d06de5">
-<h2 id="org6d06de5"><i>The optimal adversary assumption</i> and the minimization of divergences</h2>
+<section id="slide-orgbb186d6">
+<h2 id="orgbb186d6"><i>The optimal adversary assumption</i> and the minimization of divergences</h2>
 <ul>
 <li>Before each generator update, the adversary is assumed optimal
 <ul>
@@ -596,8 +551,8 @@ a particular \(\theta\) the adversary is optimal if \(a^{*}=\argmax_{a \in \gF}h
 
 </ul></li>
 
-<li><p>
-When \(a\) is parameterized by a neural net with parameters \(\phi\in\Phi\), we
+<li data-fragment-index="2" class="fragment appear"><p>
+When \(a\) is a parameterized by a neural net with parameters \(\phi\in\Phi\), we
 define
 </p>
 
@@ -606,7 +561,7 @@ define
     \gF}h(p_{\theta},a) \}\]
 </p></li>
 
-<li><p>
+<li data-fragment-index="3" class="fragment appear"><p>
 This assumption turns the two-player minimax game into a case of minimizing an
 objective w.r.t. \(\theta\) alone
 </p>
@@ -617,12 +572,8 @@ objective w.r.t. \(\theta\) alone
   \]
 </p></li>
 
-<li>For instance [<a href="#goodfellow2014generative">Goodfellow et&nbsp;al., 2014</a>] showed that \(\gM(p_{\theta}) =
+<li data-fragment-index="4" class="fragment appear">For instance [<a href="#goodfellow2014generative">Goodfellow et&nbsp;al., 2014</a>] showed that \(\gM(p_{\theta}) =
   2\cdot\text{JSD}(p_{\mr{true}} || p_\theta) - \log 4\)</li>
-
-<li>Many other GAN approaches make use of the optimal adversary assumption to show
-that \(\gM(p_{\theta})\) reduces to some divergence (e.g. WGAN
-[<a href="#arjovsky2017wasserstein">Arjovsky et&nbsp;al., 2017</a>])</li>
 
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
@@ -630,8 +581,8 @@ that \(\gM(p_{\theta})\) reduces to some divergence (e.g. WGAN
 </section>
 </section>
 <section>
-<section id="slide-orgebf1c77">
-<h2 id="orgebf1c77">Does an optimal adversary lead to optimal gradients?</h2>
+<section id="slide-org651cb66">
+<h2 id="org651cb66">Does an optimal adversary lead to optimal gradients?</h2>
 <ul>
 <li>The goal of training the generator can be seen as minimizing \(\gM(p_{\theta})\)
 <ul>
@@ -640,7 +591,7 @@ that \(\gM(p_{\theta})\) reduces to some divergence (e.g. WGAN
 
 </ul></li>
 
-<li>Assume we have generator parameters \(\theta'\). Consider
+<li data-fragment-index="2" class="fragment appear">Assume we have generator parameters \(\theta'\). Consider
 \(\phi^*\in\Phi^*(\theta')\) such that \(h (p_{\theta'}, a_{\phi^*})\) and
 \(\gM(p_{\theta'})\) are equal in value
 <ul>
@@ -650,37 +601,37 @@ practice the partial derivative \(D_1 h (p_\theta,
 <ul>
 <li>Where we defined \(D_1 h (p_\theta, a_\phi)\) to denote the partial
 derivative of \(h(p_\theta, a_\phi)\) with respect to \(\theta\) with \(\phi\)
-kept constant. Similarly, define \(D_2 h (p_\theta, a_\phi)\) to denote the
-derivative of \(h (p_\theta, a_\phi)\) with respect to \(\phi\), with \(\theta\)
-held constant.</li>
-
-</ul></li>
-<li>It is not immediately obvious these two quantities are equal</li>
+kept constant.</li>
 
 </ul></li>
 
-<li>By extending Theorem 1 in [<a href="#milgrom2002envelope">Milgrom and Segal, 2002</a>] we have that</li>
+</ul></li>
 
-</ul>
+<li data-fragment-index="3" class="fragment appear"><p>
+By extending Theorem 1 in [<a href="#milgrom2002envelope">Milgrom and Segal, 2002</a>] we have that
+</p>
+
 <blockquote>
 <p>
 <b>Theorem 1</b>. Let \(\gM(p_{\theta})=h(p_{\theta},a_{\phi^*})\) for any
-  \(\phi^*\in\Phi^{*}(\theta)\). Assuming that \(\gM(p_{\theta})\) is differentiable
-  w.r.t. \(\theta\) and \(h(p_{\theta},a_{\phi})\) is differentiable w.r.t. \(\theta\)
-  for all \(\phi\in\Phi^{*}(\theta)\), then if \(\phi^{*}\in\Phi^{*}(\theta)\) we
-  have
-  \[
-  \grad_{\theta}\gM(p_{\theta})=D_1 h(p_{\theta},a_{\phi^{*}})
-  \]
+\(\phi^*\in\Phi^{*}(\theta)\). Assuming that \(\gM(p_{\theta})\) is differentiable
+w.r.t. \(\theta\) and \(h(p_{\theta},a_{\phi})\) is differentiable w.r.t. \(\theta\)
+for all \(\phi\in\Phi^{*}(\theta)\), then if \(\phi^{*}\in\Phi^{*}(\theta)\) we
+have
+\[
+    \grad_{\theta}\gM(p_{\theta})=D_1 h(p_{\theta},a_{\phi^{*}})
+    \]
 </p>
-</blockquote>
+</blockquote></li>
+
+</ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
 </section>
 </section>
 <section>
-<section id="slide-org5b314b3">
-<h2 id="org5b314b3">Adversary constructors</h2>
+<section id="slide-orge101406">
+<h2 id="orge101406">Adversary constructors</h2>
 <ul>
 <li><p>
 An adversary constructor is a function \(f:\Theta\rightarrow\Phi\), where for
@@ -691,7 +642,7 @@ all \(\theta \in \Theta\), \(f(\theta) = \phi^*\in\Phi^{*}(\theta)\),
 \[h(p_{\theta},a_{f(\theta)})=\max_{a\in\gF}h(p_{\theta},a)\]
 </p></li>
 
-<li><p>
+<li data-fragment-index="2" class="fragment appear"><p>
 We cannot compute the function \(f(\theta)\) in general. However, they
 lead to a condition which must be satisfied for Theorem 1 to be invoked
 </p>
@@ -715,29 +666,26 @@ lead to a condition which must be satisfied for Theorem 1 to be invoked
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
-
 </section>
 </section>
 <section>
-<section id="slide-orgccfe802">
-<h2 id="orgccfe802">Assisting the Adversary - introducing AdvAs</h2>
+<section id="slide-org5b12788">
+<h2 id="org5b12788">Assisting the Adversary - introducing AdvAs</h2>
 <ul>
-<li>E.q. \ref{eq:cor} is a necessary condition for invoking Theorem 1</li>
-<li>\(\trans{D_2 h(p_{\theta},a_{f(\theta)})} \mJ_{\theta}(f)\) could be viewed as a
-measure of &ldquo;closeness&rdquo;.
+<li>E.q. \ref{eq:cor} is a necessary condition for invoking Theorem 1
 <ul>
-<li>Cannot be computed</li>
+<li>But cannot be computed</li>
 
 </ul></li>
-<li>Can compute \(D_2 h(p_{\theta},a_{\phi})\)
+<li data-fragment-index="2" class="fragment appear">Can compute \(D_2 h(p_{\theta},a_{\phi})\)
 <ul>
 <li>Use the magnitude as an approximate measure of how &ldquo;close&rdquo; we are to
 having an optimal adversary</li>
 
 </ul></li>
 
-<li><p>
-Define the objective functions
+<li data-fragment-index="3" class="fragment appear"><p>
+Consider the following gradients
 </p>
 
 <div>
@@ -748,7 +696,7 @@ Define the objective functions
 
 </div></li>
 
-<li><p>
+<li data-fragment-index="4" class="fragment appear"><p>
 Using AdvAs implies
 </p>
 
@@ -760,7 +708,7 @@ Using AdvAs implies
 
 <p>
 with \(r(\theta,\phi) = \norm{\grad_\phi {L_{\mr{adv}}}(\theta,\phi)}_2^2\) and \(\lambda\) being a hyperparameter.
-</p></li>
+Also found in [<a href="#mescheder2017numerics">Mescheder et&nbsp;al., 2017</a>,<a href="#nagarajan2017gradient">Nagarajan and Kolter, 2017</a>]</p></li>
 
 </ul>
 
@@ -769,89 +717,29 @@ with \(r(\theta,\phi) = \norm{\grad_\phi {L_{\mr{adv}}}(\theta,\phi)}_2^2\) and 
 <section>
 
 
-<div id="org64bec39" class="figure">
+<div id="orgf6f258f" class="figure">
 <p><img src="../../../assets/img/advas/figs/advas_alg.png" alt="advas_alg.png" width="1000" />
 </p>
 </div>
-
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-</section>
-<section>
-
-<ul>
-<li>Preserves convergence results:
-<ol>
-<li>Using AdvAs does not interfere with adversary updates</li>
-<li>Assuming an optimal adversary we have
-\(L^{\mr{AdvAs}}_{\mr{gen}}(\theta,\phi) \rightarrow L_{\text{gen}}(\theta,
-     \phi)\)</li>
-
-</ol></li>
-
-<li>Use an unbiased estimate \(\tilde{r}(\theta, \phi) \approx \norm{\grad_\phi
-  {L_{\mr{adv}}}(\theta,\phi)}_2^2\)
-<ul>
-<li>consider two independent and unbiased estimates of \(\grad_\phi
-    {L_{\mr{adv}}}(\theta,\phi)\) denoted \(\mX,\mX'\). Then
-\(\E\br{\trans{\mX}\mX'}=\trans{\E\br{\mX}}\E\br{\mX'}=\norm{\grad_{\phi}L_{\mr{adv}}(\theta,\phi)}_2^2\).</li>
-
-</ul></li>
-
-</ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
 </section>
 </section>
 <section>
-<section id="slide-orgb2051ba">
-<h2 id="orgb2051ba">Removing the hyperparameter \(\lambda\)</h2>
-<ul>
-<li>If \(\lambda\) is too large it may destabilize training. If too small it is
-equivalent to not using AdvAs.</li>
-
-<li><p>
-Define
-</p>
-
-<div>
-\begin{align*}
-\vg_{\mr{orig}}(\theta, \phi) &= \grad_{\theta}L_{\mr{gen}}(\theta,\phi) \\
-\vg_{\mr{AdvAs}}(\theta, \phi) &= \grad_{\theta}\tilde{r}(\theta,\phi) \\
-\vg_{\mr{total}}(\theta, \phi, \lambda) &= \grad_{\theta}L^{\mr{AdvAs}}_{\mr{gen}}(\theta,\phi) \\
-                       &= \vg_{\mr{orig}}(\theta, \phi) + \lambda \vg_{\mr{AdvAs}}(\theta, \phi).
-\end{align*}
-
-</div></li>
-
-<li>We set</li>
-
-</ul>
-<div>
-\begin{equation}
-  \lambda = \min \left( 1, \frac{\norm{\vg_{\mr{orig}}(\theta, \phi)}_2}{\norm{\vg_{\mr{AdvAs}}(\theta, \phi)}_2}\right) \nonumber
-\end{equation}
-
-</div>
-<div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
-
+<section id="slide-org7b509ab">
+<h2 id="org7b509ab">Experiments</h2>
 </section>
 </section>
 <section>
-<section id="slide-org69e423e">
-<h2 id="org69e423e">Experiments</h2>
-
-</section>
-</section>
-<section>
-<section id="slide-org8ea9e96">
-<h2 id="org8ea9e96">MNIST and WGAN-GP [<a href="#gulrajani2017improved">Gulrajani et&nbsp;al., 2017</a>]</h2>
+<section id="slide-org97e783d">
+<h2 id="org97e783d">MNIST and WGAN-GP [<a href="#gulrajani2017improved">Gulrajani et&nbsp;al., 2017</a>]</h2>
 <ul>
 <li>The best FID score reached is improved by \(28\%\) when using AdvAs</li>
 
 </ul>
 
 
-<div id="org0863ff7" class="figure">
+<div id="org237debe" class="figure">
 <p><object type="image/svg+xml" data="../../../assets/img/advas/figs/results_FID60000_plotting-v100mnist.svg" class="org-svg" width="1300">
 Sorry, your browser does not support SVG.</object>
 </p>
@@ -859,14 +747,13 @@ Sorry, your browser does not support SVG.</object>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
-
 </section>
 </section>
 <section>
-<section id="slide-orgd98ab68">
-<h2 id="orgd98ab68">CelebA and StyleGan [<a href="#karras2020analyzing">Karras et&nbsp;al., 2020</a>]</h2>
+<section id="slide-orgfa9182d">
+<h2 id="orgfa9182d">CelebA and StyleGan [<a href="#karras2020analyzing">Karras et&nbsp;al., 2020</a>]</h2>
 
-<div id="org0d1b968" class="figure">
+<div id="orgb5e8727" class="figure">
 <p><object type="image/svg+xml" data="../../../assets/img/advas/figs/graph-and-images.svg" class="org-svg" width="1000">
 Sorry, your browser does not support SVG.</object>
 </p>
@@ -877,8 +764,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-orgfde03af">
-<h2 id="orgfde03af">References</h2>
+<section id="slide-orgd5c2262">
+<h2 id="orgd5c2262">References</h2>
 <div id="includedContent"></div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>

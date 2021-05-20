@@ -27,14 +27,12 @@ p(A|x)=\frac{p(x)}{q(x)}>1\)).
 To see why this works we invoke Bayes rule and find that,
 </p>
 
-<p>
-\[
-\balnn
+\begin{align*}
 p(x|A)&=\frac{p(A|x)q(x)}{p(A)}\\
       &=\frac{\frac{p(x)}{q(x)}q(x)}{Mp(A)}\\
       &=\frac{p(x)}{Mp(A)},
-\ealnn
-\]
+\end{align*}
+<p>
 where
 \[
 p(A)=\int p(A|x)q(x)\dm{x} = \frac{1}{M}\int\frac{p(x)}{q(x)}q(x)\dm{x}=\frac{1}{M},
@@ -61,26 +59,27 @@ reject all samples below e.g. 0.
 
 <p>
 For more information about such sampling techniques see e.g. [<a href="#gelman2013bayesian">Gelman et&nbsp;al., 2013</a>]</p>
-<div id="outline-container-orgb6939a7" class="outline-2">
-<h2 id="orgb6939a7">Rejection Sampling and Bayesian Inference is a bad idea</h2>
-<div class="outline-text-2" id="text-orgb6939a7">
+<div id="outline-container-org5ad03e2" class="outline-2">
+<h2 id="org5ad03e2">Rejection Sampling and Bayesian Inference is a bad idea</h2>
+<div class="outline-text-2" id="text-org5ad03e2">
 <p>
 One might be tempted to consider rejection sampling for Bayesian inference where
-we seek to infer the posterior distribution on \(\xxx\) given some observed values
-\(\yyy\). However, that will turn out to be a incredible inefficient and in the
+we seek to infer the posterior distribution on \(x\) given some observed values
+\(y\). However, that will turn out to be a incredible inefficient and in the
 continuous case we will even end up <b>never</b> accepting any samples at all.
 </p>
 
 <p>
 To see this we can consider a simple two variable scenario with a joint
-distribution \(p(x,y)\), where \(x,y\in\real\). Assuming we observe \(y=y^*\) and using
-rejection sampling to sample from \(p(x|y)\) we could try and consider sample
-\(x,\tilde{y}\sim p(x,y)\), accept \(x\) <b>only if</b> \(\tilde{y}=y^*\), and then throw
-away \(\tilde{y}\) (which is equal to \(y^*\) anyway), s.t.
+distribution \(p(x,y)\), where \(x,y\in\real\). Assuming we observe \(y=y^*\) and
+using rejection sampling to sample from \(p(x|y)\) we could try and consider the
+following: sample \(x,\tilde{y}\sim p(x,y)\), accept \(x\) <b>only if</b>
+\(\tilde{y}=y^*\), and then throw away \(\tilde{y}\) (which is equal to \(y^*\)
+anyway), s.t.
 </p>
 
 <p>
-\[ p(A|x,y) = \unicode{x1D7D9}_\br{y=y^*}p(x,y). \]
+\[ p(A|x,y) = \unicode{x1D7D9}_\br{y=y^*}(x,y). \]
 </p>
 
 <p>
@@ -89,22 +88,18 @@ generalize to the distribution over \(x\) <b>and</b> \(y\) to be consistent, but
 through away accepted \(y\) we do an implicit marginalization),
 </p>
 
-<p>
-\[
-\balnn
+\begin{align*}
 p(x,y|A)&=\frac{p(A|x,y)p(x,y)}{p(A)}\\
-        &=\frac{p(A|x,y)p(x|y)p(y))}{p(A)}\\
+        &=\frac{p(A|x,y)p(x|y)p(y)}{p(A)}\\
         &=\frac{p(x|y=y^*)p(y^*)}{p(A)},
-\ealnn
-\]
-</p>
+\end{align*}
 
 <p>
 and
 </p>
 
 <p>
-\[p(A)=\int p(A|x)p(x|y)p(y)\dm{x}\dm{y}=\int p(x|y=y^*)p(y^*)\dm{x}=p(y^*),\]
+\[p(A)=\int p(A|x,y)p(x|y)p(y)\dm{x}\dm{y}=\int p(x|y=y^*)p(y^*)\dm{x}=p(y^*),\]
 </p>
 
 <p>

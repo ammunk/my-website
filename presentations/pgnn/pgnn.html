@@ -39,28 +39,28 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#/slide-org98dcfbe">Where is the physics in modern machine learning?</a></li>
-<li><a href="#/slide-orgd442ba9">Phisycs-guided Neural Networks (PGNN) [<a href="#/slide-karpatne2017physics">Karpatne et&nbsp;al., 2017</a>]</a></li>
-<li><a href="#/slide-orge8b2554">Constructing Hybrid-Physics-Data models</a></li>
-<li><a href="#/slide-orgeeb4776">Using physics-based loss functions</a></li>
-<li><a href="#/slide-org33221ff">Experiments</a></li>
-<li><a href="#/slide-orgd164a81">Lake temperature modeling</a></li>
-<li><a href="#/slide-orgdaf0164">Physical inconsistency for lake temperature modeling</a>
+<li><a href="#/slide-org4f10035">Where is the physics in modern machine learning?</a></li>
+<li><a href="#/slide-orgd6cfd84">Phisycs-guided Neural Networks (PGNN) [<a href="#/slide-karpatne2017physics">Karpatne et&nbsp;al., 2017</a>]</a></li>
+<li><a href="#/slide-org5a138ed">Constructing Hybrid-Physics-Data models</a></li>
+<li><a href="#/slide-org46bf5f3">Using physics-based loss functions</a></li>
+<li><a href="#/slide-orge2672b5">Experiments</a></li>
+<li><a href="#/slide-org472c3ee">Lake temperature modeling</a></li>
+<li><a href="#/slide-org550ea5f">Physical inconsistency for lake temperature modeling</a>
 <ul>
-<li><a href="#/slide-org7dfb59a">Temperature-density relationship of water</a></li>
-<li><a href="#/slide-org5c49ef4">Denisty-depth relationship</a></li>
+<li><a href="#/slide-org69652ea">Temperature-density relationship of water</a></li>
+<li><a href="#/slide-org9f0a2af">Denisty-depth relationship</a></li>
 </ul>
 </li>
-<li><a href="#/slide-orge7566d5">Loss function for lake temperature modeling</a></li>
-<li><a href="#/slide-org820fd16">Results</a>
+<li><a href="#/slide-org1de364c">Loss function for lake temperature modeling</a></li>
+<li><a href="#/slide-orgeaf21b2">Results</a>
 <ul>
-<li><a href="#/slide-org17d80fb">Models and their notation</a></li>
-<li><a href="#/slide-orgf553c64">Root mean squared error (RMSE) and physical inconsistency</a></li>
-<li><a href="#/slide-org41211fb">Relation to training size (Lake Mille Lacs)</a></li>
-<li><a href="#/slide-orgbc2ef8c">Density-depth relationship</a></li>
+<li><a href="#/slide-org399d32b">Models and their notation</a></li>
+<li><a href="#/slide-org74b90c2">Root mean squared error (RMSE) and physical inconsistency</a></li>
+<li><a href="#/slide-org0ef8e8a">Relation to training size (Lake Mille Lacs)</a></li>
+<li><a href="#/slide-orgc50a7d8">Density-depth relationship</a></li>
 </ul>
 </li>
-<li><a href="#/slide-org04bff31">References</a></li>
+<li><a href="#/slide-orgf31236e">References</a></li>
 </ul>
 </div>
 </div>
@@ -497,8 +497,8 @@
 </div>
 
 <section>
-<section id="slide-org98dcfbe">
-<h2 id="org98dcfbe">Where is the physics in modern machine learning?</h2>
+<section id="slide-org4f10035">
+<h2 id="org4f10035">Where is the physics in modern machine learning?</h2>
 <ul>
 <li>Neural networks (NN) are used for <i>black-box</i> modeling to solve regression and
 classification problems</li>
@@ -541,8 +541,8 @@ function \(f\) may be summarized as uncertainty associated with
 </section>
 </section>
 <section>
-<section id="slide-orgd442ba9">
-<h2 id="orgd442ba9">Phisycs-guided Neural Networks (PGNN) [<a href="#karpatne2017physics">Karpatne et&nbsp;al., 2017</a>]</h2>
+<section id="slide-orgd6cfd84">
+<h2 id="orgd6cfd84">Phisycs-guided Neural Networks (PGNN) [<a href="#karpatne2017physics">Karpatne et&nbsp;al., 2017</a>]</h2>
 <ul>
 <li>Combine neural networks with scientific knowledge of physics-based models</li>
 
@@ -566,7 +566,7 @@ neural networks</li>
 <section>
 
 
-<div id="org17a09e7" class="figure">
+<div id="orgd34bf5c" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_difference.png" alt="pgnn_difference.png" width="1000" />
 </p>
 </div>
@@ -575,8 +575,8 @@ neural networks</li>
 </section>
 </section>
 <section>
-<section id="slide-orge8b2554">
-<h2 id="orge8b2554">Constructing Hybrid-Physics-Data models</h2>
+<section id="slide-org5a138ed">
+<h2 id="org5a138ed">Constructing Hybrid-Physics-Data models</h2>
 <ul>
 <li>Consider input variables (observable data or &ldquo;drivers&rdquo;) \(D\in\gD\) and target
 variable(s) \(Y\in\gY\)</li>
@@ -607,7 +607,7 @@ variable(s) \(Y\in\gY\)</li>
 </ul>
 
 
-<div id="orgfcb192d" class="figure">
+<div id="orgd4ee101" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_inputs.png" alt="pgnn_inputs.png" width="800" />
 </p>
 </div>
@@ -616,8 +616,8 @@ variable(s) \(Y\in\gY\)</li>
 </section>
 </section>
 <section>
-<section id="slide-orgeeb4776">
-<h2 id="orgeeb4776">Using physics-based loss functions</h2>
+<section id="slide-org46bf5f3">
+<h2 id="org46bf5f3">Using physics-based loss functions</h2>
 <ul>
 <li><p>
 Consider the following minimization problem
@@ -674,20 +674,20 @@ it&rsquo;s position according to \(Y=f(D)=v\cdot D + Y_{0}\).</li>
 </section>
 </section>
 <section>
-<section id="slide-org33221ff">
-<h2 id="org33221ff">Experiments</h2>
+<section id="slide-orge2672b5">
+<h2 id="orge2672b5">Experiments</h2>
 </section>
 </section>
 <section>
-<section id="slide-orgd164a81">
-<h2 id="orgd164a81">Lake temperature modeling</h2>
+<section id="slide-org472c3ee">
+<h2 id="org472c3ee">Lake temperature modeling</h2>
 <ul>
 <li>Predict lake temperatures \(Y\) using PGNN</li>
 
 </ul>
 
 
-<div id="org9efcc8e" class="figure">
+<div id="org99b47ce" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_watersystem.png" alt="pgnn_watersystem.png" width="1000" />
 </p>
 </div>
@@ -697,7 +697,7 @@ it&rsquo;s position according to \(Y=f(D)=v\cdot D + Y_{0}\).</li>
 <section>
 
 
-<div id="orgf65cc1e" class="figure">
+<div id="orgc916a98" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/inputs.png" alt="inputs.png" width="1000" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Input variables \(D\)</p>
@@ -707,13 +707,13 @@ it&rsquo;s position according to \(Y=f(D)=v\cdot D + Y_{0}\).</li>
 </section>
 </section>
 <section>
-<section id="slide-orgdaf0164">
-<h2 id="orgdaf0164">Physical inconsistency for lake temperature modeling</h2>
-<div class="outline-text-2" id="text-orgdaf0164">
+<section id="slide-org550ea5f">
+<h2 id="org550ea5f">Physical inconsistency for lake temperature modeling</h2>
+<div class="outline-text-2" id="text-org550ea5f">
 </div>
 </section>
-<section id="slide-org7dfb59a">
-<h3 id="org7dfb59a">Temperature-density relationship of water</h3>
+<section id="slide-org69652ea">
+<h3 id="org69652ea">Temperature-density relationship of water</h3>
 <div>
 \begin{equation}\label{eq:rho}
 \rho(T) = 1000\times \paren{1-\frac{(T+288.9414)(T-3.9863)^{2}}{508929.2(T+68.12963)}}
@@ -722,22 +722,22 @@ it&rsquo;s position according to \(Y=f(D)=v\cdot D + Y_{0}\).</li>
 </div>
 
 
-<div id="org22c3f3f" class="figure">
+<div id="org6ba899d" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_temp.png" alt="pgnn_temp.png" width="1000" />
 </p>
 </div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
 </section>
-<section id="slide-org5c49ef4">
-<h3 id="org5c49ef4">Denisty-depth relationship</h3>
+<section id="slide-org9f0a2af">
+<h3 id="org9f0a2af">Denisty-depth relationship</h3>
 <ul>
 <li>Density is monotonically increasing with depth</li>
 
 </ul>
 
 
-<div id="orgca82400" class="figure">
+<div id="org8046d38" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_density_depth.png" alt="pgnn_density_depth.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Sketch of depth and density relationship</p>
@@ -789,8 +789,8 @@ The physics regularized loss term then becomes
 </section>
 </section>
 <section>
-<section id="slide-orge7566d5">
-<h2 id="orge7566d5">Loss function for lake temperature modeling</h2>
+<section id="slide-org1de364c">
+<h2 id="org1de364c">Loss function for lake temperature modeling</h2>
 <div>
 \begin{align*}
 \gL_{\mr{stand}}(\theta_{i}) &= \frac{1}{n}\sum_{k=1}^{n}\paren{y_{i}-f_{i}(x_{i})}^{2}, \\
@@ -814,13 +814,13 @@ R(\theta_{i}) &= \lambda_{1}\norm{\theta_{i}}_{1} + \lambda_{2}\norm{\theta_{i}}
 </section>
 </section>
 <section>
-<section id="slide-org820fd16">
-<h2 id="org820fd16">Results</h2>
-<div class="outline-text-2" id="text-org820fd16">
+<section id="slide-orgeaf21b2">
+<h2 id="orgeaf21b2">Results</h2>
+<div class="outline-text-2" id="text-orgeaf21b2">
 </div>
 </section>
-<section id="slide-org17d80fb">
-<h3 id="org17d80fb">Models and their notation</h3>
+<section id="slide-org399d32b">
+<h3 id="org399d32b">Models and their notation</h3>
 <ul>
 <li>NN, SVM, LSBoost: to a standard neural network model trained without physical
 knowledge, support vector machines, and least squared boosted regression tress</li>
@@ -835,12 +835,12 @@ fraction of times the density constraint is violated</li>
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
-<section id="slide-orgf553c64">
-<h3 id="orgf553c64">Root mean squared error (RMSE) and physical inconsistency</h3>
+<section id="slide-org74b90c2">
+<h3 id="org74b90c2">Root mean squared error (RMSE) and physical inconsistency</h3>
 <div class="container">
 <div class="col">
 
-<div id="orgdeb22c8" class="figure">
+<div id="org567b949" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_lake_mille.png" alt="pgnn_lake_mille.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 7: </span>Lake Mille Lacs</p>
@@ -849,7 +849,7 @@ fraction of times the density constraint is violated</li>
 
 <div class="col">
 
-<div id="orgdebe029" class="figure">
+<div id="org41e8db8" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_lake_mendota.png" alt="pgnn_lake_mendota.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 8: </span>Lake Mendota</p>
@@ -859,12 +859,12 @@ fraction of times the density constraint is violated</li>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
 </section>
-<section id="slide-org41211fb">
-<h3 id="org41211fb">Relation to training size (Lake Mille Lacs)</h3>
+<section id="slide-org0ef8e8a">
+<h3 id="org0ef8e8a">Relation to training size (Lake Mille Lacs)</h3>
 <div class="container">
 <div class="col">
 
-<div id="org1ab2117" class="figure">
+<div id="orgf8678dc" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_size_mse.png" alt="pgnn_size_mse.png" width="700" />
 </p>
 </div>
@@ -872,7 +872,7 @@ fraction of times the density constraint is violated</li>
 
 <div class="col">
 
-<div id="org8772e85" class="figure">
+<div id="orge810412" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_consistency_size.png" alt="pgnn_consistency_size.png" width="700" />
 </p>
 </div>
@@ -881,12 +881,12 @@ fraction of times the density constraint is violated</li>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
 </section>
-<section id="slide-orgbc2ef8c">
-<h3 id="orgbc2ef8c">Density-depth relationship</h3>
+<section id="slide-orgc50a7d8">
+<h3 id="orgc50a7d8">Density-depth relationship</h3>
 <div class="container">
 <div class="col">
 
-<div id="orgdf08c11" class="figure">
+<div id="org7c8916d" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_depth_dens_profile_mille.png" alt="pgnn_depth_dens_profile_mille.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 11: </span>Lake Mille Lacs</p>
@@ -896,7 +896,7 @@ fraction of times the density constraint is violated</li>
 <div class="col">
 
 
-<div id="orgba0cf6a" class="figure">
+<div id="org69f13b3" class="figure">
 <p><img src="../../../assets/img/pgnn/figs/pgnn_depth_dens_mendota.png" alt="pgnn_depth_dens_mendota.png" width="700" />
 </p>
 <p><span class="figure-number">Figure 12: </span>Lake Mendota</p>
@@ -908,8 +908,8 @@ fraction of times the density constraint is violated</li>
 </section>
 </section>
 <section>
-<section id="slide-org04bff31">
-<h2 id="org04bff31">References</h2>
+<section id="slide-orgf31236e">
+<h2 id="orgf31236e">References</h2>
 <div id="includedContent"></div>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 </section>
