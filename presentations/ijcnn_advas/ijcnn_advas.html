@@ -498,7 +498,6 @@ the current adversary is optimal</li>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
 
-
 </section>
 </section>
 <section>
@@ -530,15 +529,6 @@ Generally we frame GANs as a minimax game,
 
 <li data-fragment-index="5" class="fragment appear">If the minimax game of perfectly solved, then \(p_{\theta} = p_{\mr{true}}\)</li>
 
-<li data-fragment-index="6" class="fragment appear"><p>
-Originally Goodfellow et al. (2014) defined \(\gA=\br{0,1}\)
-</p>
-
-<p>
-\[ h(p_{\theta},a_\phi) = \mathbb{E}_{x\sim p_{\mr{true}}} \left[ \log a_\phi(x)
-    \right] + \mathbb{E}_{x\sim p_{\theta}} \left[ \log (1- a_\phi(x)) \right].\]
-</p></li>
-
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
 
@@ -548,12 +538,7 @@ Originally Goodfellow et al. (2014) defined \(\gA=\br{0,1}\)
 <section id="slide-orgbb186d6">
 <h2 id="orgbb186d6"><i>The optimal adversary assumption</i> and the minimization of divergences</h2>
 <ul>
-<li>Before each generator update, the adversary is assumed optimal
-<ul>
-<li>That is, if \(\gF\) is the class of permissible adversary functions, then for
-a particular \(\theta\) the adversary is optimal if \(a^{*}=\argmax_{a \in \gF}h(p_{\theta},a)\)</li>
-
-</ul></li>
+<li>Before each generator update, the adversary is assumed optimal</li>
 
 <li data-fragment-index="2" class="fragment appear"><p>
 When \(a\) is a parameterized by a neural net with parameters \(\phi\in\Phi\), we
@@ -563,6 +548,10 @@ define
 <p>
 \[\Phi^*(\theta) = \{\phi \in \Phi \mid h(p_\theta, a_\phi) = \max_{a \in
     \gF}h(p_{\theta},a) \}\]
+</p>
+
+<p>
+where \(\gF\) is the class of permissible adversary functions
 </p></li>
 
 <li data-fragment-index="3" class="fragment appear"><p>
@@ -572,12 +561,11 @@ objective w.r.t. \(\theta\) alone
 
 <p>
 \[
-  \gM(p_{\theta}) = \max_{a \in \gF}h(p_{\theta},a) = h(p_\theta, a_{\phi^*}) \quad \text{where} \quad \phi^*\in\Phi^*(\theta).
+  \gM(p_{\theta}) = h(p_\theta, a_{\phi^*}) \quad \text{where} \quad \phi^*\in\Phi^*(\theta).
   \]
 </p></li>
 
-<li data-fragment-index="4" class="fragment appear">For instance [<a href="#goodfellow2014generative">Goodfellow et&nbsp;al., 2014</a>] showed that \(\gM(p_{\theta}) =
-  2\cdot\text{JSD}(p_{\mr{true}} || p_\theta) - \log 4\)</li>
+<li data-fragment-index="4" class="fragment appear">For instance [<a href="#goodfellow2014generative">Goodfellow et&nbsp;al., 2014</a>] showed that \(\gM(p_{\theta}) \propto \text{JSD}(p_{\mr{true}} || p_\theta)\)</li>
 
 </ul>
 <div class="slide-footer">Andreas Munk, <a href="mailto:andreas@ammunk.com">amunk@cs.ubc.ca</a>, <a href="https://ammunk.com">ammunk.com</a></div>
@@ -595,19 +583,12 @@ objective w.r.t. \(\theta\) alone
 
 </ul></li>
 
-<li data-fragment-index="2" class="fragment appear">Assume we have generator parameters \(\theta'\). Consider
-\(\phi^*\in\Phi^*(\theta')\) such that \(h (p_{\theta'}, a_{\phi^*})\) and
-\(\gM(p_{\theta'})\) are equal in value
-<ul>
-<li>We want \(\grad_\theta \gM(p_{\theta})\mid_{\theta=\theta'}\) but calculate in
+<li data-fragment-index="2" class="fragment appear">We want \(\grad_\theta \gM(p_{\theta})\mid_{\theta=\theta'}\) but calculate in
 practice the partial derivative \(D_1 h (p_\theta,
-    a_{\phi^*})\mid_{\theta=\theta'}\)
+  a_{\phi^*})\mid_{\theta=\theta'}\)
 <ul>
-<li>Where we defined \(D_1 h (p_\theta, a_\phi)\) to denote the partial
-derivative of \(h(p_\theta, a_\phi)\) with respect to \(\theta\) with \(\phi\)
-kept constant.</li>
-
-</ul></li>
+<li>Where we defined \(D_1 h (p_\theta, a_\phi)\) to denote the partial derivative
+of \(h(p_\theta, a_\phi)\) with respect to \(\theta\) with \(\phi\) kept constant.</li>
 
 </ul></li>
 
@@ -637,14 +618,8 @@ have
 <section id="slide-orge101406">
 <h2 id="orge101406">Adversary constructors</h2>
 <ul>
-<li><p>
-An adversary constructor is a function \(f:\Theta\rightarrow\Phi\), where for
-all \(\theta \in \Theta\), \(f(\theta) = \phi^*\in\Phi^{*}(\theta)\),
-</p>
-
-<p>
-\[h(p_{\theta},a_{f(\theta)})=\max_{a\in\gF}h(p_{\theta},a)\]
-</p></li>
+<li>An adversary constructor is a function \(f:\Theta\rightarrow\Phi\), where for
+all \(\theta \in \Theta\), \(f(\theta) = \phi^*\in\Phi^{*}(\theta)\),</li>
 
 <li data-fragment-index="2" class="fragment appear"><p>
 We cannot compute the function \(f(\theta)\) in general. However, they
@@ -689,13 +664,13 @@ having an optimal adversary</li>
 </ul></li>
 
 <li data-fragment-index="3" class="fragment appear"><p>
-Consider the following gradients
+Consider the following loss functions
 </p>
 
 <div>
 \begin{align}
-\grad_\theta L_{\text{gen}}(\theta, \phi) &= \grad_\theta h(p_{\theta},a_\phi) \nonumber \\
-\grad_\phi L_{\text{adv}}(\theta, \phi) &= -\grad_\phi h(p_{\theta},a_\phi) \nonumber
+L_{\text{gen}}(\theta, \phi) &= h(p_{\theta},a_\phi) \nonumber \\
+L_{\text{adv}}(\theta, \phi) &= -h(p_{\theta},a_\phi) \nonumber
 \end{align}
 
 </div></li>
@@ -711,7 +686,7 @@ Using AdvAs implies
 </p>
 
 <p>
-with \(r(\theta,\phi) = \norm{\grad_\phi {L_{\mr{adv}}}(\theta,\phi)}_2^2\) and \(\lambda\) being a hyperparameter.
+with \(r(\theta,\phi) = \norm{D_{2} {L_{\mr{adv}}}(\theta,\phi)}_2^2\) and \(\lambda\) being a hyperparameter.
 Also found in [<a href="#mescheder2017numerics">Mescheder et&nbsp;al., 2017</a>,<a href="#nagarajan2017gradient">Nagarajan and Kolter, 2017</a>]</p></li>
 
 </ul>
@@ -728,7 +703,7 @@ Also found in [<a href="#mescheder2017numerics">Mescheder et&nbsp;al., 2017</a>,
 <section id="slide-orgfa9182d">
 <h2 id="orgfa9182d">CelebA and StyleGan [<a href="#karras2020analyzing">Karras et&nbsp;al., 2020</a>]</h2>
 
-<div id="orgf832c27" class="figure">
+<div id="orgfa50159" class="figure">
 <p><object type="image/svg+xml" data="../../../assets/img/advas/figs/graph-and-images.svg" class="org-svg" width="1000">
 Sorry, your browser does not support SVG.</object>
 </p>
