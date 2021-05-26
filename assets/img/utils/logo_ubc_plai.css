@@ -1,10 +1,10 @@
-body {
-    background-image: url('https://ammunk.com/assets/img/utils/ubc.svg'), url('https://ammunk.com/assets/img/utils/plai.svg');
+.slides {
+    background: url('https://ammunk.com/assets/img/utils/ubc-narrow.svg'), url('https://ammunk.com/assets/img/utils/plai.svg');
     background-size:
-        25%,
-        5%;
+        28%,
+        8%;
     background-repeat: no-repeat;
     background-position:
-        98% 100%,
-        2% 100%;
+        98% 95%,
+        23% 95%;
 }
